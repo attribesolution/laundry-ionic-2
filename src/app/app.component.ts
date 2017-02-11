@@ -4,7 +4,9 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
+
 import { ProfileComponent } from '../pages/profile/profile'
+
 
 
 @Component({
@@ -25,6 +27,7 @@ export class MyApp {
       { title: 'Page1', component: Page1 },
       { title: 'Page2', component: Page2 },
       { title: 'Profile', component: ProfileComponent}
+
     ];
 
   }
