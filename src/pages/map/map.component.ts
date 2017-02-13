@@ -8,18 +8,18 @@ import {  } from 'ionic-angular';
 
 
 export class LaundryMap{
-    @ViewChid('map') laundryMap;
+    // @ViewChid('map') laundryMap;
     map: any;
     constructor(){}
 
 
-    initializeMap(){
-        let latlng = new google.maps.LatLng(-34.9290, 138.6010)
-        let mapOptions = {
-            center: latlng,
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        this.map = new google.maps.Map(this.laundryMap.nativeElement, mapOptions)
-    }
+    // initializeMap(){
+    //     let latlng = new google.maps.LatLng(-34.9290, 138.6010)
+    //     let mapOptions = {
+    //         center: latlng,
+    //         zoom: 15,
+    //         mapTypeId: google.maps.MapTypeId.ROADMAP
+    //     };
+    //     this.map = new google.maps.Map(this.laundryMap.nativeElement, mapOptions)
+    // }
 }
