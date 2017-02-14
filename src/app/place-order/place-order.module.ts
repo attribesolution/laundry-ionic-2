@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core'
-
-import { PlaceOrderComponent } from './placeorder.component';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { PlaceOrderComponent } from './place-order.component';
 
 @NgModule({
-    imports: [],
+    imports: [
+            IonicModule.forRoot(PlaceOrderComponent),
+    ],
     declarations: [PlaceOrderComponent],
     entryComponents: [PlaceOrderComponent],
     exports: [PlaceOrderComponent]

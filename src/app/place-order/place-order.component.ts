@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'place-order',
-    template: `<p>hello world !!!!  </p>`,
+    templateUrl: 'place-order.template.html',
 })
 
 export class PlaceOrderComponent{
