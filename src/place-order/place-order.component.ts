@@ -1,8 +1,10 @@
-import {Component} from '@angular/core'
+import { Component } from '@angular/core';
 
 @Component({
-    templateUrl: 'place-order.html'
+    selector: 'place-order',
+    templateUrl: 'place-order.template.html',
 })
-export class PlaceOrderComponent{
 
+export class PlaceOrderComponent{
+    constructor(){}
 }
