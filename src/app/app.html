@@ -1,8 +1,11 @@
+
 <ion-menu [content]="content">
   <ion-header>
+    <ion-navbar color = "primary">
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
+        <ion-title>Menu</ion-title>  
+    </ion-toolbar> 
+    </ion-navbar>
   </ion-header>
 
   <ion-content>
@@ -14,6 +17,5 @@
   </ion-content>
 
 </ion-menu>
-
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"  color = "primary"></ion-nav>

@@ -1,0 +1,42 @@
+
+
+#font-heading-color{
+font-family: "Verdana";
+font-weight: 300;
+color : color($colors, secondary);
+}
+.text-lightgray-color{
+font-family: "Verdana";
+color : lightseagreen;
+}
+
+.upper-case{
+
+    text-transform: uppercase;
+}
+.center-aligned{
+text-align: center;
+line-height: 140%;
+}
+.congratulation-box-height{
+
+    height: 50%;
+    padding-top: 25%;
+}
+.congratulation-box-color{
+
+   background-color:rgba(76, 175, 80, 0.25);
+}
+.notification-center-button{
+
+    background-color: color($colors, secondary);
+    border-radius: 50%;
+    -webkit-border-radius:50%;
+    width: 60px;
+    height: 60px; 
+    font-size: 60px;
+    text-align: center;
+    display:table;
+    margin: -30px auto 0px auto;
+    box-shadow: 0 0 25px 2px rgba(0, 0, 0, 0.25);
+}
