@@ -1,0 +1,23 @@
+ <ion-header class="Header-inner">
+  <ion-navbar color = "primary" >
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <div class="congratulation-box-height congratulation-box-color">
+    <h2 id="font-heading-color" class = "center-aligned upper-case ">Congratulations</h2>
+    <h3 class = "center-aligned text-lightgray-color">Your order has been placed successfully</h3>
+  </div>
+  <div class="notification-center-button">
+     <ion-icon name = "notifications" class="notification-center-button"  (click) = "done()" style="display: table-cell; text-align: center; vertical-align: middle;"></ion-icon>
+  </div>
+  <h4 class = "center-aligned text-lightgray-color">Send notification for this order</h4>
+  <div class="bottom-button-padding" id="bottom-content" block>
+    <button ion-button color="primary" block>Start new</button>
+  </div>
+
+</ion-content>
