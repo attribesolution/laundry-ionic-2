@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core'
 import { IonicModule } from 'ionic-angular';
 import { PlaceOrderComponent } from './place-order.component';
+import { LaundryItems } from '../pages/laundryitems/laundryitems';
+
 
 @NgModule({
     imports: [
-        IonicModule.forRoot(PlaceOrderComponent),
+        IonicModule.forRoot(PlaceOrderComponent)
     ],
-    declarations: [PlaceOrderComponent],
-    entryComponents: [PlaceOrderComponent],
+    declarations: [PlaceOrderComponent,LaundryItems],
+    entryComponents: [PlaceOrderComponent , LaundryItems],
     exports: [PlaceOrderComponent]
 })
 
