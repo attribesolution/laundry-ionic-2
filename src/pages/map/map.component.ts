@@ -10,16 +10,13 @@ import {  } from 'ionic-angular';
 export class LaundryMap{
     // @ViewChid('map') laundryMap;
     map: any;
+    lat: number = 25.322327;
+    lng: number = 55.513641;
+    zoom: number = 10;
     constructor(){}
 
-
-    // initializeMap(){
-    //     let latlng = new google.maps.LatLng(-34.9290, 138.6010)
-    //     let mapOptions = {
-    //         center: latlng,
-    //         zoom: 15,
-    //         mapTypeId: google.maps.MapTypeId.ROADMAP
-    //     };
-    //     this.map = new google.maps.Map(this.laundryMap.nativeElement, mapOptions)
-    // }
+    getMapLocation($event){
+        let location = $event.value;
+        console.log()
+    }
 }
