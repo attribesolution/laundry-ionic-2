@@ -31,6 +31,6 @@ export class Page2 {
   }
 
   done() {
-    this.navCtrl.push(OrderPlaced)
+    this.navCtrl.setRoot(OrderPlaced)
   }
 }
