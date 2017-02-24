@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "header">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,7 +7,7 @@
   </ion-navbar>
   <ion-searchbar (ionInput)="getMapLocation($event)"></ion-searchbar>
 </ion-header>
-<ion-content>
+<ion-content class="menu-content myBg">
     <sebm-google-map [latitude]="lat" [longitude]="lng">
       <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
     </sebm-google-map>
