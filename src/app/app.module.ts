@@ -5,8 +5,10 @@ import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { ProfileComponent } from '../pages/profile/profile';
 import { PlaceOrderModule } from '../place-order/place-order.module';
-import { LaundryMap } from '../pages/map/map.component'
-import {OrderPlaced} from '../pages/order-placed/order-placed'
+import { LaundryMap } from '../pages/map/map.component';
+import { OrderPlaced } from '../pages/order-placed/order-placed';
+import { CareInstructions } from '../pages/care-instructions/care-instructions'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +16,8 @@ import {OrderPlaced} from '../pages/order-placed/order-placed'
     Page2,
     ProfileComponent,
     LaundryMap,
-    OrderPlaced
+    OrderPlaced,
+    CareInstructions
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -27,7 +30,8 @@ import {OrderPlaced} from '../pages/order-placed/order-placed'
     Page2,
     ProfileComponent,
     LaundryMap,
-    OrderPlaced
+    OrderPlaced,
+    CareInstructions
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

@@ -9,6 +9,7 @@ import { ProfileComponent } from '../pages/profile/profile';
 import { PlaceOrderComponent } from '../place-order/place-order.component';
 import { LaundryMap } from '../pages/map/map.component';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
+import { CareInstructions } from '../pages/care-instructions/care-instructions'
 
 
 
@@ -33,7 +34,8 @@ export class MyApp {
       { title: 'Profile', component: ProfileComponent },
       { title: 'Place Order', component: PlaceOrderComponent},
       { title: 'Map', component: LaundryMap },
-      { title: 'LaundryItems', component: LaundryItems}
+      { title: 'LaundryItems', component: LaundryItems},
+      { title: 'CareInstructions', component: CareInstructions}
     ];
 
   }

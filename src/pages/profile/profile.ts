@@ -1,7 +1,6 @@
 import { Component } from '@angular/core'
 import { NavController } from 'ionic-angular';
 
-import { NavController } from 'ionic-angular';
 
 @Component({
     selector: 'profile',
@@ -13,9 +12,4 @@ export class ProfileComponent
    constructor(public navCtrl: NavController) {
         
   }
-
-  constructor(public navCtrl: NavController) {
-    
-  }
-
 }
