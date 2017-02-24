@@ -19,7 +19,7 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions'
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = LaundryItems;
 
   pages: Array<{title: string, component: any}>;
 

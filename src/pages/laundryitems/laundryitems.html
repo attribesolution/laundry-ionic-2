@@ -1,11 +1,43 @@
- <ion-header >
-  <ion-navbar>
+<ion-header>
+  <ion-navbar color="header">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Laundry Items</h3>
+<ion-content color="secondary">
+
+  <ion-item style="background-color: secondary" color="secondary" item-width="100%">
+    What you got today?
+  </ion-item>
+  
+  <div>
+  <ion-list>
+    <ion-row color="secondary" ion-item *ngFor="let item of items">
+      <ion-col  item-left width-30>
+      <ion-icon [name]="item.icon" item-left></ion-icon>
+      {{item.title}}
+      </ion-col>
+
+      <ion-col style="text-align: center" id="number_picker" item-left width-30>
+      <img src="assets/assets/inc_icon.png" style="width : 20% ; height : 20%" (click)="incrementQty(item)" >
+      {{item.qty}}
+      <img src="assets/assets/dec_icon.png" style="width : 20% ; height : 20%" (click)="decrementQty(item)" >
+     </ion-col>
+
+      <ion-col item-right width-10>
+        <button small ion-button [color] = "item.wash?'primary':'secondary'" id="wash" (click)="wash(item)">W</button>
+      </ion-col>
+        <ion-col style="margin-left:10px" (click)="dry(item)" item-right width-10>
+        <button small ion-button [color] = "item.dry?'primary':'secondary'" id="Dry">D</button>
+      </ion-col>
+
+      <ion-col style="min-width: 3em; text-align:center; margin-left: 10px" item-right width-20>
+        {{item.total}}
+      </ion-col>
+      
+    </ion-row>
+  </ion-list>
+  </div>
 </ion-content>

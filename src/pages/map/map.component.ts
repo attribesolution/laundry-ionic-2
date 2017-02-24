@@ -17,55 +17,15 @@ import { Nav, Platform } from 'ionic-angular';
 
 export class LaundryMap{
     // @ViewChid('map') laundryMap;
-    map: GoogleMap;;
+    map: any;
+    lat: number = 25.322327;
+    lng: number = 55.513641;
+    zoom: number = 10;
     constructor(){}
 
-
-    // initializeMap(){
-    //     let latlng = new google.maps.LatLng(-34.9290, 138.6010)
-    //     let mapOptions = {
-    //         center: latlng,
-    //         zoom: 15,
-    //         mapTypeId: google.maps.MapTypeId.ROADMAP
-    //     };
-    //     this.map = new google.maps.Map(this.laundryMap.nativeElement, mapOptions)
-    // }
-
-// Load map only after view is initialize
-ngAfterViewInit() {
- this.loadMap();
-}
-
-loadMap() {
-    let element : HTMLElement =  document.getElementById('map');
-     let location = new GoogleMapsLatLng(-34.9290,138.6010);
- 
-        this.map = new GoogleMap(element, {
-          'backgroundColor': 'white',
-          'controls': {
-            'compass': true,
-            'myLocationButton': true,
-            'indoorPicker': true,
-            'zoom': true
-          },
-          'gestures': {
-            'scroll': true,
-            'tilt': true,
-            'rotate': true,
-            'zoom': true
-          },
-          'camera': {
-            'latLng': location,
-            'tilt': 30,
-            'zoom': 15,
-            'bearing': 50
-          }
-        });
- 
-        this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-            console.log('Map is ready!');
-        });
- 
- }
+    getMapLocation($event){
+        let location = $event.value;
+        console.log()
+    }
 
 }
