@@ -16,7 +16,7 @@ import { LaundryItems } from '../pages/laundryitems/laundryitems';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = LaundryItems;
 
   pages: Array<{title: string, component: any}>;
 
