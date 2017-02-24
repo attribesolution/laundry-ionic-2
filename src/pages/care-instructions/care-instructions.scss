@@ -229,7 +229,28 @@ ion-content#careIns{
   and (max-device-width: 736px) 
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: portrait) { 
+    .dryCleanHeading{
+        position: absolute;
+        z-index: 106;
+        bottom: 22%; 
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        width: 80%;
+        font-size: 200%;
 
+    }
+    .dryCleanImg{
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        left: 0;
+        right: 0;
+        bottom: 22.1%; 
+        z-index: 105;   
+    }
 }
 
 /* Landscape */
@@ -238,5 +259,5 @@ ion-content#careIns{
   and (max-device-width: 736px) 
   and (-webkit-min-device-pixel-ratio: 3)
   and (orientation: landscape) { 
-
+    
 }
