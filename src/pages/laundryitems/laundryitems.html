@@ -7,38 +7,42 @@
  
 </ion-header>
 
-<ion-content color="secondary">
+<ion-content class="fill-bg" item-height="100%">
 
-  <ion-item style="background-color: secondary" color="secondary" item-width="100%">
-    What you got today?
-  </ion-item>
-  
-  <div class="myBga">
-  <ion-list>
-    <ion-row color="secondary" ion-item *ngFor="let item of items">
-      <ion-col  item-left width-30>
-      <ion-icon [name]="item.icon" item-left></ion-icon>
-      {{item.title}}
+
+  <ion-item-divider  class="fill-bg" padding color = "secondary">
+    <div style="text-align: center; background: url('assets/images/heading_bg.png'); background-size: 100%; background-repeat: no-repeat;background-position: center; width: 100%;  height: 100%; padding: 10px" color="secondary">
+    <p color="secondary">WHAT YOU GOT TODAY?</p>
+    </div>
+  </ion-item-divider>
+    <ion-list class="fill-bg" color="secondary" style="border-bottom: 0px" >
+      <ion-item-divider style="border-top: 0px; border-bottom: 0px; flex-wrap: wrap;" color="secondary" *ngFor="let item of items" class="fill-bg">
+        <ion-col class="fill-bg" style="background-color: transparent" item-left width-30>
+        <ion-icon [name]="item.icon" item-left></ion-icon>
+        {{item.title}}
+        </ion-col>
+
+        <ion-col class="fill-bg" style="margin: 0px; padding: 0px; text-align: center" width-10 item-left>
+        <img src="assets/images/inc_icon.png" style="width : 75% ; height : 75% " (click)="incrementQty(item)" >
+        </ion-col>
+        <ion-col style="text-align: center; max-width: 2em; padding:0px ; margin: 0px" item-left>
+        {{item.qty}}
+        </ion-col>
+        <ion-col style="margin: 0px; padding: 0px; text-align: center" width-10 item-left>
+        <img src="assets/images/dec_icon.png" style="width : 75% ; height : 75% " (click)="decrementQty(item)" >
       </ion-col>
 
-      <ion-col style="text-align: center" id="number_picker" item-left width-30>
-      <img src="assets/images/inc_icon.png" style="width : 20% ; height : 20%" (click)="incrementQty(item)" >
-      {{item.qty}}
-      <img src="assets/images/dec_icon.png" style="width : 20% ; height : 20%" (click)="decrementQty(item)" >
-     </ion-col>
+        <ion-col class="fill-bg" style="border-bottom: 0px" item-right width-10>
+          <button small ion-button [color] = "item.wash?'primary':'dark'" id="wash" (click)="wash(item)">W</button>
+        </ion-col>
+          <ion-col class="fill-bg" style="margin-left:10px" (click)="dry(item)" item-right width-10>
+          <button small ion-button [color] = "item.dry?'primary':'dark'" id="Dry">D</button>
+        </ion-col>
 
-      <ion-col item-right width-10>
-        <button small ion-button [color] = "item.wash?'primary':'secondary'" id="wash" (click)="wash(item)">W</button>
-      </ion-col>
-        <ion-col style="margin-left:10px" (click)="dry(item)" item-right width-10>
-        <button small ion-button [color] = "item.dry?'primary':'secondary'" id="Dry">D</button>
-      </ion-col>
-
-      <ion-col style="min-width: 3em; text-align:center; margin-left: 10px" item-right width-20>
-        {{item.total}}
-      </ion-col>
-      
-    </ion-row>
-  </ion-list>
-  </div>
+        <ion-col  class="fill-bg" style="min-width: 3em; text-align:center; margin-left: 10px" item-right width-20>
+          {{item.total}}
+        </ion-col>
+        
+      </ion-item-divider>
+    </ion-list>
 </ion-content>
