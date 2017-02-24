@@ -1,5 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import {  } from 'ionic-angular';
+import {
+ GoogleMap,
+ GoogleMapsEvent,
+ GoogleMapsLatLng,
+ CameraPosition,
+ GoogleMapsMarkerOptions,
+ GoogleMapsMarker
+} from 'ionic-native';
+import { Nav, Platform } from 'ionic-angular';
 
 @Component({
     selector: 'laundry-map',
@@ -19,4 +27,5 @@ export class LaundryMap{
         let location = $event.value;
         console.log()
     }
+
 }
