@@ -36,7 +36,7 @@ export class LaundryMap{
             
         }
         let options = new RequestOptions({ headers: headers });
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=${apikey}`;
+        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchKey}key=${apikey}`;
 
         let location$ = this.http.get(googleLocationApi) 
             .map(res => res.json())
@@ -44,5 +44,4 @@ export class LaundryMap{
         location$.subscribe(res=> console.log(res));
 
     }
-
 }

@@ -1,0 +1,20 @@
+.searchbar{
+    padding: 0;
+    background-color: #2d2d2d ;
+    opacity: 0.75;
+    margin: 10px 5% 0;
+    width: 90%;
+    .search-input{
+        padding: 10px 25px;
+        width: 90%;
+        background: #2d2d2d;
+        border: none;
+        color: white;
+        font-size: 20px;
+    }
+
+    .search-icon{
+        color: white;
+        font-size: 22px;
+    }
+}

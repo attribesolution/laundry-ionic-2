@@ -5,10 +5,13 @@
     </button>
     <ion-title>Map</ion-title>
   </ion-navbar>
-  <ion-searchbar id="location" (keyup)="getMapLocation($event)"></ion-searchbar>
 </ion-header>
 
 <ion-content>
+  <div class="searchbar">
+    <input type="text" class="search-input">
+    <ion-icon name="search" class="search-icon"></ion-icon>
+  </div>
     <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
      <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="'M'" [markerDraggable]="true">
      </sebm-google-map-marker>
