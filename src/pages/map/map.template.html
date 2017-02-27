@@ -1,12 +1,13 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "header">
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
     </button>
     <ion-title>Map</ion-title>
   </ion-navbar>
   <ion-searchbar id="location" (keyup)="getMapLocation($event)"></ion-searchbar>
 </ion-header>
+
 <ion-content>
     <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
      <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="'M'" [markerDraggable]="true">
