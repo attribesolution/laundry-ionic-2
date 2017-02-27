@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx'
+// import { MapService } from '../pages/map/map.service';
+import { MapService } from './map.service';
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'laundry-map',
@@ -12,36 +17,35 @@ import 'rxjs/add/operator/map';
         .sebm-google-map-container {
             height: 350px;
         }
-    `]
+    `],
+    providers:[MapService]
 })
 
 
-export class LaundryMap{
+export class LaundryMap implements AfterViewInit{
     // @ViewChid('map') laundryMap;
+    @ViewChild('search') button: ElementRef;
     map: any;
     lat: number = 25.322327;
     lng: number = 55.513641;
     zoom: number = 10;
-    constructor(private navCtrl: NavController, private http: Http){}
+    constructor(private navCtrl: NavController, private mapService: MapService){
+    }
+    ngAfterViewInit(){
+        this.listenToSearchInput();
+    }
+    listenToSearchInput(){
+        let location: string;
+        let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
+            .map(e=> location = e['srcElement'].value.trim())
+            .distinctUntilChanged()
+            .switchMap(() => this.mapService.getJSON(location))
+        searchInput$.subscribe(location=> console.log(location))
+    }
 
-    getMapLocation($event){
-
-        let searchKey = $event.srcElement.value.toLowerCase().trim();
-
-        let apikey = 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY';
-        let headers = new Headers({ 'Accept': 'application/json' });
-        headers.append('Authorization', `Bearer ${apikey}`);
-        
-        let callMapTypeAhead = function(){
-            
-        }
-        let options = new RequestOptions({ headers: headers });
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchKey}key=${apikey}`;
-
-        let location$ = this.http.get(googleLocationApi) 
-            .map(res => res.json())
-
-        location$.subscribe(res=> console.log(res));
-
+    getMapLocation(location){
+        if(location)
+            this.mapService.getJSON(location)
+                .subscribe(res=> console.log(res))
     }
 }

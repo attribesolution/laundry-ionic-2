@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="searchbar">
-    <input type="text" class="search-input" placeholder="Search Location">
+    <input id="search" #search type="text" class="search-input" placeholder="Enter Location">
     <ion-icon name="search" class="search-icon"></ion-icon>
   </div>
     <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
