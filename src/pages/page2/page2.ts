@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
-import {LaundryItems} from '../laundryitems/laundryitems';
 import {OrderPlaced} from '../order-placed/order-placed';
 @Component({
   selector: 'page-page2',

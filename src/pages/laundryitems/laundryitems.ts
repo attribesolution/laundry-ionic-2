@@ -8,5 +8,5 @@ import { NavController } from 'ionic-angular';
 })
 
 export class LaundryItems{
-     constructor(){}
+     constructor(private navCtrl: NavController){}
 }
