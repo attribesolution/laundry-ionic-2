@@ -9,7 +9,8 @@ import { ProfileComponent } from '../pages/profile/profile';
 import { PlaceOrderModule } from '../place-order/place-order.module';
 import { LaundryMap } from '../pages/map/map.component';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
-import { CareInstructions } from '../pages/care-instructions/care-instructions'
+import { CareInstructions } from '../pages/care-instructions/care-instructions';
+import { ServicesPage } from '../pages/services/services';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions'
     ProfileComponent,
     LaundryMap,
     OrderPlaced,
-    CareInstructions
+    CareInstructions,
+    ServicesPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -36,7 +38,8 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions'
     ProfileComponent,
     LaundryMap,
     OrderPlaced,
-    CareInstructions
+    CareInstructions,
+    ServicesPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
