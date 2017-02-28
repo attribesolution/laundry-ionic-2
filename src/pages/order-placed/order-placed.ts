@@ -8,7 +8,7 @@ import { NavController } from 'ionic-angular';
 })
 
 export class OrderPlaced{
-     constructor(){}
+     constructor(private navCtrl: NavController){}
 
 
  done() {
