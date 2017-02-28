@@ -20,7 +20,7 @@ import { ServicesPage } from '../pages/services/services';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryItems;
+  rootPage: any = ServicesPage;
 
   pages: Array<{title: string, component: any}>;
 

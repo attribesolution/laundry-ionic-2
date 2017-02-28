@@ -12,11 +12,29 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'services.html'
 })
 export class ServicesPage {
-
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  
+  buttons: any = [
+    ['COLD WASH', 'HOT WASH'],
+    ['LOW DRY', 'REGULAR DRY'],
+    ['SCENTED', 'NO SCENT'],
+    ['SOFTNER', 'NO SOFTNER']
+  ];
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServicesPage');
+  }
+
+  imageClicked(){
+    console.log('Image Clicked');
+  }
+
+  setClass(index){
+    return index ? "services-page-unselected" : "services-page-selected";
+  }
+
+  setFontColor(index){
+    return index ? "#59bd84": "#000";
   }
 
 }
