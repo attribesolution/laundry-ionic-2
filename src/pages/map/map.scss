@@ -20,3 +20,14 @@
         font-size: 22px;
     }
 }
+.scroll {
+    height: 100%;
+}
+ 
+#mapParent {
+    width: 100%;
+    height: 50%!important;
+}
+.gmnoprint, .gm-fullscreen-control{
+    display: none!important;
+}

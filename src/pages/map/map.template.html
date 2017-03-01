@@ -12,8 +12,8 @@
     <input id="search" #search type="text" class="search-input" placeholder="Enter Location">
     <ion-icon name="search" class="search-icon"></ion-icon>
   </div>
-    <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-     <sebm-google-map-marker [latitude]="lat" [longitude]="lng" [label]="'M'" [markerDraggable]="true">
-     </sebm-google-map-marker>
-   </sebm-google-map>
+
+<div id="mapParent">
+  <div #map id="map"></div>  
+</div>
 </ion-content>

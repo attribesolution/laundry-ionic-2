@@ -1,47 +1,22 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component, ViewChild, ElementRef} from '@angular/core';
+import {NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-import { Http, Headers, RequestOptions } from '@angular/http';
-// import { MapService } from '../pages/map/map.service';
-import { MapService } from './map.service';
-import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
 
 declare var google;
 
 @Component({
-    selector: 'laundry-map',
-    templateUrl: 'map.template.html',
-    providers:[MapService]
+  templateUrl: 'home.html'
 })
+export class HomePage {
 
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
 
-export class LaundryMap implements AfterViewInit{
-    // @ViewChid('map') laundryMap;
-    @ViewChild('search') button: ElementRef;
-    @ViewChild('map') mapElement: ElementRef;
-    map: any;
-    lat: number = 25.322327;
-    lng: number = 55.513641;
-    zoom: number = 10;
-    constructor(private navCtrl: NavController, private mapService: MapService){
-        this.ionViewLoaded();
-    }
-    ngAfterViewInit(){
-        this.listenToSearchInput();
-    }
-    listenToSearchInput(){
-        let location: string;
-        let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
-            .map(e=> location = e['srcElement'].value.trim())
-            .distinctUntilChanged()
-            .switchMap(() => this.mapService.getJSON(location))
-        searchInput$.subscribe(location => console.log(location))
-    }
-ionViewLoaded(){
+  constructor(public navCtrl: NavController) {
+    this.ionViewLoaded();
+  }
+
+  ionViewLoaded(){
     console.log("ionViewLoaded Call hogya");
     this.loadMap();
   }
@@ -141,8 +116,6 @@ ionViewLoaded(){
 
 	    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-         this.map.controls[google.maps.ControlPosition.TOP_LEFT].display = 'none';
-
   	}, (err) => {
   		console.log(err);
   	});
@@ -177,4 +150,3 @@ ionViewLoaded(){
   }
 
 }
-   
