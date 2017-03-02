@@ -9,4 +9,10 @@ import { NavController } from 'ionic-angular';
 
 export class CareInstructions{
      constructor(){}
+
+startNextScreen()
+  {
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+  }
 }

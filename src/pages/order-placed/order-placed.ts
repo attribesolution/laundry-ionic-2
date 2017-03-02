@@ -15,4 +15,10 @@ export class OrderPlaced{
    console.log("notification button clicked");
   }
 
+  startNextScreen()
+  {
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+  }
+
 }

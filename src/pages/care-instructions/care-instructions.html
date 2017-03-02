@@ -25,5 +25,9 @@
     </div>
     <textarea style="color: white; text-decoration-line: none"name="launderedShirts" [id]="launderedShirts" cols="30" rows="10" placeholder="Enter care instructions"></textarea>
   </div>
-  <button class="care-next-button" ion-button block color="primary">NEXT</button>
 </ion-content>
+<ion-footer color="secondary" style="padding: 10px">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
+</ion-footer>

@@ -72,4 +72,10 @@ export class LaundryItems{
     item.dry?item.dry=false:item.dry=true;
     console.log('dry'+item.dry);
   }
+
+ startNextScreen()
+  {
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+  }
 }

@@ -48,4 +48,10 @@ export class LaundryMap implements AfterViewInit{
             this.mapService.getJSON(location)
                 .subscribe(res=> console.log(res))
     }
+
+  startNextScreen()
+  {
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+  }
 }

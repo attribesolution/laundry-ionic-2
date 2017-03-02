@@ -7,16 +7,21 @@
  
 </ion-header>
 
-<ion-content class="fill-bg" item-height="100%">
-
-
-  <ion-item-divider  class="fill-bg" 
-                     padding 
+<ion-content class="fill-bg">
+<div class="heading">
+  <ion-item-divider  class="fill-bg"
+                     style="padding-left: 10px;
+                            padding-right: 10px;
+                            padding-top: 5px; 
+                            padding-bottom: 5px; 
+                            border-bottom: 0px"
                      color = "secondary">
-    <div id="heading-bg" color="secondary">
+    <div id="heading-bg" style="padding: 10px" color="secondary">
     <p color="secondary">WHAT YOU GOT TODAY?</p>
     </div>
   </ion-item-divider>
+</div>
+  <div class="list">
     <ion-list class="fill-bg" 
               color="secondary"
               style="border-bottom: 0px" >
@@ -81,4 +86,11 @@
         
       </ion-item-divider>
     </ion-list>
+  </div>
+  
 </ion-content>
+<ion-footer color="secondary" style="padding: 10px">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
+</ion-footer>
