@@ -11,6 +11,7 @@ import { LaundryMap } from '../pages/map/map.component';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
 import { CareInstructions } from '../pages/care-instructions/care-instructions'
 import { OrderPlaced } from '../pages/order-placed/order-placed';
+import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 
 
 @Component({
@@ -19,7 +20,7 @@ import { OrderPlaced } from '../pages/order-placed/order-placed';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryItems;
+  rootPage: any = DropOffDetails;
 
   pages: Array<{title: string, component: any}>;
 
@@ -32,10 +33,11 @@ export class MyApp {
       { title: 'Page 1', component: Page1 },
       { title: 'OrderPlaced', component: OrderPlaced },
       { title: 'Profile', component: ProfileComponent },
-      { title: 'Place Order', component: PlaceOrderComponent},
+      { title: 'Place Order', component: PlaceOrderComponent },
       { title: 'Map', component: LaundryMap },
-      { title: 'LaundryItems', component: LaundryItems},
-      { title: 'CareInstructions', component: CareInstructions}
+      { title: 'LaundryItems', component: LaundryItems },
+      { title: 'CareInstructions', component: CareInstructions },
+      { title: 'DropOffDetails', component: DropOffDetails },      
     ];
 
   }
