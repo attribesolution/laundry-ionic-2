@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
+import { ServicesPage } from '../services/services';
 
 
 @Component ({
@@ -75,7 +76,7 @@ export class LaundryItems{
 
  startNextScreen()
   {
-      /*Todo start next screen*/
+      this.navCtrl.push(ServicesPage);
       console.log("Next clicked!");
   }
 }

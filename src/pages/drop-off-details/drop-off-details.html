@@ -40,7 +40,7 @@
       <ion-item-divider class="fill-bg">
         <div class="ParentDiv">
           <div>
-            <h2 class="careH2" color="dark">Laundered Shirts</h2>
+            <h2 class="careH2" color="secondary">Laundered Shirts</h2>
             <img src="./assets/images/heading_bg.png" alt="Care Heading" class="careHeadingImg">
             
           </div>  
@@ -102,6 +102,8 @@
   </div>
   <button class="care-next-button" ion-button block color="primary">NEXT</button>-->
 </ion-content>
-<ion-footer>
-  <button ion-button block>NEXT</button>
+<ion-footer style="padding: 10px;">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
 </ion-footer>

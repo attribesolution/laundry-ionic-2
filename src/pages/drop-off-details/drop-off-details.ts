@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
+import {OrderPlaced} from '../order-placed/order-placed';
+
 @Component ({
     selector: 'drop-off-details',
     templateUrl: 'drop-off-details.html'
@@ -18,7 +20,7 @@ export class DropOffDetails{
             this.dates.push(new Date(Date.now() + 24*i*36e5));
     };
     
-     constructor(){
+     constructor(private navCtrl: NavController){
     
          this.dateArrayMaker();
          console.log(this.dates);
@@ -35,4 +37,9 @@ export class DropOffDetails{
             this.highlightedDiv = newValue;
         }
      }
+     startNextScreen()
+        {
+            this.navCtrl.push(OrderPlaced);
+            console.log("Next clicked!");
+        }
 }
