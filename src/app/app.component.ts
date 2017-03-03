@@ -11,8 +11,8 @@ import { LaundryMap } from '../pages/map/map.component';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
 import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
+import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
-// import { HomePage } from '../pages/google-map/home';
 
 
 @Component({
@@ -34,12 +34,12 @@ export class MyApp {
       { title: 'Page 1', component: Page1 },
       { title: 'OrderPlaced', component: OrderPlaced },
       { title: 'Profile', component: ProfileComponent },
-      { title: 'Place Order', component: PlaceOrderComponent},
+      { title: 'Place Order', component: PlaceOrderComponent },
       { title: 'Map', component: LaundryMap },
+      { title: 'DropOffDetails', component: DropOffDetails },      
       { title: 'LaundryItems', component: LaundryItems},
       { title: 'CareInstructions', component: CareInstructions},
       { title: 'Services', component: ServicesPage}
-      // { title: 'HomePage', component: HomePage}
     ];
 
   }
