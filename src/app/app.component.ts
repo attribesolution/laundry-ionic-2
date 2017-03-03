@@ -9,9 +9,10 @@ import { ProfileComponent } from '../pages/profile/profile';
 import { PlaceOrderComponent } from '../place-order/place-order.component';
 import { LaundryMap } from '../pages/map/map.component';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
-import { CareInstructions } from '../pages/care-instructions/care-instructions'
+import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
+import { ServicesPage } from '../pages/services/services';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = DropOffDetails;
+  rootPage: any = ServicesPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -35,9 +36,10 @@ export class MyApp {
       { title: 'Profile', component: ProfileComponent },
       { title: 'Place Order', component: PlaceOrderComponent },
       { title: 'Map', component: LaundryMap },
-      { title: 'LaundryItems', component: LaundryItems },
-      { title: 'CareInstructions', component: CareInstructions },
       { title: 'DropOffDetails', component: DropOffDetails },      
+      { title: 'LaundryItems', component: LaundryItems},
+      { title: 'CareInstructions', component: CareInstructions},
+      { title: 'Services', component: ServicesPage}
     ];
 
   }

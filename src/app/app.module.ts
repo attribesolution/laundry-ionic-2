@@ -11,6 +11,7 @@ import { LaundryMap } from '../pages/map/map.component';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
 import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
+import { ServicesPage } from '../pages/services/services';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
     LaundryMap,
     OrderPlaced,
     CareInstructions,
-    DropOffDetails
+    DropOffDetails,
+    ServicesPage
+
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -39,7 +42,8 @@ import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
     LaundryMap,
     OrderPlaced,
     CareInstructions,
-    DropOffDetails
+    DropOffDetails,
+    ServicesPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
