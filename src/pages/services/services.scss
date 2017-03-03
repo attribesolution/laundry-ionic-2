@@ -1,0 +1,23 @@
+page-services {
+    .services-page-selected{
+        text-align: center; 
+        background: url('./../../assets/images/polygon_btn_selected.png');
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center; 
+        width: 100%;  
+        height: 100%; 
+        padding: 10px;   
+    }
+    .services-page-unselected{
+        text-align: center; 
+        background: url('./../../assets/images/polygon_btn.png');
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center; 
+        width: 100%;  
+        height: 100%; 
+        padding: 10px;
+    }
+}
+

@@ -1,0 +1,34 @@
+<!--
+  Generated template for the Services page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color = "header">
+    <button ion-button menuToggle>
+      <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
+    </button>
+    <ion-title class="center">Service</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="fill-bg">
+  <ion-grid>
+    <ion-item-divider class="fill-bg" style="border-bottom: 1px solid #323232"></ion-item-divider>
+    <ion-row *ngFor="let button of buttons">
+      <ion-col *ngFor="let item of button">
+        <div color="secondary" [ngClass]="setClass(button.indexOf(item))">
+          <p color="secondary" [style.color]="[setFontColor(button.indexOf(item))]">{{ item }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="footer-padding">
+   <button ion-button block><span color="secondary">NEXT</span></button>
+</ion-footer>
