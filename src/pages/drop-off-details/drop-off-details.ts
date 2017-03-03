@@ -12,18 +12,23 @@ import {OrderPlaced} from '../order-placed/order-placed';
 export class DropOffDetails{
      today: Date = new Date();
      newDate: Date = new Date;
-     locale = 'en-us';
+     locale: String = 'en-us';
+     hours: number[] = Array.from(new Array(12),(val,index)=>index+1);
+     minutes: number[] = Array.from(new Array(60),(val,index)=>index)
      dates = [];
+     amPm: String[] = ['AM', 'PM'];
      highlightedDiv: number;
-    dateArrayMaker(){
+
+     dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
-    };
+     };
     
      constructor(private navCtrl: NavController){
     
          this.dateArrayMaker();
          console.log(this.dates);
+         console.log(this.hours, this.minutes);
      }
 
      getClassofDate(e){
