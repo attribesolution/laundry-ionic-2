@@ -10,8 +10,8 @@ import { PlaceOrderModule } from '../place-order/place-order.module';
 import { LaundryMap } from '../pages/map/map.component';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
 import { CareInstructions } from '../pages/care-instructions/care-instructions';
+import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
-// import { HomePage } from '../pages/google-map/home';
 
 @NgModule({
   declarations: [
@@ -22,8 +22,9 @@ import { ServicesPage } from '../pages/services/services';
     LaundryMap,
     OrderPlaced,
     CareInstructions,
+    DropOffDetails,
     ServicesPage
-    // HomePage
+
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -41,8 +42,8 @@ import { ServicesPage } from '../pages/services/services';
     LaundryMap,
     OrderPlaced,
     CareInstructions,
+    DropOffDetails,
     ServicesPage
-    // HomePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
