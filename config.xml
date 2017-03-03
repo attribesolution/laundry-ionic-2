@@ -6,6 +6,8 @@
   <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
+  <allow-navigation href="https://maps.googleapis.com/*"/>
+  <allow-navigation href="http://maps.googleapis.com/*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
-
+import 'rxjs/add/operator/filter';
 @Injectable()
 
 export class MapService{
@@ -10,6 +10,6 @@ export class MapService{
     
     getJSON = (place: string) => {
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&key=${this.myApiKey}`
-        return this.http.get(googleLocationApi).map(res => res.json())
+        return this.http.get(googleLocationApi).map(res => res.json()).filter(e => e.formatted_address);
     } 
 }
