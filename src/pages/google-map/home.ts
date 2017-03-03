@@ -1,51 +1,22 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component, ViewChild, ElementRef} from '@angular/core';
+import {NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
-import { Http, Headers, RequestOptions } from '@angular/http';
-// import { MapService } from '../pages/map/map.service';
-import { MapService } from './map.service';
-import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
 
 declare var google;
 
-
 @Component({
-    selector: 'laundry-map',
-    templateUrl: 'map.template.html',
-    providers:[MapService]
+  templateUrl: 'home.html'
 })
+export class HomePage {
 
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
 
-export class LaundryMap implements AfterViewInit{
-    // @ViewChid('map') laundryMap;
-    @ViewChild('search') button: ElementRef;
-    @ViewChild('map') mapElement: ElementRef;
-    map: any;
-    lat: number = 25.322327;
-    lng: number = 55.513641;
-    zoom: number = 10;
-    saved :boolean;
-    addition : boolean;
-    save : boolean;
-    constructor(private navCtrl: NavController, private mapService: MapService){
-        this.ionViewLoaded();
-    }
-    ngAfterViewInit(){
-        this.listenToSearchInput();
-    }
-    listenToSearchInput(){
-        let location: string;
-        let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
-            .map(e=> location = e['srcElement'].value.trim())
-            .distinctUntilChanged()
-            .switchMap(() => this.mapService.getJSON(location))
-        searchInput$.subscribe(location => console.log(location))
-    }
-ionViewLoaded(){
+  constructor(public navCtrl: NavController) {
+    this.ionViewLoaded();
+  }
+
+  ionViewLoaded(){
     console.log("ionViewLoaded Call hogya");
     this.loadMap();
   }
@@ -61,50 +32,48 @@ ionViewLoaded(){
 	      center: latLng,
 	      zoom: 15,
         styles: [
-            {elementType: 'geometry', stylers: [{color: '#15151b'}]},
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
             {
-              featureType: 'administrative',
-              elementType: 'labels',
-              stylers: [{visibility: 'off'}]
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
             },
             {
               featureType: 'poi',
-              elementType: 'labels',
-              stylers: [{visibility: 'off'}]
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'geometry',
-              stylers: [{visibility: 'off'}]
+              stylers: [{color: '#263c3f'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'labels.text.fill',
-              stylers: [{visibility: 'off'}]
+              stylers: [{color: '#6b9a76'}]
             },
             {
               featureType: 'road',
               elementType: 'geometry',
-              stylers: [{color: '#000000'}]
-            }
-            // #38414e
-            ,
+              stylers: [{color: '#38414e'}]
+            },
             {
               featureType: 'road',
               elementType: 'geometry.stroke',
-              stylers: [{color: '#000000'}]//212a37
+              stylers: [{color: '#212a37'}]
             },
             {
               featureType: 'road',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#ffffff'}]//9ca5b3
+              stylers: [{color: '#9ca5b3'}]
             },
             {
               featureType: 'road.highway',
               elementType: 'geometry',
-              stylers: [{color: '#000000'}]//746855
+              stylers: [{color: '#746855'}]
             },
             {
               featureType: 'road.highway',
@@ -118,13 +87,13 @@ ionViewLoaded(){
             },
             {
               featureType: 'transit',
-              elementType: 'all',
-              stylers: [{visibility: 'off'}]
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
             },
             {
               featureType: 'transit.station',
               elementType: 'labels.text.fill',
-              stylers: [{visibility: 'off'}]
+              stylers: [{color: '#d59563'}]
             },
             {
               featureType: 'water',
@@ -134,21 +103,18 @@ ionViewLoaded(){
             {
               featureType: 'water',
               elementType: 'labels.text.fill',
-              stylers: [{visibility: 'off'}]
+              stylers: [{color: '#515c6d'}]
             },
             {
               featureType: 'water',
               elementType: 'labels.text.stroke',
-              stylers: [{visibility: 'off'}]
+              stylers: [{color: '#17263c'}]
             }
           ],
-	      mapTypeId: google.maps.MapTypeId.ROADMAP,
-        backgroundColor: 'none'
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
 	    }
 
 	    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
 
   	}, (err) => {
   		console.log(err);
@@ -183,17 +149,4 @@ ionViewLoaded(){
 
   }
 
-  savedButtonClicked(){ 
-    this.saved=this.saved?false:true;
-    console.log("savedButtonClicked");
-  }
-  saveButtonClicked(){ 
-    this.save=this.save?false:true;
-    console.log("saveButtonClicked");
-  }
-  additionButtonClicked(){ 
-    this.addition=this.addition?false:true;
-    console.log("savedButtonClicked");
-  }
 }
-   

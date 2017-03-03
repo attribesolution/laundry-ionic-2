@@ -12,6 +12,7 @@ import { LaundryItems } from '../pages/laundryitems/laundryitems';
 import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
 import { ServicesPage } from '../pages/services/services';
+// import { HomePage } from '../pages/google-map/home';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class MyApp {
       { title: 'LaundryItems', component: LaundryItems},
       { title: 'CareInstructions', component: CareInstructions},
       { title: 'Services', component: ServicesPage}
+      // { title: 'HomePage', component: HomePage}
     ];
 
   }

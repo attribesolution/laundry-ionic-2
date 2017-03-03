@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
+
+declare var google;
 
 @Component ({
     selector: 'congratulation-Component',
@@ -8,11 +9,9 @@ import { NavController } from 'ionic-angular';
 })
 
 export class OrderPlaced{
+
+     @ViewChild('map') mapElement: ElementRef;
+     map: any;
+
      constructor(private navCtrl: NavController){}
-
-
- done() {
-   console.log("notification button clicked");
-  }
-
 }
