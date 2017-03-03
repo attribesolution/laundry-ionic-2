@@ -12,6 +12,7 @@ import 'rxjs/add/operator/switchMap';
 
 declare var google;
 
+
 @Component({
     selector: 'laundry-map',
     templateUrl: 'map.template.html',
@@ -27,6 +28,9 @@ export class LaundryMap implements AfterViewInit{
     lat: number = 25.322327;
     lng: number = 55.513641;
     zoom: number = 10;
+    saved :boolean;
+    addition : boolean;
+    save : boolean;
     constructor(private navCtrl: NavController, private mapService: MapService){
         this.ionViewLoaded();
     }
@@ -57,48 +61,50 @@ ionViewLoaded(){
 	      center: latLng,
 	      zoom: 15,
         styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'geometry', stylers: [{color: '#15151b'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
             {
-              featureType: 'administrative.locality',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              featureType: 'administrative',
+              elementType: 'labels',
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'poi',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              elementType: 'labels',
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'geometry',
-              stylers: [{color: '#263c3f'}]
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'poi.park',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#6b9a76'}]
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'road',
               elementType: 'geometry',
-              stylers: [{color: '#38414e'}]
-            },
+              stylers: [{color: '#000000'}]
+            }
+            // #38414e
+            ,
             {
               featureType: 'road',
               elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
+              stylers: [{color: '#000000'}]//212a37
             },
             {
               featureType: 'road',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#9ca5b3'}]
+              stylers: [{color: '#ffffff'}]//9ca5b3
             },
             {
               featureType: 'road.highway',
               elementType: 'geometry',
-              stylers: [{color: '#746855'}]
+              stylers: [{color: '#000000'}]//746855
             },
             {
               featureType: 'road.highway',
@@ -112,13 +118,13 @@ ionViewLoaded(){
             },
             {
               featureType: 'transit',
-              elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
+              elementType: 'all',
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'transit.station',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'water',
@@ -128,20 +134,21 @@ ionViewLoaded(){
             {
               featureType: 'water',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'water',
               elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
+              stylers: [{visibility: 'off'}]
             }
           ],
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	      mapTypeId: google.maps.MapTypeId.ROADMAP,
+        backgroundColor: 'none'
 	    }
 
 	    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-         this.map.controls[google.maps.ControlPosition.TOP_LEFT].display = 'none';
+         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
 
   	}, (err) => {
   		console.log(err);
@@ -176,5 +183,17 @@ ionViewLoaded(){
 
   }
 
+  savedButtonClicked(){ 
+    this.saved=this.saved?false:true;
+    console.log("savedButtonClicked");
+  }
+  saveButtonClicked(){ 
+    this.save=this.save?false:true;
+    console.log("saveButtonClicked");
+  }
+  additionButtonClicked(){ 
+    this.addition=this.addition?false:true;
+    console.log("savedButtonClicked");
+  }
 }
    
