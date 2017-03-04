@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { MapService } from '../pages/map/map.service';
 import { MapService } from './map.service';
@@ -12,7 +12,7 @@ import 'rxjs/add/operator/switchMap';
 
 declare var google;
 
-
+  
 @Component({
     selector: 'laundry-map',
     templateUrl: 'map.template.html',
