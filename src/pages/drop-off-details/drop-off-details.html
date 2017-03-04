@@ -15,8 +15,7 @@
       </div>
     </ion-item-divider>
     <ion-row style="height: 27.75%;">
-    
-      <ion-col width-60>
+      <ion-col width-40>
       <div class="scrollableTime">
         <ion-item-divider 
           color="secondary" 
@@ -39,7 +38,7 @@
       </div>
     </ion-col>
 
-     <ion-col width-20>
+     <ion-col width-30>
       <div class="scrollableTime2">
         <ion-item-divider 
           color="secondary" 
@@ -47,14 +46,14 @@
           class="drop-off-details-date-item-divider"
                                         
           >
-            <span class="drop-off-details-date-col uppercase">
+            <span style="text-align: middle" class="drop-off-details-date-col uppercase">
               {{ hour }}
             </span> 
         </ion-item-divider>
       </div>
     </ion-col>
 
-    <ion-col width-20>
+    <ion-col width-30>
       <div class="scrollableTime">
         <ion-item-divider 
           color="secondary" 
@@ -72,23 +71,7 @@
       </div>
     </ion-col>
 
-    <ion-col width-20>
-      <div class="scrollableTime">
-        <ion-item-divider 
-          color="secondary" 
-          *ngFor="let value of amPm"
-          class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDiv === $date.id, 
-                      'drop-off-details-date-item-divider':  highlightedDiv !== $date.id }"
-          #$date
-          (click)="toggleHighlight($date.id)"
-          >
-            <span class="drop-off-details-date-col uppercase">
-              {{ value }}
-            </span>
-        </ion-item-divider>
-      </div>
-    </ion-col>
+    
     </ion-row>
     
       <ion-item-divider class="fill-bg">
