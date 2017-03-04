@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import {LaundryItems} from '../laundryitems/laundryitems';
 
 declare var google;
 
@@ -33,6 +34,7 @@ export class LaundryMap implements AfterViewInit{
     save : boolean;
     constructor(private navCtrl: NavController, private mapService: MapService){
         this.ionViewLoaded();
+        
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
@@ -49,6 +51,12 @@ ionViewLoaded(){
     console.log("ionViewLoaded Call hogya");
     this.loadMap();
   }
+
+    getMapLocation(location){
+        if(location)
+            this.mapService.getJSON(location)
+                .subscribe(res=> console.log(res))
+    }
 
   loadMap(){
 
@@ -195,5 +203,13 @@ ionViewLoaded(){
     this.addition=this.addition?false:true;
     console.log("savedButtonClicked");
   }
+
+    startNextScreen()
+    {
+      this.navCtrl.push(LaundryItems);
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+    }
 }
-   
+
+  

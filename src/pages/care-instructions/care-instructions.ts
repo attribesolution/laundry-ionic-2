@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import { DropOffDetails} from '../drop-off-details/drop-off-details';
 
 @Component ({
     selector: 'care-instructions',
@@ -8,5 +9,11 @@ import { NavController } from 'ionic-angular';
 })
 
 export class CareInstructions{
-     constructor(){}
+     constructor(private navCtrl:NavController){}
+
+startNextScreen()
+  {
+      this.navCtrl.push(DropOffDetails);
+      console.log("Next clicked!");
+  }
 }

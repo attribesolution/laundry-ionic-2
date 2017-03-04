@@ -16,7 +16,7 @@
     <ion-icon name="search" class="search-icon"></ion-icon>
   </div>
 
-  <div style="width:100%; bottom: 10%; z-index: 100; position: fixed;">
+  <div style="width:100%; bottom: 15%; z-index: 100; position: fixed;">
 
  
     <div class="bottom-options">
@@ -40,3 +40,8 @@
   <div #map id="map"></div>  
 </div>
 </ion-content>
+<ion-footer style="padding: 10px;">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
+</ion-footer>

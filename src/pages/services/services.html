@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
     </button>
-    <ion-title class="center">Service</ion-title>
+    <ion-title>Service</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -28,7 +28,8 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
-<ion-footer class="footer-padding">
-   <button ion-button block><span color="secondary">NEXT</span></button>
+<ion-footer style="padding: 10px;">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
 </ion-footer>
