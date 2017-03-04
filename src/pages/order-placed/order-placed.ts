@@ -13,5 +13,15 @@ export class OrderPlaced{
      @ViewChild('map') mapElement: ElementRef;
      map: any;
 
+ done() {
+   console.log("notification button clicked");
+  }
+
+  startNextScreen()
+  {
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+  }
+
      constructor(private navCtrl: NavController){}
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import {CareInstructions} from '../care-instructions/care-instructions';
 
 /*
   Generated class for the Services page.
@@ -35,6 +36,12 @@ export class ServicesPage {
 
   setFontColor(index){
     return index ? "#59bd84": "#000";
+  }
+
+  startNextScreen()
+  {
+      this.navCtrl.push(CareInstructions);
+      console.log("Next clicked!");
   }
 
 }

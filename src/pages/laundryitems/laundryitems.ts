@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
+import { ServicesPage } from '../services/services';
 
 
 @Component ({
@@ -71,5 +72,11 @@ export class LaundryItems{
   {
     item.dry?item.dry=false:item.dry=true;
     console.log('dry'+item.dry);
+  }
+
+ startNextScreen()
+  {
+      this.navCtrl.push(ServicesPage);
+      console.log("Next clicked!");
   }
 }
