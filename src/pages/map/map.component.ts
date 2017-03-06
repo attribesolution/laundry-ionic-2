@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams,PopoverController,Popover } from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { MapService } from '../pages/map/map.service';
@@ -10,6 +10,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import {LaundryItems} from '../laundryitems/laundryitems';
+import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-info-modal.component';
 
 declare var google;
 
@@ -32,7 +33,9 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
-    constructor(private navCtrl: NavController, private mapService: MapService){
+    isModalVisible : boolean;
+    popOver : Popover;
+    constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
         this.ionViewLoaded();
         
     }
@@ -48,7 +51,6 @@ export class LaundryMap implements AfterViewInit{
         searchInput$.subscribe(location => console.log(location))
     }
 ionViewLoaded(){
-    console.log("ionViewLoaded Call hogya");
     this.loadMap();
   }
 
@@ -60,9 +62,7 @@ ionViewLoaded(){
 
   loadMap(){
 
-    console.log("Call hogya");
   	Geolocation.getCurrentPosition().then((position) => {
-    console.log("promise Call hogya");
 	    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 	    let mapOptions = {
@@ -200,10 +200,29 @@ ionViewLoaded(){
     console.log("saveButtonClicked");
   }
   additionButtonClicked(){ 
-    this.addition=this.addition?false:true;
-    console.log("savedButtonClicked");
+    //this.isModalVisible=this.isModalVisible?false:true;
+    console.log(this.addition);
+    if(!this.isModalVisible)
+      this.showAdditionalInfoModal();
+    // else
+    //   this.popOver.dismiss();
   }
+  showAdditionalInfoModal(){  
 
+    this.popOver = this.popoverCtrl.create(AdditionalInfoModal,{},{enableBackdropDismiss:true, cssClass:'additional-info-modal-styling'});
+    this.popOver.present();
+    let self = this;
+    this.popOver.onDidDismiss(function(){
+     self.setVisibleFlag(false);
+    });
+    this.setVisibleFlag(true);
+    // let infoModal = this.modalCtrl.create(AdditionalInfoModal,{showBackdrop:true});
+    // infoModal.isOverlay = true;
+    // this.navCtrl.push(infoModal);
+  }
+setVisibleFlag(flag){
+  this.isModalVisible = flag;
+}
     startNextScreen()
     {
       this.navCtrl.push(LaundryItems);
