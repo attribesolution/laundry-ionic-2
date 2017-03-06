@@ -8,6 +8,12 @@
     "sizes": "512x512",
     "type": "image/png"
   }],
+  "permissions":[
+    "webRequest",
+    "webRequestBlocking",
+    "cookies",
+    "<all_urls>"
+  ],
   "background_color": "#4e8ef7",
   "theme_color": "#4e8ef7"
 }

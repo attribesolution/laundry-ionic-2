@@ -37,7 +37,7 @@
         
       </div>
       <div class="horizontal-orientation">
-        <img class= "buttons-icon-size" [src]="addition? 'assets/images/additional_text_active.png':'assets/images/additional_text_inactive.png' " alt="" (click) = "additionButtonClicked()">
+        <img class= "buttons-icon-size" [src]="isModalVisible? 'assets/images/additional_text_active.png':'assets/images/additional_text_inactive.png' " alt="" (click) = "additionButtonClicked()">
         
       </div>
     </div>
@@ -46,8 +46,8 @@
   <div #map id="map"></div>  
 </div>
 </ion-content>
-<ion-footer style="padding: 10px;">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+<ion-footer style="padding: 10px;" >
+        <button ion-button full style="height: 50px" (click)="startNextScreen()" [disabled] = "isModalVisible?'disabled':'' ">
         <p style="font-size: 20px;" color="secondary">Next</p>
         </button>
 </ion-footer>

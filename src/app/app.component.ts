@@ -15,7 +15,7 @@ import { ServicesPage } from '../pages/services/services';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryMap;
+  rootPage: any = ServicesPage;
 
   pages: Array<{title: string, component: any}>;
 
