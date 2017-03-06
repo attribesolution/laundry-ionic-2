@@ -14,7 +14,7 @@ import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-in
 
 declare var google;
 
-
+  
 @Component({
     selector: 'laundry-map',
     templateUrl: 'map.template.html',
@@ -33,14 +33,18 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
+   available_locations: Array<Object> = []
     isModalVisible : boolean;
     popOver : Popover;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
         this.ionViewLoaded();
-        
+
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
+        this.loadMap();
+        
+        
     }
     listenToSearchInput(){
         let location: string;
@@ -50,14 +54,14 @@ export class LaundryMap implements AfterViewInit{
             .switchMap(() => this.mapService.getJSON(location))
         searchInput$.subscribe(location => console.log(location))
     }
-ionViewLoaded(){
-    this.loadMap();
-  }
+
 
     getMapLocation(location){
-        if(location)
-            this.mapService.getJSON(location)
-                .subscribe(res=> console.log(res))
+        if(location){
+            let location$ = this.mapService.getJSON(location)
+              
+            location$.subscribe(res=> this.available_locations = res)
+        }
     }
 
   loadMap(){

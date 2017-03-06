@@ -13,8 +13,14 @@
 <ion-content class="fill-bg">
   <div class="searchbar">
     <input id="search" #search type="text" class="search-input" placeholder="Enter Location">
+    
     <ion-icon name="search" class="search-icon"></ion-icon>
   </div>
+  <div style="z-index: 100; position: fixed;">
+    <div *ngFor="let avloc of available_locations">
+          <p>{{avloc.formatted_address}}</p>
+    </div>
+  </div >
 
   <div style="width:100%; bottom: 15%; z-index: 100; position: fixed;">
 

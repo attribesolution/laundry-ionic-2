@@ -10,7 +10,9 @@ export class MapService{
     
     getJSON = (place: string) => {
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&key=${this.myApiKey}`
-        return this.http.get(googleLocationApi).map(res => res.json()).filter(e => e.formatted_address);
+        return this.http.get(googleLocationApi)
+            .map(res => JSON.parse(res['_body']).results)
+            // .map(e=> e.formatted_address)
     } 
 
     startNextScreen()
