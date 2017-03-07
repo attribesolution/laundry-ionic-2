@@ -9,63 +9,103 @@
 
 <ion-content padding class="fill-bg">
   <div class="parentDivScreen">
-    <ion-item-divider style="border: 0" class="fill-bg" padding color="secondary">
-      <div class="polygon-heading" color="secondary">
-      <p color="secondary">Date and Time</p>
-      </div>
-    </ion-item-divider>
+    <div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style="
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div id="heading-bg" 
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+                                    
+                                    color="secondary">
+        <p color="secondary">DROP OFF INSTRUCTIONS</p>
+        </div>
+      </ion-item-divider>
+    </div>
     <ion-row style="height: 27.75%;">
-      <ion-col width-40>
+      <ion-col style="padding: 0!important;" width-40>
       <div class="scrollableTime">
         <ion-item-divider 
           color="secondary" 
           *ngFor="let date of dates"
           class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDiv === $date.id, 
-                      'drop-off-details-date-item-divider':  highlightedDiv !== $date.id }"
+          [ngClass]="{ 'current': highlightedDay === date, 
+                      'drop-off-details-date-item-divider':  highlightedDay !== date }"
           #$date
-          (click)="toggleHighlight($date.id)"
+          (click)="toggleHighlight(date, 'day')"
           >
-            <span class="drop-off-details-date-col uppercase">
-              {{ date.toLocaleString(locale, { month: "short" }) }} {{ date.getDate() }}
+            <span class="drop-off-details-date-col">
+              {{ date.toLocaleString(locale, { month: "short" }) | uppercase  }} {{ date.getDate() }}
               <sup *ngIf="date.getDate() == 1">ST</sup>
               <sup *ngIf="date.getDate() == 2">ND</sup>
               <sup *ngIf="date.getDate() == 3">RD</sup>
               <sup *ngIf="date.getDate() >= 4">TH</sup>
-            <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) }}</span>
+            <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) | uppercase }}</span>
             </span>
         </ion-item-divider>
       </div>
     </ion-col>
 
-     <ion-col width-30>
-      <div class="scrollableTime2">
+     <ion-col width-20 style="padding: 0!important;">
+      <div class="scrollableTime">
         <ion-item-divider 
           color="secondary" 
           *ngFor="let hour of hours"
           class="drop-off-details-date-item-divider"
-                                        
+          style="text-align: center!important;"                                        
+          [ngClass]="{ 'current': highlightedHour === hour, 
+                      'drop-off-details-date-item-divider':  highlightedHour !== hour }"
+          #$hour
+          (click)="toggleHighlight(hour, 'hour')"
           >
-            <span style="text-align: middle" class="drop-off-details-date-col uppercase">
-              {{ hour }}
+            <span class="drop-off-details-date-col">
+              {{ hour | number : '2.0-0' }}
             </span> 
         </ion-item-divider>
       </div>
     </ion-col>
 
-    <ion-col width-30>
+    <ion-col width-20 style="padding: 0!important;">
       <div class="scrollableTime">
         <ion-item-divider 
           color="secondary" 
           *ngFor="let minute of minutes"
           class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDiv === $date.id, 
-                      'drop-off-details-date-item-divider':  highlightedDiv !== $date.id }"
-          #$date
-          (click)="toggleHighlight($date.id)"
+          style="text-align: center!important;"
+          [ngClass]="{ 'current': highlightedMinute === minute, 
+                      'drop-off-details-date-item-divider':  highlightedMinute !== minute }"
+          #$minute
+          (click)="toggleHighlight(minute, 'minute')"
           >
-            <span class="drop-off-details-date-col uppercase">
-              {{ minute }}
+            <span class="drop-off-details-date-col">
+              {{ minute | number : '2.0-0' }}
+            </span>
+        </ion-item-divider>
+      </div>
+    </ion-col>
+
+     <ion-col width-20 style="padding: 0!important;">
+      <div style="height: 100%; line-height: 50%;" class="scrollableTime">
+        <ion-item-divider 
+          color="secondary" 
+          *ngFor="let value of amPm"
+          class="drop-off-details-date-item-divider"
+          [ngClass]="{ 'current': highlightedAmPm === value, 
+                      'drop-off-details-date-item-divider':  highlightedAmPm !== value }"
+          #$amPm
+          (click)="toggleHighlight(value, 'amPm')"
+          style="text-align: center!important;"
+          >
+            <span class="drop-off-details-date-col">
+              {{ value }}
             </span>
         </ion-item-divider>
       </div>
@@ -73,71 +113,42 @@
 
     
     </ion-row>
-    
-      <ion-item-divider class="fill-bg">
+    <div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style="
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div id="heading-bg" 
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+                                    
+                                    color="secondary">
+        <p color="secondary">DROP OFF INSTRUCTIONS</p>
+        </div>
+      </ion-item-divider>
+      <ion-item-divider class="myBg">
+        <div class="ParentDiv1">
+          <textarea name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
+        </div>
+      </ion-item-divider>
+    </div>
+      <!--<ion-item-divider class="fill-bg">
         <div class="ParentDiv">
           <div>
             <h2 class="careH2" color="secondary">Laundered Shirts</h2>
             <img src="./assets/images/heading_bg.png" alt="Care Heading" class="careHeadingImg">
-            
           </div>  
           <textarea name="launderedShirts" id="launderedShirtsTextArea" cols="30" rows="6" placeholder="Enter care instructions"></textarea>
         </div>
-        
-      </ion-item-divider>
-    </div>
-    <!--<ion-item-divider color="secondary" style="border-top: 0px; border-bottom: 0px; flex-wrap: wrap;">
-      Item divider2
-    </ion-item-divider>-->
-  <!--</ion-list>
-  <ion-list class="fill-bg" color="secondary" style="border-bottom: 0px" >
-      <ion-item-divider style="border-top: 0px; border-bottom: 0px; flex-wrap: wrap;" color="secondary" *ngFor="let item of items" class="fill-bg">
-        <ion-col class="fill-bg" style="background-color: transparent" item-left width-30>
-        <ion-icon [name]="item.icon" item-left></ion-icon>
-          Title
-        </ion-col>
-
-        <ion-col class="fill-bg" style="margin: 0px; padding: 0px; text-align: center" width-10 item-left>
-        <img src="assets/images/inc_icon.png" style="width : 75% ; height : 75% " (click)="incrementQty(item)" >
-        </ion-col>
-        <ion-col style="text-align: center; max-width: 2em; padding:0px ; margin: 0px" item-left>
-        {{item.qty}}
-        </ion-col>
-        <ion-col style="margin: 0px; padding: 0px; text-align: center" width-10 item-left>
-        <img src="assets/images/dec_icon.png" style="width : 75% ; height : 75% " (click)="decrementQty(item)" >
-      </ion-col>
-
-        <ion-col class="fill-bg" style="border-bottom: 0px" item-right width-10>
-          <button small ion-button [color] = "item.wash?'primary':'dark'" id="wash" (click)="wash(item)">W</button>
-        </ion-col>
-          <ion-col class="fill-bg" style="margin-left:10px" (click)="dry(item)" item-right width-10>
-          <button small ion-button [color] = "item.dry?'primary':'dark'" id="Dry">D</button>
-        </ion-col>
-
-        <ion-col  class="fill-bg" style="min-width: 3em; text-align:center; margin-left: 10px" item-right width-10>
-          {{item.total}}
-        </ion-col>
-        
-      </ion-item-divider>
-    </ion-list>-->
-  <!--<div class="ParentDiv">
-    <div>
-      <h2 class="careH2" color="dark">Date and Time</h2>
-      <img src="./assets/images/heading_bg.png" alt="Care Heading" class="careHeadingImg">
-      
-    </div>  
-    <textarea name="launderedShirts" id="launderedShirtsTextArea" cols="30" rows="10" placeholder="Enter care instructions"></textarea>
-  </div>
-  
-  <div class="ParentDiv">
-    <div>
-      <h2 class="dryCleanHeading" color="dark">Dry Cleaning</h2>
-      <img src="./assets/images/heading_bg.png" alt="Care Heading" class="dryCleanImg">
-      
-    </div>
-    <textarea name="launderedShirts" [id]="launderedShirts" cols="30" rows="10" placeholder="Enter care instructions"></textarea>
-  </div>
-  <button class="care-next-button" ion-button block color="primary">NEXT</button>-->
+      </ion-item-divider>-->
+    </div>   
 </ion-content>
 <ion-footer style="padding: 10px;">
         <button ion-button full style="height: 50px" (click)="startNextScreen()">

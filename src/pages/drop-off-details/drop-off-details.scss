@@ -8,33 +8,27 @@ drop-off-details{
     .parentDivScreen{
         height: 100%;
         width: 100%;
-        overflow: hidden;
+        
     }
     .scrollableTime{
         height: 100%;
         overflow-y: scroll;
-        padding-right: 17px;
         border-right: 2px solid white; 
-        font-size: 90%;  
-    }
-    .scrollableTime2{
-        height: 100%;
-        overflow-y: scroll;
-        padding-right: 15px; 
-        border-right: 2px solid white; 
-        font-size: 5px!important;
+        font-size: 80px;  
     }
     .scrollableTime::-webkit-scrollbar {
         width: 0px;  /* remove scrollbar space */
-        /*background: transparent;  /* optional: just make scrollbar invisible */
+        background: transparent;  /* optional: just make scrollbar invisible */
     }   
     .drop-off-details-date-item-divider{
         border-bottom: 2px solid white;
+        
     }
     .drop-off-details-date-col{
         height: 100px;
         width: 100%;
         overflow: hidden;
+        font-size: 10px; 
     }
     .current{
         margin-top: -4px;
@@ -49,15 +43,28 @@ drop-off-details{
         /*background: transparent;  /* optional: just make scrollbar invisible */
     /*}*/
     .weekday{
-        text-transform: uppercase;
-        font-size: 10px;
+        
+        font-size: 7px;
         float: right;
         padding-top: 5%;
         
     }
+    .parentDiv1{
+        text-align: center;
+    }
+    textarea{
+        background: color($colors, secondary)!important;
+        display: block;
+        margin: 0 auto;
+        border: 2px solid #7D7979;
+        height: 25vh;
+        width: 100%;
+        font-size: 125%;
+        padding: 5%;
+    }   
 }
 
-ion-content#careIns{
+/*ion-content#careIns{
     background: color($colors, secondary)!important;
     color: color($colors, secondary)!important;
 }
@@ -65,394 +72,4 @@ ion-content#careIns{
 .care-next-button{
     margin-top: -10%;
 }
-
-/* ----------- Galaxy S5 ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-
-}
-
-/* Portrait */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 360px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: portrait) {
-    .careHeadingImg{
-        position: absolute;
-        z-index: 100;
-        top: 12.25%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-    }
-
-    .careH2{
-        position: absolute;
-        z-index: 101;
-        top: 14.5%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        font-size: 200%;
-    }
-    .dryCleanHeading{
-        position: absolute;
-        z-index: 106;
-        bottom: 13.5%; 
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-        font-size: 200%;
-
-    }
-    .dryCleanImg{
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        left: 0;
-        right: 0;
-        bottom: 14.4%; 
-        z-index: 105;   
-    }
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: landscape) {
-
-}
-
-/* ----------- iPhone 5 and 5S ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-
-}
-
-/* Portrait */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: portrait) {
-      
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: landscape) {
-    
-}
-
-
-.ParentDiv{
-        text-align: center;
-        padding: 8% 3%;
-        margin: 10% 1%;
-}
-.ParentDiv textarea{
-    background: color($colors, secondary)!important;
-    border: 0px;
-    resize: none;
-    font-size: 150%;
-    border: 2px solid #7D7979;    
-    width: 100%;
-    padding: 12% 4%;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-            box-sizing: border-box;         /* Opera/IE 8+ */
-            
-}
-
-/* ----------- iPhone 6 ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
-
-}
-/* Portrait */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: portrait) { 
-
-    .careHeadingImg{
-        position: absolute;
-        z-index: 100;
-        top: 12.75%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-    }
-
-    .careH2{
-        position: absolute;
-        z-index: 101;
-        top: 15.5%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        font-size: 200%;
-    }
-    .dryCleanHeading{
-        position: absolute;
-        z-index: 106;
-        bottom: 15.5%; 
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-        font-size: 200%;
-
-    }
-    .dryCleanImg{
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        left: 0;
-        right: 0;
-        bottom: 16.3%; 
-        z-index: 105;   
-    }
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: landscape) { 
-      .ParentDiv{
-        text-align: center;
-        padding: 8% 3%;
-        margin: 10% 1%;
-    }
-
-    .ParentDiv textarea{
-        background: color($colors, secondary)!important;
-        border: 0px;
-        resize: none;
-        font-size: 200%;
-        border: 2px solid #7D7979;    
-        width: 100%;
-        padding: 8% 4%;
-        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-           -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-                box-sizing: border-box;         /* Opera/IE 8+ */
-                
-    }
-
-      .careHeadingImg{
-        position: absolute;
-        z-index: 100;
-        top: 28.5%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-    }
-
-    .careH2{
-        position: absolute;
-        z-index: 101;
-        top: 33%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        font-size: 300%;
-    }
-    .dryCleanHeading{
-        position: absolute;
-        z-index: 106;
-        bottom: -130%; 
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-        font-size: 300%;
-
-    }
-    .dryCleanImg{
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        left: 0;
-        right: 0;
-        bottom: -130.5%; 
-        z-index: 105;   
-    }
-}
-
-/* ----------- iPhone 6+ ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 3) { 
-
-}
-
-/* Portrait */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: portrait) { 
-    .careHeadingImg{
-        position: absolute;
-        z-index: 100;
-        top: 13.25%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-    }
-
-    .careH2{
-        position: absolute;
-        z-index: 101;
-        top: 16%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        font-size: 300%;
-    }
-    .dryCleanHeading{
-        position: absolute;
-        z-index: 106;
-        bottom: 20.5%; 
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-        font-size: 200%;
-
-    }
-    .dryCleanImg{
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        left: 0;
-        right: 0;
-        bottom: 21.1%; 
-        z-index: 105;   
-    }
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 3)
-  and (orientation: landscape) { 
-    
-}
-
-/* ----------- Nexus 5X ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 412px) 
-  and (max-device-width: 412px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-
-}
-
-/* Portrait */
-@media only screen 
-  and (min-device-width: 410px) 
-  and (max-device-width: 414px)
-  and (min-device-height: 731px)
-  and (max-device-height: 733px)
-  and (orientation: portrait) {
-    .careHeadingImg{
-        position: absolute;
-        z-index: 100;
-        top: 13.2%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-    }
-
-    .careH2{
-        position: absolute;
-        z-index: 101;
-        top: 15.5%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        font-size: 200%;
-    }
-    .dryCleanHeading{
-        position: absolute;
-        z-index: 106;
-        bottom: 20%; 
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        width: 80%;
-        font-size: 200%;
-
-    }
-    .dryCleanImg{
-        position: absolute;
-        margin-left: auto;
-        margin-right: auto;
-        width: 80%;
-        left: 0;
-        right: 0;
-        bottom: 20.5%; 
-        z-index: 105;   
-    }
-}
-
-/* Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2)
-  and (orientation: landscape) {
-
-}
+*/
