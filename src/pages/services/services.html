@@ -19,10 +19,10 @@
 <ion-content class="fill-bg">
   <ion-grid>
     <ion-item-divider class="fill-bg" style="border-bottom: 1px solid #323232"></ion-item-divider>
-    <ion-row *ngFor="let button of buttons">
-      <ion-col *ngFor="let item of button">
-        <div color="secondary" [ngClass]="setClass(button.indexOf(item))">
-          <p color="secondary" [style.color]="[setFontColor(button.indexOf(item))]">{{ item }}</p>
+    <ion-row *ngFor="let button of buttons; let firstrow = first; let lastrow = last" >
+      <ion-col *ngFor="let item of button; let firstcol = first; let lastcol = last">
+        <div color="secondary"  [ngClass]="item.selected?'services-page-selected':'services-page-unselected' " (click) = "imageClicked( item ,firstrow, firstcol, lastrow,lastcol,buttons.indexOf(button))">
+          <p color="secondary" [style.color]="item.selected?'#000':'#59bd84'">{{ item.title }}</p>
         </div>
       </ion-col>
     </ion-row>

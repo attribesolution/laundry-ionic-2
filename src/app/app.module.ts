@@ -9,8 +9,12 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
+<<<<<<< HEAD
 import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
 
+=======
+import {AdditionalInfoModal} from '../pages/modals/additional-info-modal/additional-info-modal.component';
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
 @NgModule({
   declarations: [
     MyApp,
@@ -20,7 +24,11 @@ import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
+<<<<<<< HEAD
     AdditionalNote
+=======
+    AdditionalInfoModal
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -37,7 +45,11 @@ import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
+<<<<<<< HEAD
     AdditionalNote
+=======
+    AdditionalInfoModal
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

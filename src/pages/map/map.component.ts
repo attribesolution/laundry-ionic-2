@@ -1,5 +1,9 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+<<<<<<< HEAD
 import { NavController , PopoverController } from 'ionic-angular';
+=======
+import { NavController, NavParams,PopoverController,Popover } from 'ionic-angular';
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
 import {Geolocation} from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { MapService } from '../pages/map/map.service';
@@ -10,11 +14,15 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import {LaundryItems} from '../laundryitems/laundryitems';
+<<<<<<< HEAD
 import {AdditionalNote} from '../modals/additional-note/additional-note';
+=======
+import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-info-modal.component';
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
 
 declare var google;
 
-
+  
 @Component({
     selector: 'laundry-map',
     templateUrl: 'map.template.html',
@@ -33,12 +41,22 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
+<<<<<<< HEAD
     constructor(private navCtrl: NavController, private mapService: MapService, private popoverCtrl:PopoverController){
+=======
+   available_locations: Array<Object> = []
+    isModalVisible : boolean;
+    popOver : Popover;
+    constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
+>>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
         this.ionViewLoaded();
-        
+
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
+        this.loadMap();
+        
+        
     }
     listenToSearchInput(){
         let location: string;
@@ -48,22 +66,19 @@ export class LaundryMap implements AfterViewInit{
             .switchMap(() => this.mapService.getJSON(location))
         searchInput$.subscribe(location => console.log(location))
     }
-ionViewLoaded(){
-    console.log("ionViewLoaded Call hogya");
-    this.loadMap();
-  }
+
 
     getMapLocation(location){
-        if(location)
-            this.mapService.getJSON(location)
-                .subscribe(res=> console.log(res))
+        if(location){
+            let location$ = this.mapService.getJSON(location)
+              
+            location$.subscribe(res=> this.available_locations = res)
+        }
     }
 
   loadMap(){
 
-    console.log("Call hogya");
   	Geolocation.getCurrentPosition().then((position) => {
-    console.log("promise Call hogya");
 	    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 	    let mapOptions = {
@@ -214,14 +229,13 @@ ionViewLoaded(){
     console.log("savedButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
-
-  startNextScreen()
-  {
-    /*Todo add validation before move*/
-    this.navCtrl.push(LaundryItems);
-    console.log("Next clicked!");
-  }
-
+  
+    startNextScreen()
+    {
+      this.navCtrl.push(LaundryItems);
+      /*Todo start next screen*/
+      console.log("Next clicked!");
+    }
 }
 
   
