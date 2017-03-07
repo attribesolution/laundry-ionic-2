@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController , PopoverController } from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { MapService } from '../pages/map/map.service';
@@ -10,6 +10,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import {LaundryItems} from '../laundryitems/laundryitems';
+import {AdditionalNote} from '../modals/additional-note/additional-note';
 
 declare var google;
 
@@ -32,7 +33,7 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
-    constructor(private navCtrl: NavController, private mapService: MapService){
+    constructor(private navCtrl: NavController, private mapService: MapService, private popoverCtrl:PopoverController){
         this.ionViewLoaded();
         
     }
@@ -199,17 +200,28 @@ ionViewLoaded(){
     this.save=this.save?false:true;
     console.log("saveButtonClicked");
   }
-  additionButtonClicked(){ 
-    this.addition=this.addition?false:true;
-    console.log("savedButtonClicked");
+
+  openAdditionalNoteDialog(myEvent)
+  {
+    let popover = this.popoverCtrl.create(AdditionalNote);
+    popover.present({
+      ev: myEvent
+    });
   }
 
-    startNextScreen()
-    {
-      this.navCtrl.push(LaundryItems);
-      /*Todo start next screen*/
-      console.log("Next clicked!");
-    }
+  additionButtonClicked(myEvent){ 
+    this.addition=this.addition?false:true;
+    console.log("savedButtonClicked");
+    this.openAdditionalNoteDialog(myEvent);
+  }
+
+  startNextScreen()
+  {
+    /*Todo add validation before move*/
+    this.navCtrl.push(LaundryItems);
+    console.log("Next clicked!");
+  }
+
 }
 
   

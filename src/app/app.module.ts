@@ -9,6 +9,7 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
+import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LaundryItems } from '../pages/laundryitems/laundryitems';
     CareInstructions,
     DropOffDetails,
     ServicesPage,
-    LaundryItems
+    LaundryItems,
+    AdditionalNote
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -34,7 +36,8 @@ import { LaundryItems } from '../pages/laundryitems/laundryitems';
     CareInstructions,
     DropOffDetails,
     ServicesPage,
-    LaundryItems
+    LaundryItems,
+    AdditionalNote
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

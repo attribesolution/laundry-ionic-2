@@ -11,11 +11,5 @@ export class MapService{
     getJSON = (place: string) => {
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&key=${this.myApiKey}`
         return this.http.get(googleLocationApi).map(res => res.json()).filter(e => e.formatted_address);
-    } 
-
-    startNextScreen()
-    {
-      /*Todo start next screen*/
-      console.log("Next clicked!");
     }
 }
