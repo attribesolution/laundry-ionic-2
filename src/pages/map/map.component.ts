@@ -1,9 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-<<<<<<< HEAD
-import { NavController , PopoverController } from 'ionic-angular';
-=======
 import { NavController, NavParams,PopoverController,Popover } from 'ionic-angular';
->>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
 import {Geolocation} from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 // import { MapService } from '../pages/map/map.service';
@@ -14,12 +10,7 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import {LaundryItems} from '../laundryitems/laundryitems';
-<<<<<<< HEAD
 import {AdditionalNote} from '../modals/additional-note/additional-note';
-=======
-import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-info-modal.component';
->>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
-
 declare var google;
 
   
@@ -41,16 +32,10 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
-<<<<<<< HEAD
-    constructor(private navCtrl: NavController, private mapService: MapService, private popoverCtrl:PopoverController){
-=======
    available_locations: Array<Object> = []
     isModalVisible : boolean;
     popOver : Popover;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
->>>>>>> e6fbbbceca4cac60af6c5745da2a129ef6f492cd
-        this.ionViewLoaded();
-
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
