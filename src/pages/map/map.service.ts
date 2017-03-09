@@ -9,8 +9,8 @@ export class MapService{
     myApiKey = 'AIzaSyBifb4pycCZZCs1OqewdQ-d698bylvYjkw'
     
     getJSON = (place: string) => {
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&key=${this.myApiKey}`
-
+        let stringQuery = place +  " in UAE";
+        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
 
         return this.http.get(googleLocationApi)
