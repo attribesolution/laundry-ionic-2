@@ -9,7 +9,10 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
+import {AdditionalInfoModal} from '../pages/modals/additional-info-modal/additional-info-modal.component';
+import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
 import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -19,6 +22,8 @@ import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
+    AdditionalInfoModal,
+    PickUpDetails,
     AdditionalNote
   ],
   imports: [
@@ -36,6 +41,8 @@ import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
+    AdditionalInfoModal,
+    PickUpDetails,
     AdditionalNote
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
