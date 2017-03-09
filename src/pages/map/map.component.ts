@@ -229,7 +229,8 @@ export class LaundryMap implements AfterViewInit{
   }
 
   locationClicked(location){
-    console.log("%cYou have clicked on: ", location);
+    console.log("You have clicked on: ", location);
+    localStorage.setItem("Location Selected", location);
   }
   
     startNextScreen()
