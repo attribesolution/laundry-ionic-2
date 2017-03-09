@@ -222,6 +222,10 @@ export class LaundryMap implements AfterViewInit{
     console.log("savedButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
+
+  locationClicked(location){
+    console.log("%cYou have clicked on: ", location);
+  }
   
     startNextScreen()
     {
