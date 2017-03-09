@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
 import {LaundryItems} from '../laundryitems/laundryitems';
 import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-info-modal.component';
 
@@ -37,22 +38,27 @@ export class LaundryMap implements AfterViewInit{
     isModalVisible : boolean;
     popOver : Popover;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
-        this.ionViewLoaded();
+        // this.ionViewLoaded();
 
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
         this.loadMap();
+        this.getMapLocation(location);
         
         
     }
     listenToSearchInput(){
         let location: string;
+        console.log('location1:',location)
         let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
             .map(e=> location = e['srcElement'].value.trim())
             .distinctUntilChanged()
             .switchMap(() => this.mapService.getJSON(location))
-        searchInput$.subscribe(location => console.log(location))
+        searchInput$.subscribe(location => {
+          this.available_locations = location;
+          console.log(this.available_locations);
+        })
     }
 
 
@@ -60,7 +66,8 @@ export class LaundryMap implements AfterViewInit{
         if(location){
             let location$ = this.mapService.getJSON(location)
               
-            location$.subscribe(res=> this.available_locations = res)
+            location$.subscribe(res=> console.log)
+            
         }
     }
 
