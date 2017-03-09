@@ -36,6 +36,7 @@ export class LaundryMap implements AfterViewInit{
    available_locations: Array<Object> = []
     isModalVisible : boolean;
     popOver : Popover;
+    postion : any;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
 
     }
@@ -72,10 +73,10 @@ export class LaundryMap implements AfterViewInit{
   loadMap(){
 
   	Geolocation.getCurrentPosition().then((position) => {
-	    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 	    let mapOptions = {
-	      center: latLng,
+	      center: this.postion,
 	      zoom: 15,
         styles: [
             {elementType: 'geometry', stylers: [{color: '#15151b'}]},
@@ -174,11 +175,15 @@ export class LaundryMap implements AfterViewInit{
   }
 
   addMarker(){
-
+     
 		let marker = new google.maps.Marker({
 			map: this.map,
 			animation: google.maps.Animation.drop,
-			position: this.map.getCenter()
+			// position: this.map.getCenter(),
+      draggable:false,
+      optimized:false, // <-- required for animated gif
+      position: this.postion,
+      icon: "./assets/gifs/ripple_marker.gif"
 		});
 
 		let content = "<h4>Information!</h4>";          
