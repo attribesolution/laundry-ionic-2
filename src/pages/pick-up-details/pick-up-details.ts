@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 
-import {OrderPlaced} from '../order-placed/order-placed';
+import { DropOffDetails } from '../drop-off-details/drop-off-details';
 
 @Component ({
-    selector: 'drop-off-details',
-    templateUrl: 'drop-off-details.html'
+    selector: 'pick-up-details',
+    templateUrl: 'pick-up-details.html'
 })
 
-export class DropOffDetails{
+export class PickUpDetails{
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
@@ -60,7 +60,7 @@ export class DropOffDetails{
             this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
     }
      startNextScreen(){
-            this.navCtrl.push(OrderPlaced);
+            this.navCtrl.push(DropOffDetails);
             console.log("Next clicked!");
             let newDate = this.selectedDate.day.getFullYear() + ' ' + 
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { DropOffDetails} from '../drop-off-details/drop-off-details';
+import { PickUpDetails } from '../pick-up-details/pick-up-details';
 
 @Component ({
     selector: 'care-instructions',
@@ -13,7 +13,7 @@ export class CareInstructions{
 
 startNextScreen()
   {
-      this.navCtrl.push(DropOffDetails);
+      this.navCtrl.push(PickUpDetails);
       console.log("Next clicked!");
   }
 }

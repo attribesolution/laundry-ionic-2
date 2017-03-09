@@ -9,9 +9,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
 import {LaundryItems} from '../laundryitems/laundryitems';
-import {AdditionalInfoModal} from '../modals/additional-info-modal/additional-info-modal.component';
-
+import {AdditionalNote} from '../modals/additional-note/additional-note';
 declare var google;
 
   
@@ -38,22 +38,26 @@ export class LaundryMap implements AfterViewInit{
     popOver : Popover;
     postion : any;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
-        
 
     }
     ngAfterViewInit(){
         this.listenToSearchInput();
         this.loadMap();
+        this.getMapLocation(location);
         
         
     }
     listenToSearchInput(){
         let location: string;
+        console.log('location1:',location)
         let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
             .map(e=> location = e['srcElement'].value.trim())
             .distinctUntilChanged()
             .switchMap(() => this.mapService.getJSON(location))
-        searchInput$.subscribe(location => console.log(location))
+        searchInput$.subscribe(location => {
+          this.available_locations = location;
+          console.log(this.available_locations);
+        })
     }
 
 
@@ -61,7 +65,8 @@ export class LaundryMap implements AfterViewInit{
         if(location){
             let location$ = this.mapService.getJSON(location)
               
-            location$.subscribe(res=> this.available_locations = res)
+            location$.subscribe(res=> console.log)
+            
         }
     }
 
@@ -208,30 +213,21 @@ export class LaundryMap implements AfterViewInit{
     this.save=this.save?false:true;
     console.log("saveButtonClicked");
   }
-  additionButtonClicked(){ 
-    //this.isModalVisible=this.isModalVisible?false:true;
-    console.log(this.addition);
-    if(!this.isModalVisible)
-      this.showAdditionalInfoModal();
-    // else
-    //   this.popOver.dismiss();
-  }
-  showAdditionalInfoModal(){  
 
-    this.popOver = this.popoverCtrl.create(AdditionalInfoModal,{},{enableBackdropDismiss:true, cssClass:'additional-info-modal-styling'});
-    this.popOver.present();
-    let self = this;
-    this.popOver.onDidDismiss(function(){
-     self.setVisibleFlag(false);
+  openAdditionalNoteDialog(myEvent)
+  {
+    let popover = this.popoverCtrl.create(AdditionalNote);
+    popover.present({
+      ev: myEvent
     });
-    this.setVisibleFlag(true);
-    // let infoModal = this.modalCtrl.create(AdditionalInfoModal,{showBackdrop:true});
-    // infoModal.isOverlay = true;
-    // this.navCtrl.push(infoModal);
   }
-setVisibleFlag(flag){
-  this.isModalVisible = flag;
-}
+
+  additionButtonClicked(myEvent){ 
+    this.addition=this.addition?false:true;
+    console.log("savedButtonClicked");
+    this.openAdditionalNoteDialog(myEvent);
+  }
+  
     startNextScreen()
     {
       this.navCtrl.push(LaundryItems);

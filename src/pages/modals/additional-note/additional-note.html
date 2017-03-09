@@ -1,0 +1,26 @@
+<ion-content style="background-color: transparent">
+       <ion-item-divider  class="fill-bg">
+    <div id="heading-bg" 
+    style="padding: 10px; 
+           background: url('./assets/images/heading_bg.png');  
+           text-align: center;
+           background-size: 100%; 
+           background-repeat: no-repeat;
+           background-position: center;
+           border: 0px;
+           width: 100%; 
+           height: 100%;"
+           color="secondary">
+    <p color="secondary">ADDITIONAL NOTE</p>
+    </div>
+  </ion-item-divider>
+   <ion-input class="fill-bg" placeholder="Add notes..."></ion-input>
+   <div class="fill-bg">
+   <button style="float: left" ion-button item-left>
+       <ion-icon name="add" (click)="close()"></ion-icon>
+   </button>
+   <button style="float: right" ion-button item-right icon-only>
+       <ion-icon name="star" (click)="done()"></ion-icon>
+   </button>
+   </div>
+</ion-content>

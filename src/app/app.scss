@@ -31,9 +31,9 @@ ion-header {
    background: url('./../assets/images/heading_bg.png'); 
    background-size: 100%; background-repeat: no-repeat;
    background-position: center; 
-   width: 100%;  
-   height: 100%; 
-   padding: 10px
+   padding-top: 5px; 
+   border-bottom: 0px;
+   padding: 10px;
  }
 
 .footer-padding { padding: 1% 3%; }

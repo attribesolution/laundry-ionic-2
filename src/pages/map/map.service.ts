@@ -12,14 +12,9 @@ export class MapService{
         let stringQuery = place +  " in UAE";
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
+
         return this.http.get(googleLocationApi)
             .map(res => JSON.parse(res['_body']).results)
             // .map(e=> e.formatted_address)
     } 
-
-    startNextScreen()
-    {
-      /*Todo start next screen*/
-      console.log("Next clicked!");
-    }
 }
