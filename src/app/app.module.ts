@@ -11,6 +11,8 @@ import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
 import {AdditionalInfoModal} from '../pages/modals/additional-info-modal/additional-info-modal.component';
 import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
+import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
+
 @NgModule({
   declarations: [
     MyApp,
@@ -21,7 +23,8 @@ import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
     ServicesPage,
     LaundryItems,
     AdditionalInfoModal,
-    PickUpDetails
+    PickUpDetails,
+    AdditionalNote
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -39,7 +42,8 @@ import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
     ServicesPage,
     LaundryItems,
     AdditionalInfoModal,
-    PickUpDetails
+    PickUpDetails,
+    AdditionalNote
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
