@@ -16,5 +16,13 @@ export class MapService{
         return this.http.get(googleLocationApi)
             .map(res => JSON.parse(res['_body']).results)
             // .map(e=> e.formatted_address)
-    } 
+     } 
+     hitPreGen = (URL:any) => {
+        console.log("Hitting: ", URL);
+
+        return this.http.get(URL)
+            // .map(res => JSON.parse(res['_body']).results);
+    }
+
+    
 }

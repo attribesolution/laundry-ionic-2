@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ServicesPage } from '../services/services';
 import { LaundryItemsService } from './laundryitmes.service';
-import {LaundryItemModel} from '../../models/laundryitem.model';
+import { LaundryItemModel } from '../../models/laundryitem.model';
+import { globalVars } from '../../app/globalvariables';
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',
@@ -14,10 +15,14 @@ export class LaundryItems{
   icons: string[];
   titles: string[];
   items: Array<{title: string, icon: string, qty: number, price: number, total:number, dry:boolean, wash:boolean}>;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
+  data: "";
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, private items_Service: LaundryItemsService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
+    this.data = navParams.get('preGenData');
+    // console.log(this.data);
+    
 
     // Let's populate this page with some filler content for funzies
    /* this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
@@ -52,16 +57,9 @@ export class LaundryItems{
           }
           console.log('final laundry items: ', laundryitems)
         }
-        
-        
-        
+ 
     })
-
-   
-  
-   
-    console.log("laundryitems",laundryitems);
-
+  console.log("laundryitems",laundryitems);
 }
 
 // increment product qty
@@ -98,7 +96,9 @@ export class LaundryItems{
 
  startNextScreen()
   {
-      this.navCtrl.push(ServicesPage);
+      this.navCtrl.push(ServicesPage, {
+        preGenData: this.data
+      });
       console.log("Next clicked!");
   }
 }
