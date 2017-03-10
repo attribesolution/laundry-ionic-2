@@ -4,6 +4,7 @@ import { ServicesPage } from '../services/services';
 import { LaundryItemsService } from './laundryitmes.service';
 import { LaundryItemModel } from '../../models/laundryitem.model';
 import { globalVars } from '../../app/globalvariables';
+import {PreGenModel} from '../../models/preGen.model';
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',
@@ -15,10 +16,9 @@ export class LaundryItems implements OnInit{
   icons: string[];
   titles: string[];
   laundryitems : LaundryItemModel;
-  totalAmount : number;
-  totalQuantity : number;
   responseArray : Array<Object> = [];
-  data: "";
+  data: PreGenModel;
+  params : Array<Object> = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
     this.selectedItem = navParams.get('item');
     this.data = navParams.get('preGenData');
@@ -26,9 +26,7 @@ export class LaundryItems implements OnInit{
 
 
   ngOnInit(){
-     // default values
-    this.totalAmount   = 0;
-    this.totalQuantity = 0;
+
     this.selectedItem = this.navParams.get('item');
     var response$      =  this.items_Service.getItems()
     .subscribe(res => {
@@ -55,9 +53,10 @@ maplaundryitems(data){
     name: element.name,
     icon: element.icon,
     rate: element.rate,
+    count: 0,
+    amount:0,
     toWash:true,
 	  toDry:false
-
     }
     this.responseArray.push(mappedObject);
   });
@@ -65,48 +64,57 @@ maplaundryitems(data){
 }
 // increment product qty
   incrementQty(item,index) {
-    this.totalQuantity++;
+    item.count++;
 
      this.calculateTotalAmount(item);
 
-    console.log("totalQuantity = ",this.totalQuantity , "totalAmount = ",this.totalAmount);
+    console.log("totalQuantity = ",item.count , "totalAmount = ",item.amount);
      
+     if(this.params.indexOf(item) <= -1){
+        this.params.push(item);
+        console.log("params", this.params);
+     }
+      
+
   }
 
   // decrement product qty
   decrementQty(item,index) {
-    if(this.totalQuantity < 1 ){
-      console.log("wash = " , item.rate.wash ,"totalQuantity = ",this.totalQuantity , "totalAmount = ",this.totalAmount);
-      this.totalQuantity = 0
-      this.totalAmount   = 0
-      
+    if(item.count < 1 ){
+      console.log("wash = " , item.rate.wash ,"totalQuantity = ",item.count , "totalAmount = ",item.amount);
+      item.count = 0
+      item.amount   = 0
+
+      if(this.params.indexOf(item) > -1)
+      this.params.splice(this.params.indexOf(item),1);
+
     }else{
-      this.totalQuantity--;
+      item.count--;
       
       this.calculateTotalAmount(item);
    
     }
 
-    console.log("totalAmount after = ",this.totalAmount);
+    console.log("totalAmount after = ",item.amount);
   }
 
 addWashingAmountToTotal(item) : number{
 
-   return item.rate.wash *this.totalQuantity  ;
+   return item.rate.wash *item.count  ;
 }
 addDryCleaningAmountToTotal(item) :number{
 
-  return item.rate.dryclean *this.totalQuantity  ;
+  return item.rate.dryclean *item.count  ;
 }
 calculateTotalAmount(item){
 
  
   if(item.toWash && item.toDry)
-      this.totalAmount =   this.addWashingAmountToTotal(item) +  this.addDryCleaningAmountToTotal(item);
+      item.amount =   this.addWashingAmountToTotal(item) +  this.addDryCleaningAmountToTotal(item);
   else if(item.toDry)
-       this.totalAmount =  this.addDryCleaningAmountToTotal(item);
+       item.amount =  this.addDryCleaningAmountToTotal(item);
   else
-      this.totalAmount =   this.addWashingAmountToTotal(item) ;
+      item.amount =   this.addWashingAmountToTotal(item) ;
 
 }
   wash(item)
@@ -125,6 +133,35 @@ calculateTotalAmount(item){
 
  startNextScreen()
   {
+    let jsonArray : Array<Object> = []
+    this.params.forEach(element => {
+      
+        jsonArray.push({
+              name: (element as any).name,
+	            rate:(element as any).amount,
+	            count: (element as any).count,
+	            toWash:(element as any).toWash,
+	            toDry:(element as any).toDry
+
+        })
+    });
+    let laundryData: {laundryItems : Array<Object>} = {
+      
+      laundryItems : jsonArray
+    };
+
+    console.log("laundry data = ",laundryData);
+    
+     let URL =  globalVars.patchLaundryitemsApiURL("58c2e8c254e476399314de8b");
+    this.items_Service.patchService(URL,laundryData)
+    .subscribe(res => {
+          if(res.status == 200) {
+            let response = JSON.parse(res['_body']) 
+              
+              console.log('final response = ', response)
+            }
+        })
+
       this.navCtrl.push(ServicesPage, {
         preGenData: this.data
       });
