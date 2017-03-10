@@ -7,6 +7,7 @@ interface LaundryItemData {
         wash: number,
         dryclean: number
     }
+
 }
 
 export interface LaundryItemModel{

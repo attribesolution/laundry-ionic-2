@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
+    </button>
+    <ion-title color="primary">Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="fill-bg">
+  <div class="parentDivScreen">
+    <div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style="
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div id="heading-bg" 
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+              color="secondary">
+        <p color="secondary">PROFILE</p>
+        </div>
+      </ion-item-divider>
+    
+    </div>
+
+   <ion-list class="fill-bg" style="padding: 10px">
+       <ion-item class="fill-bg">
+           <ion-label floating color="light">NAME</ion-label>
+           <ion-input type="text" class="item.item-input"></ion-input>
+       </ion-item>
+       <ion-item class="fill-bg">
+           <ion-label floating color="light">PHONE NUMBER</ion-label>
+           <ion-input type="number" class="item.item-input"></ion-input>
+       </ion-item>
+       <ion-item class="fill-bg">
+           <ion-label floating color="light">SECONDARY PHONE NUMBER</ion-label>
+           <ion-input type="text" class="item.item-input"></ion-input>
+       </ion-item>
+       <ion-item class="fill-bg">
+           <ion-label floating color="light">EMAIL ADDRESS</ion-label>
+           <ion-input type="text" class="item.item-input"></ion-input>
+       </ion-item>
+       <ion-item class="fill-bg">
+           <ion-label floating color="light">CURRENT CITY</ion-label>
+           <ion-input type="text" class="item.item-input"></ion-input>
+       </ion-item>
+       <ion-item class="fill-bg">
+           <!--<ion-label floating color="light">DATE OF BIRTH</ion-label>-->
+           <ion-input type="date" placeholder="DATE OF BIRTH" class="item.item-input"></ion-input>
+       </ion-item>
+   </ion-list>
+    
+ </div>   
+</ion-content>
+<ion-footer style="padding: 10px;">
+        <button ion-button full style="height: 50px" (click)="save()">
+        <p style="font-size: 20px;" color="secondary">Save</p>
+        </button>
+</ion-footer>
