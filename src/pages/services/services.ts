@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { CareInstructions } from '../care-instructions/care-instructions';
 import { globalVars } from '../../app/globalvariables'
 import { ServicesPatcher } from './services.service';
+import { PreGenModel } from '../../models/preGen.model';
 /*
   Generated class for the Services page.
 
@@ -17,7 +18,7 @@ import { ServicesPatcher } from './services.service';
 export class ServicesPage {
 
     buttons:any = [[{title:'COLD WASH' , selected:true },{title:'HOT WASH' , selected:false}],[{title:'LOW DRY' , selected:true},{title:'REGULAR DRY' , selected:false}],[{title:'SCENTED' , selected:true},{title:'NO SCENT' , selected:false}],[{title:'SOFTNER' , selected:true},{title:'NO SOFTNER' , selected:false}]];
-    data = "";
+    data: PreGenModel;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public servicesPatcher: ServicesPatcher) {
     this.data = navParams.get('preGenData');
@@ -96,11 +97,22 @@ export class ServicesPage {
           }
         });
       });
+      // console.log(servicesData);
       
-      let URL = globalVars.ServicesApiURL(1);
-      let patchData = () => {
-      console.log(this.servicesPatcher.patchService(URL, servicesData));
-    }
+    //   let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
+    //   let patchData = () => {
+    //   this.servicesPatcher.patchService(URL, servicesData)
+    //     .subscribe(res =>{
+    //       if(res.status == 200) {
+    //           let response = JSON.parse(res['_body'])
+    //           let Data = {
+    //             href: response["href"],
+    //             data: response["data"]
+    //           }
+    //           console.log('Respose', Data); 
+    //         }
+    //     });
+    // }
     
       
       this.navCtrl.push(CareInstructions);
