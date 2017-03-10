@@ -10,10 +10,12 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
-import {LaundryItems} from '../laundryitems/laundryitems';
-import {AdditionalNote} from '../modals/additional-note/additional-note';
+import { LaundryItems } from '../laundryitems/laundryitems';
+import { AdditionalNote } from '../modals/additional-note/additional-note';
 declare var google;
+import { PreGenModel } from "../../models/preGen.model";
 
+import { globalVars } from "../../app/globalvariables";
   
 @Component({
     selector: 'laundry-map',
@@ -33,19 +35,33 @@ export class LaundryMap implements AfterViewInit{
     saved :boolean;
     addition : boolean;
     save : boolean;
-   available_locations: Array<Object> = []
+    available_locations: Array<Object> = []
     isModalVisible : boolean;
     popOver : Popover;
     postion : any;
+    preGenData: PreGenModel;
+    preGenApiURL = globalVars.PreGenApiURL();
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
 
     }
     ngAfterViewInit(){
+        this.createPreGen();
         this.listenToSearchInput();
         this.loadMap();
         this.getMapLocation(location);
-        
-        
+    }
+    createPreGen(){
+        this.mapService.hitPreGen(this.preGenApiURL)
+          .subscribe(res => {
+            if(res.status == 200) {
+              let response = JSON.parse(res['_body'])
+              this.preGenData = {
+                href: response["href"],
+                data: response["data"]
+              }
+              console.log('Respose From PreGen', this.preGenData); 
+            }
+        });
     }
     listenToSearchInput(){
         let location: string;
@@ -227,10 +243,17 @@ export class LaundryMap implements AfterViewInit{
     console.log("savedButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
-  
-    startNextScreen()
-    {
-      this.navCtrl.push(LaundryItems);
+
+  locationClicked(location){
+    console.log("You have clicked on: ", location);
+    localStorage.setItem("Location Selected", location);
+  }
+      
+    startNextScreen(){
+      console.log(this.preGenData);  
+      this.navCtrl.push(LaundryItems, {
+        preGenData: this.preGenData 
+      });
       /*Todo start next screen*/
       console.log("Next clicked!");
     }

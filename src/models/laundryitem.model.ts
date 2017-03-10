@@ -1,4 +1,3 @@
-
 interface LaundryItemData { 
     object_id: string, 
     name: string,

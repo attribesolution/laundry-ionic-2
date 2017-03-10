@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ServicesPage } from '../services/services';
 import { LaundryItemsService } from './laundryitmes.service';
-import {LaundryItemModel} from '../../models/laundryitem.model';
+import { LaundryItemModel } from '../../models/laundryitem.model';
+import { globalVars } from '../../app/globalvariables';
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',
@@ -17,9 +18,12 @@ export class LaundryItems implements OnInit{
   totalAmount : number;
   totalQuantity : number;
   responseArray : Array<Object> = [];
-
+  data: "";
   constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
+    this.selectedItem = navParams.get('item');
+    this.data = navParams.get('preGenData');
 }
+
 
   ngOnInit(){
      // default values
@@ -46,7 +50,8 @@ maplaundryitems(data){
   
   data.forEach(element => {
     
-   let mappedObject =  {object_id: element.object_id, 
+   let mappedObject =  {
+    object_id: element.object_id, 
     name: element.name,
     icon: element.icon,
     rate: element.rate,
@@ -56,6 +61,7 @@ maplaundryitems(data){
     }
     this.responseArray.push(mappedObject);
   });
+
 }
 // increment product qty
   incrementQty(item,index) {
@@ -119,7 +125,9 @@ calculateTotalAmount(item){
 
  startNextScreen()
   {
-      this.navCtrl.push(ServicesPage);
+      this.navCtrl.push(ServicesPage, {
+        preGenData: this.data
+      });
       console.log("Next clicked!");
   }
 }

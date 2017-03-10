@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import {CareInstructions} from '../care-instructions/care-instructions';
-
+import { CareInstructions } from '../care-instructions/care-instructions';
+import { globalVars } from '../../app/globalvariables'
+import { ServicesPatcher } from './services.service';
 /*
   Generated class for the Services page.
 
@@ -10,13 +11,19 @@ import {CareInstructions} from '../care-instructions/care-instructions';
 */
 @Component({
   selector: 'page-services',
-  templateUrl: 'services.html'
+  templateUrl: 'services.html',
+  providers: [ServicesPatcher]
 })
 export class ServicesPage {
 
     buttons:any = [[{title:'COLD WASH' , selected:true },{title:'HOT WASH' , selected:false}],[{title:'LOW DRY' , selected:true},{title:'REGULAR DRY' , selected:false}],[{title:'SCENTED' , selected:true},{title:'NO SCENT' , selected:false}],[{title:'SOFTNER' , selected:true},{title:'NO SOFTNER' , selected:false}]];
+    data = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public servicesPatcher: ServicesPatcher) {
+    this.data = navParams.get('preGenData');
+    console.log(this.data);
+    
+  }
   
 
 
@@ -79,8 +86,23 @@ export class ServicesPage {
     return index ? "#59bd84": "#000";
   }
 
-  startNextScreen()
-  {
+  
+  startNextScreen(){
+      let servicesData: Array<string> = [];
+      this.buttons.forEach(button => {
+        button.forEach( b => {
+          if(b.selected == true){
+            servicesData.push(b.title);
+          }
+        });
+      });
+      
+      let URL = globalVars.ServicesApiURL(1);
+      let patchData = () => {
+      console.log(this.servicesPatcher.patchService(URL, servicesData));
+    }
+    
+      
       this.navCtrl.push(CareInstructions);
       console.log("Next clicked!");
   }
