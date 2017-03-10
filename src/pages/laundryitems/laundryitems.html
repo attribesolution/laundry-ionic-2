@@ -31,20 +31,20 @@
     </div>
   </ion-item-divider>
 </div>
-  <div class="list">
+  <div *ngIf="responseArray" class="list" >
     <ion-list class="fill-bg" 
               color="secondary"
               style="border-bottom: 0px" >
       <ion-item-divider id="item-list"
                         color="secondary"
-                        *ngFor="let item of items"
+                        *ngFor="let item of responseArray"
                         class="fill-bg">
         <ion-col class="fill-bg"
                  style="background-color: transparent"
                  item-left
                  width-30>
         <ion-icon [name]="item.icon" item-left></ion-icon>
-        {{item.title}}
+        {{item.name}}
         </ion-col>
 
         <ion-col class="fill-bg item-col" 
@@ -52,19 +52,19 @@
                  item-left>
         <img src="assets/images/inc_icon.png" 
              class="button-size" 
-             (click)="incrementQty(item)" >
+             (click)="incrementQty(item,laundryitems.data.indexOf(item))" >
         </ion-col>
         <ion-col class="item-col" 
                  style="max-width: 2em;" 
                  item-left>
-        {{item.qty}}
+        {{item.count}}
         </ion-col>
         <ion-col class="item-col" 
                  width-10 
                  item-left>
         <img src="assets/images/dec_icon.png" 
              class="button-size" 
-             (click)="decrementQty(item)" >
+             (click)="decrementQty(item,laundryitems.data.indexOf(item))" >
       </ion-col>
 
         <ion-col class="fill-bg" 
@@ -73,7 +73,7 @@
                  width-10>
           <button small 
                   ion-button 
-                  [color] = "item.wash?'primary':'header'" 
+                  [color] = "item.toWash?'primary':'header'" 
                   id="wash" 
                   (click)="wash(item)">W</button>
         </ion-col>
@@ -83,7 +83,7 @@
                    item-right width-10>
           <button small 
                   ion-button 
-                  [color] = "item.dry?'primary':'header'" 
+                  [color] = "item.toDry?'primary':'header'" 
                   id="Dry">D</button>
         </ion-col>
 
@@ -91,7 +91,7 @@
                   style="min-width: 3em; text-align:center; margin-left: 10px" 
                   item-right 
                   width-20>
-          {{item.total}}
+          {{item.amount}}
         </ion-col>
         
       </ion-item-divider>
