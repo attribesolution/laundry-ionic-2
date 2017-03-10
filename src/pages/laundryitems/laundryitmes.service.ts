@@ -10,9 +10,15 @@ export class LaundryItemsService{
     
     
     getItems = () => {
-        console.log(globalVars.LaundryitemsApiURL);
-        let URL = (globalVars.LaundryitemsApiURL);
-          return this.http.get(globalVars.BaseURL + globalVars.LaundryitemsURL);
+         let URL = globalVars.getLaundryitemsApiURL();
+        console.log(URL);
+       // let URL = (globalVars.LaundryitemsApiURL());
+          return this.http.get(URL);
             // .map(e=> e.formatted_address)
     } 
+
+    patchService = (URL: string, data, options?) => {
+            return this.http.patch(URL, data, options);
+        }
+        
 }
