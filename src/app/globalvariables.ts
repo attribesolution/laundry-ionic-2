@@ -1,5 +1,5 @@
 export const globalVars =  {
-    BaseURL: "http://192.168.1.104:3000",
+    BaseURL: "http://localhost:3000",        //192.168.1.104
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
