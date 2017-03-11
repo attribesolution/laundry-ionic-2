@@ -112,7 +112,8 @@ export class ServicesPage {
               console.log('Respose', Data); 
             }
         });
-    }
+      }
+      
     
       patchData(URL,servicesData)
       this.navCtrl.push(CareInstructions);

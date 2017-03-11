@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { DropOffDetails } from '../drop-off-details/drop-off-details';
+
+import { globalVars } from '../../app/globalvariables';
+
+import { PickupService } from './pick-up.service'
 
 @Component ({
     selector: 'pick-up-details',
@@ -10,6 +14,7 @@ import { DropOffDetails } from '../drop-off-details/drop-off-details';
 })
 
 export class PickUpDetails{
+     @ViewChild('textarea') textarea: ElementRef
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
@@ -27,17 +32,22 @@ export class PickUpDetails{
         minute: 0,
         amPm: 'AM'
      };
-
+    loc: Object;
+    data;
+    pickupInstructions: string;
      dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
      };
-    
-     constructor(private navCtrl: NavController){
+     AfterViewInit(){
+         this.loc = JSON.parse(localStorage.getItem("Location"));
+     }
+     constructor(public navCtrl: NavController, public navParams: NavParams, private pickupService: PickupService){
     
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
+         this.data = navParams.get('preGenData');
      }
 
      getClassofDate(e){
@@ -60,14 +70,32 @@ export class PickUpDetails{
             this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
     }
      startNextScreen(){
-            this.navCtrl.push(DropOffDetails);
             console.log("Next clicked!");
             let newDate = this.selectedDate.day.getFullYear() + ' ' + 
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
-                                 this.selectedDate.amPm
-            console.log(new Date(newDate));
+                                 this.selectedDate.amPm;
+            let when = new Date(newDate)
+            console.log('when: ', when);
+            console.log('location: ', this.loc);
+            console.log(this.pickupInstructions);
+            this.navCtrl.push(DropOffDetails);
+    }
+    patchPickUpDetails(){
+        let data = {
+            pickupDetails: {
+                location: {
+                    lat: "1",
+                    lng: "2",
+                    address: "Attribe"
+                },
+                when: new Date(),
+                instruction: "None"
+            }
+        }
+        let URL = globalVars.patchPickupApiURL((this.data.data as any)._id  as string);
+        this.pickupService.hitPickupPatch(URL, data)
     }
 }

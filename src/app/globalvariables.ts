@@ -1,5 +1,7 @@
 export const globalVars =  {
+
     BaseURL: "http://localhost:3000",        //192.168.1.104
+
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
@@ -13,8 +15,12 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + this.PreGenURL;
     },
     OrderURL: "/api/v1/orders/",
-    ServicesURL: "/pickup",
+    ServicesURL: "/services",
     ServicesApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.ServicesURL;
+    },
+    PickupURL: "/pickup",
+    patchPickupApiURL(orderID){
+        return this.BaseURL + this.OrderURL + orderID + this.PickupURL;
     }
 }
