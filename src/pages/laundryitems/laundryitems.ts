@@ -22,6 +22,7 @@ export class LaundryItems implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
     this.selectedItem = navParams.get('item');
     this.data = navParams.get('preGenData');
+    // this.loc = navParams.get('pickupDetails');
 }
 
 

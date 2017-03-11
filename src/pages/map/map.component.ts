@@ -29,8 +29,6 @@ export class LaundryMap implements AfterViewInit{
     @ViewChild('search') button: ElementRef;
     @ViewChild('map') mapElement: ElementRef;
     map: any;
-    lat: number = 25.322327;
-    lng: number = 55.513641;
     zoom: number = 10;
     saved :boolean;
     addition : boolean;
@@ -41,6 +39,9 @@ export class LaundryMap implements AfterViewInit{
     postion : any;
     preGenData: PreGenModel;
     preGenApiURL = globalVars.PreGenApiURL();
+    address: string; 
+    lat: number; 
+    lng: number;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
 
     }
@@ -246,13 +247,23 @@ export class LaundryMap implements AfterViewInit{
 
   locationClicked(location){
     console.log("You have clicked on: ", location);
-    localStorage.setItem("Location Selected", location);
+    localStorage.setItem("Location", JSON.stringify(location));
+    this.lat = location.geometry.location.lat;
+    this.lng = location.geometry.location.lng;
+    this.address = location.formatted_address;
   }
       
     startNextScreen(){
       console.log(this.preGenData);  
       this.navCtrl.push(LaundryItems, {
-        preGenData: this.preGenData 
+        preGenData: this.preGenData,
+        pickupDetails: {
+          location: {
+            lat: this.lat,
+            lng: this.lng,
+            address: this.address
+          }
+        }
       });
       /*Todo start next screen*/
       console.log("Next clicked!");
