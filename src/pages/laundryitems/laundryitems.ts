@@ -152,7 +152,8 @@ calculateTotalAmount(item){
 
     console.log("laundry data = ",laundryData);
     
-     let URL =  globalVars.patchLaundryitemsApiURL("58c2e8c254e476399314de8b");
+     let URL =  globalVars.patchLaundryitemsApiURL((this.data.data as any)._id  as string);
+     console.log(URL)
     this.items_Service.patchService(URL,laundryData)
     .subscribe(res => {
           if(res.status == 200) {
