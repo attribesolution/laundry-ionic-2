@@ -1,0 +1,157 @@
+ <ion-header>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
+    </button>
+    <ion-title color="primary">Drop Off Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="fill-bg">
+  <div class="parentDivScreen">
+    <div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style="
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div id="heading-bg" 
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+                                    
+                                    color="secondary">
+        <p color="secondary">DROP OFF INSTRUCTIONS</p>
+        </div>
+      </ion-item-divider>
+    </div>
+    <ion-row style="height: 27.75%;">
+      <ion-col style="padding: 0!important;" width-40>
+      <div class="scrollableTime">
+        <ion-item-divider 
+          color="secondary" 
+          *ngFor="let date of dates"
+          class="drop-off-details-date-item-divider"
+          [ngClass]="{ 'current': highlightedDay === date, 
+                      'drop-off-details-date-item-divider':  highlightedDay !== date }"
+          #$date
+          (click)="toggleHighlight(date, 'day')"
+          >
+            <span class="drop-off-details-date-col">
+              {{ date.toLocaleString(locale, { month: "short" }) | uppercase  }} {{ date.getDate() }}
+              <sup *ngIf="date.getDate() == 1">ST</sup>
+              <sup *ngIf="date.getDate() == 2">ND</sup>
+              <sup *ngIf="date.getDate() == 3">RD</sup>
+              <sup *ngIf="date.getDate() >= 4">TH</sup>
+            <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) | uppercase }}</span>
+            </span>
+        </ion-item-divider>
+      </div>
+    </ion-col>
+
+     <ion-col width-20 style="padding: 0!important;">
+      <div class="scrollableTime">
+        <ion-item-divider 
+          color="secondary" 
+          *ngFor="let hour of hours"
+          class="drop-off-details-date-item-divider"
+          style="text-align: center!important;"                                        
+          [ngClass]="{ 'current': highlightedHour === hour, 
+                      'drop-off-details-date-item-divider':  highlightedHour !== hour }"
+          #$hour
+          (click)="toggleHighlight(hour, 'hour')"
+          >
+            <span class="drop-off-details-date-col">
+              {{ hour | number : '2.0-0' }}
+            </span> 
+        </ion-item-divider>
+      </div>
+    </ion-col>
+
+    <ion-col width-20 style="padding: 0!important;">
+      <div class="scrollableTime">
+        <ion-item-divider 
+          color="secondary" 
+          *ngFor="let minute of minutes"
+          class="drop-off-details-date-item-divider"
+          style="text-align: center!important;"
+          [ngClass]="{ 'current': highlightedMinute === minute, 
+                      'drop-off-details-date-item-divider':  highlightedMinute !== minute }"
+          #$minute
+          (click)="toggleHighlight(minute, 'minute')"
+          >
+            <span class="drop-off-details-date-col">
+              {{ minute | number : '2.0-0' }}
+            </span>
+        </ion-item-divider>
+      </div>
+    </ion-col>
+
+     <ion-col width-20 style="padding: 0!important;">
+      <div style="height: 100%; line-height: 50%;" class="scrollableTime">
+        <ion-item-divider 
+          color="secondary" 
+          *ngFor="let value of amPm"
+          class="drop-off-details-date-item-divider"
+          [ngClass]="{ 'current': highlightedAmPm === value, 
+                      'drop-off-details-date-item-divider':  highlightedAmPm !== value }"
+          #$amPm
+          (click)="toggleHighlight(value, 'amPm')"
+          style="text-align: center!important;"
+          >
+            <span class="drop-off-details-date-col">
+              {{ value }}
+            </span>
+        </ion-item-divider>
+      </div>
+    </ion-col>
+
+    
+    </ion-row>
+    <div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style="
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div id="heading-bg" 
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+                                    
+                                    color="secondary">
+        <p color="secondary">DROP OFF INSTRUCTIONS</p>
+        </div>
+      </ion-item-divider>
+      <ion-item-divider class="myBg">
+        <div class="ParentDiv1">
+          <textarea name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
+        </div>
+      </ion-item-divider>
+    </div>
+      <!--<ion-item-divider class="fill-bg">
+        <div class="ParentDiv">
+          <div>
+            <h2 class="careH2" color="secondary">Laundered Shirts</h2>
+            <img src="./assets/images/heading_bg.png" alt="Care Heading" class="careHeadingImg">
+          </div>  
+          <textarea name="launderedShirts" id="launderedShirtsTextArea" cols="30" rows="6" placeholder="Enter care instructions"></textarea>
+        </div>
+      </ion-item-divider>-->
+    </div>   
+</ion-content>
+<ion-footer style="padding: 10px;">
+        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
+</ion-footer>

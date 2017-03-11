@@ -1,16 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-
-import { ProfileComponent } from '../pages/profile/profile';
-import { PlaceOrderComponent } from '../place-order/place-order.component';
 import { LaundryMap } from '../pages/map/map.component';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
-import { CareInstructions } from '../pages/care-instructions/care-instructions'
+import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
+import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
+import { ServicesPage } from '../pages/services/services';
 
 
 @Component({
@@ -22,20 +18,13 @@ export class MyApp {
   rootPage: any = LaundryItems;
 
   pages: Array<{title: string, component: any}>;
-
   constructor(public platform: Platform) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
 
     this.pages = [      
-      { title: 'Page 1', component: Page1 },
-      { title: 'OrderPlaced', component: OrderPlaced },
-      { title: 'Profile', component: ProfileComponent },
-      { title: 'Place Order', component: PlaceOrderComponent},
-      { title: 'Map', component: LaundryMap },
-      { title: 'LaundryItems', component: LaundryItems},
-      { title: 'CareInstructions', component: CareInstructions}
+      { title: 'Home', component: LaundryMap },
     ];
 
   }

@@ -1,0 +1,75 @@
+pick-up-details{
+    .date-col{
+        text-transform: uppercase;
+    }
+    .uppercase{
+        text-transform: uppercase;
+    }
+    .parentDivScreen{
+        height: 100%;
+        width: 100%;
+        
+    }
+    .scrollableTime{
+        height: 100%;
+        overflow-y: scroll;
+        border-right: 2px solid white; 
+        font-size: 80px;  
+    }
+    .scrollableTime::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+    }   
+    .drop-off-details-date-item-divider{
+        border-bottom: 2px solid white;
+        
+    }
+    .drop-off-details-date-col{
+        height: 100px;
+        width: 100%;
+        overflow: hidden;
+        font-size: 10px; 
+    }
+    .current{
+        margin-top: -4px;
+        border-bottom: 2px solid color($colors, primary);
+        border-top: 2px solid color($colors, primary);
+        color: color($colors, primary);
+    }
+    /*
+    
+    .drop-off-details-date-item-divider::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        /*background: transparent;  /* optional: just make scrollbar invisible */
+    /*}*/
+    .weekday{
+        
+        font-size: 7px;
+        float: right;
+        padding-top: 5%;
+        
+    }
+    .parentDiv1{
+        text-align: center;
+    }
+    textarea{
+        background: color($colors, secondary)!important;
+        display: block;
+        margin: 0 auto;
+        border: 2px solid #7D7979;
+        height: 25vh;
+        width: 100%;
+        font-size: 125%;
+        padding: 5%;
+    }   
+}
+
+/*ion-content#careIns{
+    background: color($colors, secondary)!important;
+    color: color($colors, secondary)!important;
+}
+
+.care-next-button{
+    margin-top: -10%;
+}
+*/

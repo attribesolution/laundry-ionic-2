@@ -3,12 +3,51 @@
     <button ion-button menuToggle>
       <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
     </button>
+    <ion-buttons end>
+      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
+    </ion-buttons>
     <ion-title>Map</ion-title>
   </ion-navbar>
-  <ion-searchbar (ionInput)="getMapLocation($event)"></ion-searchbar>
 </ion-header>
-<ion-content class="menu-content myBg">
-    <sebm-google-map [latitude]="lat" [longitude]="lng">
-      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-    </sebm-google-map>
+
+<ion-content class="fill-bg">
+  <div class="searchbar">
+    <input id="search" autocomplete="off" #search type="text" class="search-input" placeholder="Enter Location">
+    <ion-icon name="search" class="search-icon"></ion-icon>
+    <div style="display: block; overflow-y: scroll; height: 150px; width: 100%; z-index: 1000; position: absolute;">
+      <div style="padding: 1.5% 2%; background-color:#000; opacity: 0.95;" *ngFor="let avloc of available_locations">
+            <p class="auto-complete-text">{{ avloc.formatted_address }}</p>
+      </div>
+  </div >
+  </div>
+  
+
+  <div style="width:100%; bottom: 15%; z-index: 100; position: fixed;">
+
+ 
+    <div class="bottom-options">
+
+      <div class="horizontal-orientation">
+        
+        <img class= "buttons-icon-size"  [src]="saved? 'assets/images/saved_location_active.png':'assets/images/saved_location_inactive.png'" alt="" (click) = "savedButtonClicked()">
+        
+      </div>
+      <div class="horizontal-orientation">
+        <img class= "buttons-icon-size" [src]="save? 'assets/images/save_this_location_active.png' : 'assets/images/save_this_location_inactive.png'" alt="" (click) = "saveButtonClicked()">
+        
+      </div>
+      <div class="horizontal-orientation">
+        <img class= "buttons-icon-size" [src]="isModalVisible? 'assets/images/additional_text_active.png':'assets/images/additional_text_inactive.png' " alt="" (click) = "additionButtonClicked()">
+        
+      </div>
+    </div>
+ </div>
+<div id="mapParent">
+  <div #map id="map"></div>  
+</div>
 </ion-content>
+<ion-footer style="padding: 10px;" >
+        <button ion-button full style="height: 50px" (click)="startNextScreen()" [disabled] = "isModalVisible?'disabled':'' ">
+        <p style="font-size: 20px;" color="secondary">Next</p>
+        </button>
+</ion-footer>

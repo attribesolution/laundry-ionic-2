@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
-
-
+import { ServicesPage } from '../services/services';
+import { LaundryItemsService } from './laundryitmes.service';
+import {LaundryItemModel} from '../../models/laundryitem.model';
 @Component ({
     selector: 'laundry_items',
-    templateUrl: 'laundryitems.html'
+    templateUrl: 'laundryitems.html',
+    providers:[LaundryItemsService] 
 })
 
 export class LaundryItems{
@@ -14,12 +15,12 @@ export class LaundryItems{
   titles: string[];
   items: Array<{title: string, icon: string, qty: number, price: number, total:number, dry:boolean, wash:boolean}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
 
     // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
+   /* this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     'american-football', 'boat', 'bluetooth', 'build'];
 
      this.titles = ['Jacket', 'T-shirt', 'Jeans', 'Tides', 'Coat', 'Suit',
@@ -37,7 +38,29 @@ export class LaundryItems{
         dry: false,
         wash:false
       });
-    }
+    }*/
+   let laundryitems : LaundryItemModel; 
+
+   var response$ =  items_Service.getItems()
+
+    .subscribe(res => {
+      if(res.status == 200) {
+        let response = JSON.parse(res['_body']) 
+          laundryitems = {
+            href : response["href"],
+            data : response["data"]
+          }
+          console.log('final laundry items: ', laundryitems)
+        }
+        
+        
+        
+    })
+
+   
+  
+   
+    console.log("laundryitems",laundryitems);
 
 }
 
@@ -71,5 +94,11 @@ export class LaundryItems{
   {
     item.dry?item.dry=false:item.dry=true;
     console.log('dry'+item.dry);
+  }
+
+ startNextScreen()
+  {
+      this.navCtrl.push(ServicesPage);
+      console.log("Next clicked!");
   }
 }
