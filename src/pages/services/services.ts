@@ -97,24 +97,24 @@ export class ServicesPage {
           }
         });
       });
-      // console.log(servicesData);
+      console.log(servicesData);
       
-    //   let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
-    //   let patchData = () => {
-    //   this.servicesPatcher.patchService(URL, servicesData)
-    //     .subscribe(res =>{
-    //       if(res.status == 200) {
-    //           let response = JSON.parse(res['_body'])
-    //           let Data = {
-    //             href: response["href"],
-    //             data: response["data"]
-    //           }
-    //           console.log('Respose', Data); 
-    //         }
-    //     });
-    // }
+      let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
+      let patchData = (URL,servicesData) => {
+      this.servicesPatcher.patchService(URL, servicesData)
+        .subscribe(res =>{
+          if(res.status == 200) {
+              let response = JSON.parse(res['_body'])
+              let Data = {
+                href: response["href"],
+                data: response["data"]
+              }
+              console.log('Respose', Data); 
+            }
+        });
+    }
     
-      
+      patchData(URL,servicesData)
       this.navCtrl.push(CareInstructions);
       console.log("Next clicked!");
   }

@@ -15,7 +15,7 @@ import {NotificationComponent} from '../pages/notifications/notifications';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryItems;
+  rootPage: any = LaundryMap;
 
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform) {
