@@ -99,8 +99,8 @@
   </div>
   
 </ion-content>
-<ion-footer color="secondary" style="padding: 10px">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+<ion-footer color="secondary" style="padding: 10px" >
+        <button ion-button full style="height: 50px" (click)="startNextScreen()" [disabled] = "responseArray.length<=0?'disabled':''">
         <p style="font-size: 20px;" color="secondary">Next</p>
         </button>
 </ion-footer>

@@ -1,7 +1,7 @@
 page-services {
     .services-page-selected{
         text-align: center; 
-        background: url('./../../assets/images/polygon_btn_selected.png');
+         background-image: url('../assets/images/polygon_btn_selected.png');
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center; 
@@ -11,7 +11,7 @@ page-services {
     }
     .services-page-unselected{
         text-align: center; 
-        background: url('./../../assets/images/polygon_btn.png');
+         background-image: url('../assets/images/polygon_btn.png');
         background-size: 100%;
         background-repeat: no-repeat;
         background-position: center; 
