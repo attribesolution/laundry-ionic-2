@@ -24,7 +24,7 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + orderID + this.PickupURL;
     },
     DropOffURL: "/dropoff",
-    patchDropApiURL(orderID){
+    patchDropOffApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.DropOffURL;
     }
 }
