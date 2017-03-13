@@ -3,7 +3,6 @@ import { Http } from '@angular/http'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 @Injectable()
-
 export class PickupService{
     constructor(private http: Http){}
    
