@@ -15,12 +15,16 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + this.PreGenURL;
     },
     OrderURL: "/api/v1/orders/",
-    ServicesURL: "/services",
+    ServicesURL: "/service",
     ServicesApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.ServicesURL;
     },
     PickupURL: "/pickup",
     patchPickupApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.PickupURL;
+    },
+    DropOffURL: "/dropoff",
+    patchDropOffApiURL(orderID){
+        return this.BaseURL + this.OrderURL + orderID + this.DropOffURL;
     }
 }
