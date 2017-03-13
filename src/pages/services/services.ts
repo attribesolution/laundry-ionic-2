@@ -119,7 +119,9 @@ export class ServicesPage {
       
       
       patchData(URL,servicesDataToSend);
-      this.navCtrl.push(CareInstructions);
+      this.navCtrl.push(CareInstructions,{
+        preGenData: this.data
+      });
       console.log("Next clicked!");
   }
 
