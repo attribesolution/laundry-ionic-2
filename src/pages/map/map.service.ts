@@ -6,7 +6,7 @@ import 'rxjs/add/operator/filter';
 
 export class MapService{
     constructor(private http: Http){}
-    myApiKey = 'AIzaSyBifb4pycCZZCs1OqewdQ-d698bylvYjkw'
+    myApiKey = 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY'
     
     getJSON = (place: string) => {
         let stringQuery = place +  " in UAE";

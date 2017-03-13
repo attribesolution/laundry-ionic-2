@@ -42,6 +42,7 @@ export class LaundryMap implements AfterViewInit{
     address: string; 
     lat: number; 
     lng: number;
+    inputFieldValue: string = '';
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
 
     }
@@ -247,6 +248,7 @@ export class LaundryMap implements AfterViewInit{
 
   locationClicked(location){
     console.log("You have clicked on: ", location);
+    this.inputFieldValue = location.formatted_address || '';
     localStorage.setItem("Location", JSON.stringify(location));
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
@@ -263,7 +265,8 @@ export class LaundryMap implements AfterViewInit{
             lng: this.lng,
             address: this.address
           }
-        }
+        },
+        
       });
       /*Todo start next screen*/
       console.log("Next clicked!");
