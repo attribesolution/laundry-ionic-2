@@ -17,11 +17,11 @@ export class LaundryItems implements OnInit{
   titles: string[];
   laundryitems : LaundryItemModel;
   responseArray : Array<Object> = [];
-  data: PreGenModel;
+  preGenData: PreGenModel;
   params : Array<Object> = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
     this.selectedItem = navParams.get('item');
-    this.data = navParams.get('preGenData');
+    this.preGenData = navParams.get('preGenData');
     // this.loc = navParams.get('pickupDetails');
 }
 
@@ -153,8 +153,8 @@ calculateTotalAmount(item){
 
     console.log("laundry data = ",laundryData);
     
-     let URL =  globalVars.patchLaundryitemsApiURL((this.data.data as any)._id  as string);
-     console.log(URL)
+    let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
+    console.log(URL)
     this.items_Service.patchService(URL,laundryData)
     .subscribe(res => {
           if(res.status == 200) {
@@ -165,7 +165,7 @@ calculateTotalAmount(item){
         })
 
       this.navCtrl.push(ServicesPage, {
-        preGenData: this.data
+        preGenData: this.preGenData
       });
       console.log("Next clicked!");
   }

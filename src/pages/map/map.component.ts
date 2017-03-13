@@ -263,7 +263,8 @@ export class LaundryMap implements AfterViewInit{
             lng: this.lng,
             address: this.address
           }
-        }
+        },
+        
       });
       /*Todo start next screen*/
       console.log("Next clicked!");

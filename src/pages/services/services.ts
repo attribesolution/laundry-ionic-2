@@ -97,11 +97,14 @@ export class ServicesPage {
           }
         });
       });
+      let servicesDataToSend = {
+        services: servicesData
+      }
       console.log(servicesData);
       
       let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
-      let patchData = (URL,servicesData) => {
-      this.servicesPatcher.patchService(URL, servicesData)
+      let patchData = (URL,servicesDataToSend) => {
+      this.servicesPatcher.patchService(URL, servicesDataToSend)
         .subscribe(res =>{
           if(res.status == 200) {
               let response = JSON.parse(res['_body'])
@@ -114,8 +117,8 @@ export class ServicesPage {
         });
       }
       
-    
-      patchData(URL,servicesData)
+      
+      patchData(URL,servicesDataToSend);
       this.navCtrl.push(CareInstructions);
       console.log("Next clicked!");
   }

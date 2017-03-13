@@ -96,7 +96,7 @@ export class PickUpDetails{
                 instruction: "None"
             }
         }
-        let URL = globalVars.patchPickupApiURL((this.data.data as any)._id  as string);
+        let URL = globalVars.patchPickupApiURL((this.data.data as any)._id);
         this.pickupService.hitPickupPatch(URL, data)
     }
 }
