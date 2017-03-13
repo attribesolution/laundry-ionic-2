@@ -10,7 +10,8 @@ import { PickupService } from './pick-up.service'
 
 @Component ({
     selector: 'pick-up-details',
-    templateUrl: 'pick-up-details.html'
+    templateUrl: 'pick-up-details.html',
+    providers: [PickupService]
 })
 
 export class PickUpDetails{
@@ -42,7 +43,7 @@ export class PickUpDetails{
      AfterViewInit(){
          this.loc = JSON.parse(localStorage.getItem("Location"));
      }
-     constructor(public navCtrl: NavController, public navParams: NavParams, private pickupService: PickupService){
+     constructor(public navCtrl: NavController, public navParams: NavParams, public pickupService: PickupService){
     
          this.dateArrayMaker();
          console.log(this.dates);
