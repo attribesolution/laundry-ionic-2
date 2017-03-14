@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
+import {LaundryMap} from '../map/map.component';
 declare var google;
 
 @Component ({
@@ -21,6 +21,8 @@ export class OrderPlaced{
   {
       /*Todo start next screen*/
       console.log("Next clicked!");
+
+      this.navCtrl.setRoot(LaundryMap);
   }
 
      constructor(private navCtrl: NavController){}

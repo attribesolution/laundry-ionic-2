@@ -44,10 +44,10 @@ export class LaundryMap implements AfterViewInit{
     lng: number;
     inputFieldValue: string = '';
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
-
+      this.createPreGen();  
     }
     ngAfterViewInit(){
-        this.createPreGen();
+        
         this.listenToSearchInput();
         this.loadMap();
         this.getMapLocation(location);
