@@ -43,8 +43,9 @@ export class LaundryMap implements AfterViewInit{
     lat: number; 
     lng: number;
     inputFieldValue: string = '';
+    search1;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
-
+      console.log(this.search1);
     }
     ngAfterViewInit(){
         this.createPreGen();
@@ -248,7 +249,8 @@ export class LaundryMap implements AfterViewInit{
 
   locationClicked(location){
     console.log("You have clicked on: ", location);
-    this.inputFieldValue = location.formatted_address || '';
+    this.available_locations = undefined;
+    this.inputFieldValue = location.formatted_address;
     localStorage.setItem("Location", JSON.stringify(location));
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
