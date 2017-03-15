@@ -6,22 +6,26 @@
   </ion-navbar>
 </ion-header>
 
- <ion-content class="fill-bg">
-  <div class="congratulation-box-height congratulation-box-color-2" color="secondary">
-      <h2 id="font-heading-color" class = "center-aligned upper-case ">Congratulations</h2>
-   </div>
-   <div class="bottom-button-padding" id="bottom-content" block>
-     <h3 class = "center-aligned text-color">Your order has been placed successfully</h3>
-     <div class="notification-center-button">
-       <ion-icon name = "notifications" class="notification-center-button custom-bell-icon"  (click) = "done()" style="display: table-cell; text-align: center; vertical-align: middle;"></ion-icon>
-     </div>
-    <h4 class = "center-aligned text-color">Send notification for this order</h4>
-    </div>
-  
-  </ion-content> 
+<ion-content class="fill-bg congratulation">
+  <div class="upper-box">
+    <h3>CONGRATULATIONS</h3>
+    <p>Your order has been placed successfully</p>
+  </div>
+
+  <div class="notification">
+    <button (click)="done()">
+      <img src="./assets/images/notification_icon.png" alt="">
+      <p>Send notification for this order</p>
+    </button>
+  </div>
+  <div class="track">
+    <h4>TRACK ORDER</h4>
+    <img src="./assets/gifs/Order-Placed-animation.gif" alt="">
+  </div>
+</ion-content>
 
 <ion-footer color="secondary" style="padding: 10px">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
-        <p style="font-size: 20px;" color="secondary">Start New</p>
-        </button>
+  <button ion-button full style="height: 50px" (click)="startNextScreen()">
+    <p style="font-size: 20px;" color="secondary">START NEW</p>
+  </button>
 </ion-footer>

@@ -46,9 +46,10 @@ export class LaundryMap implements AfterViewInit{
     search1;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
       console.log(this.search1);
+      this.createPreGen();  
     }
     ngAfterViewInit(){
-        this.createPreGen();
+        
         this.listenToSearchInput();
         this.loadMap();
         this.getMapLocation(location);
