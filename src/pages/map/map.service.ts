@@ -9,7 +9,8 @@ export class MapService{
     myApiKey = 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY'
     
     getJSON = (place: string) => {
-        let stringQuery = place +  " in UAE";
+        let stringQuery: string; //= place +  " in UAE";
+        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  " in UAE";
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
 

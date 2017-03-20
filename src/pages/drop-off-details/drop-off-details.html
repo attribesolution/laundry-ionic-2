@@ -135,23 +135,14 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
+          <textarea #textarea name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
         </div>
       </ion-item-divider>
     </div>
-      <!--<ion-item-divider class="fill-bg">
-        <div class="ParentDiv">
-          <div>
-            <h2 class="careH2" color="secondary">Laundered Shirts</h2>
-            <img src="./assets/images/heading_bg.png" alt="Care Heading" class="careHeadingImg">
-          </div>  
-          <textarea name="launderedShirts" id="launderedShirtsTextArea" cols="30" rows="6" placeholder="Enter care instructions"></textarea>
-        </div>
-      </ion-item-divider>-->
     </div>   
 </ion-content>
 <ion-footer style="padding: 10px;">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <button ion-button full style="height: 50px" (click)="startNextScreen(textarea)">
         <p style="font-size: 20px;" color="secondary">Next</p>
         </button>
 </ion-footer>

@@ -17,7 +17,7 @@ import { PreGenModel } from '../../models/preGen.model'
 })
 
 export class PickUpDetails{
-     @ViewChild('textarea') textarea: ElementRef
+     @ViewChild('textarea') textarea: ElementRef;
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
@@ -37,7 +37,7 @@ export class PickUpDetails{
      };
     loc: Object;
     preGenData: PreGenModel;
-    pickupInstructions: string;
+    private pickupInstructions: string;
      dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
@@ -55,9 +55,6 @@ export class PickUpDetails{
          console.log('Location: ', this.loc);
      }
 
-     getClassofDate(e){
-
-     }
      toggleHighlight(Elementid: any, segment: string){
         console.clear();
         console.log(Elementid);
@@ -74,7 +71,8 @@ export class PickUpDetails{
         segment === 'amPm' ? 
             this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
     }
-     startNextScreen(){
+     startNextScreen(textareaValue){
+            console.log(textareaValue);
             console.log("Next clicked!");
             let newDate = this.selectedDate.day.getFullYear() + ' ' + 
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
@@ -86,13 +84,13 @@ export class PickUpDetails{
             console.log('when: ', when);
             console.log('location: ', this.loc);
             // console.log(this.pickupInstructions);
-            this.patchPickUpDetails(when);
+            this.patchPickUpDetails(when, textareaValue);
             this.navCtrl.push(DropOffDetails, {
                 preGenData: this.preGenData
             });
             
     }
-    patchPickUpDetails(whenDate){
+    patchPickUpDetails(whenDate, textareaValue){
         console.log((this.loc as any).geometry.location.lat);
         
         let data = {
@@ -103,7 +101,7 @@ export class PickUpDetails{
                     address: (this.loc as any).formatted_address
                 },
                 when: whenDate,
-                instruction: "None"
+                instruction: textareaValue
             }
         }
         let URL = globalVars.patchPickupApiURL((this.preGenData.data as any)._id);
