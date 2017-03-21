@@ -11,7 +11,8 @@ import { globalVars } from '../../app/globalvariables';
 
 @Component ({
     selector: 'care-instructions',
-    templateUrl: 'care-instructions.html'
+    templateUrl: 'care-instructions.html',
+    providers: [CareInstructionsService]
 })
 
 export class CareInstructions{
