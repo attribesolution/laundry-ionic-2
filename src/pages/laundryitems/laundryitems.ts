@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ServicesPage } from '../services/services';
-import { LaundryItemsService } from './laundryitmes.service';
+import { LaundryItemsService } from './laundryitems.service';
 import { LaundryItemModel } from '../../models/laundryitem.model';
 import { globalVars } from '../../app/globalvariables';
-import {PreGenModel} from '../../models/preGen.model';
+import { PreGenModel } from '../../models/preGen.model';
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',

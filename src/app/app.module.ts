@@ -9,11 +9,12 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
-import {AdditionalInfoModal} from '../pages/modals/additional-info-modal/additional-info-modal.component';
+import { AdditionalInfoModal } from '../pages/modals/additional-info-modal/additional-info-modal.component';
 import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
-import {AdditionalNote} from '../pages/modals/additional-note/additional-note'
-import {ProfileComponent} from '../pages/profile/profile'
-import {NotificationComponent} from '../pages/notifications/notifications';
+import { AdditionalNote } from '../pages/modals/additional-note/additional-note'
+import { ProfileComponent } from '../pages/profile/profile'
+import { NotificationComponent } from '../pages/notifications/notifications';
+import { RatesListComponent } from '../pages/rates-list/rates-list'
 @NgModule({
   declarations: [
     MyApp,
@@ -27,7 +28,8 @@ import {NotificationComponent} from '../pages/notifications/notifications';
     PickUpDetails,
     AdditionalNote,
     ProfileComponent,
-    NotificationComponent
+    NotificationComponent,
+    RatesListComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -48,7 +50,8 @@ import {NotificationComponent} from '../pages/notifications/notifications';
     PickUpDetails,
     AdditionalNote,
     ProfileComponent,
-    NotificationComponent
+    NotificationComponent,
+    RatesListComponent
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

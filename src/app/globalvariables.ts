@@ -1,6 +1,6 @@
 export const globalVars =  {
 
-    BaseURL: "http://localhost:3000",        //192.168.1.104
+    BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
 
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
@@ -26,5 +26,10 @@ export const globalVars =  {
     DropOffURL: "/dropoff",
     patchDropOffApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.DropOffURL;
+    },
+    CareInstructionsURL: "/instructions",
+    patchCareInstructionsURL(orderID){
+        return this.BaseURL + this.OrderURL + orderID + this.CareInstructionsURL;
     }
+
 }
