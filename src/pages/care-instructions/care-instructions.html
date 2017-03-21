@@ -31,7 +31,7 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="launderedShirts" cols="30" rows="6" placeholder="Enter care instructions"></textarea>
+          <textarea name="launderedShirts" #launderedShirts cols="30" rows="6" placeholder="Enter care instructions"></textarea>
         </div>
       </ion-item-divider>
     </div>
@@ -60,13 +60,13 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="launderedShirts" cols="30" rows="6" placeholder="Enter care instructions"></textarea>
+          <textarea name="dryCleaning" #dryCleaning cols="30" rows="6" placeholder="Enter care instructions"></textarea>
         </div>
       </ion-item-divider>
     </div>
 </ion-content>
 <ion-footer color="secondary" style="padding: 10px">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <button ion-button full style="height: 50px" (click)="startNextScreen(launderedShirts.value, dryCleaning.value)">
         <p style="font-size: 20px;" color="secondary">Next</p>
         </button>
 </ion-footer>
