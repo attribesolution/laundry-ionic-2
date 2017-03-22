@@ -12,7 +12,7 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryMap;
+  rootPage: any = SignInPage;
 
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform) {
