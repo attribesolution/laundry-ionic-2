@@ -46,19 +46,6 @@
         <ion-icon [name]="item.icon" item-left></ion-icon>
         {{item.name}}
         </ion-col>
-
-        <ion-col class="fill-bg item-col" 
-                 width-10 
-                 item-left>
-        <img src="assets/images/inc_icon.png" 
-             class="button-size" 
-             (click)="incrementQty(item,laundryitems.data.indexOf(item))" >
-        </ion-col>
-        <ion-col class="item-col" 
-                 style="max-width: 2em;" 
-                 item-left>
-        {{item.count}}
-        </ion-col>
         <ion-col class="item-col" 
                  width-10 
                  item-left>
@@ -66,7 +53,19 @@
              class="button-size" 
              (click)="decrementQty(item,laundryitems.data.indexOf(item))" >
       </ion-col>
-
+        <ion-col class="item-col" 
+                 style="max-width: 2em;" 
+                 item-left>
+        {{item.count}}
+        </ion-col>
+        
+        <ion-col class="fill-bg item-col" 
+                 width-10 
+                 item-left>
+        <img src="assets/images/inc_icon.png" 
+             class="button-size" 
+             (click)="incrementQty(item,laundryitems.data.indexOf(item))" >
+        </ion-col>
         <ion-col class="fill-bg" 
                  style="border-bottom: 0px"
                  item-right
