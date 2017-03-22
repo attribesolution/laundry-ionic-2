@@ -1,0 +1,10 @@
+rates-list{
+    .col-heading{
+        background: color($colors, primary);
+        height: 30px;
+        font-size: 125%;        
+        display: table-cell;
+        vertical-align: middle;
+        width: 100px;
+    }
+}
