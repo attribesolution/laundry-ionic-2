@@ -14,7 +14,8 @@ import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
 import { AdditionalNote } from '../pages/modals/additional-note/additional-note'
 import { ProfileComponent } from '../pages/profile/profile'
 import { NotificationComponent } from '../pages/notifications/notifications';
-import { RatesListComponent } from '../pages/rates-list/rates-list'
+import { RatesListComponent } from '../pages/rates-list/rates-list';
+import { SignInPage } from '../pages/sign-in/sign-in'
 @NgModule({
   declarations: [
     MyApp,
@@ -29,7 +30,8 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
     AdditionalNote,
     ProfileComponent,
     NotificationComponent,
-    RatesListComponent
+    RatesListComponent,
+    SignInPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -51,7 +53,8 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
     AdditionalNote,
     ProfileComponent,
     NotificationComponent,
-    RatesListComponent
+    RatesListComponent,
+    SignInPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
