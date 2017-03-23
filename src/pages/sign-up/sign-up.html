@@ -1,0 +1,77 @@
+<ion-content padding class="fill-bg">
+    <img src="./assets/images/logo.png">
+    <form novalidate #f>
+      <div class="sign-up-input-fields">
+        <ion-icon name="contact" class="sign-up-icon"></ion-icon>
+        <input 
+          required 
+          type="text" 
+          id="username" 
+          name="username" 
+          autocomplete="off" 
+          class="sign-up-input"
+          [(ngModel)]="username"  
+          placeholder="Username"> 
+      </div>
+      <div class="sign-up-input-fields">
+        <ion-icon name="lock" class="sign-up-icon"></ion-icon>
+        <input
+        required 
+        id="password" 
+        type="password"
+        name="password" 
+        autocomplete="off" 
+        class="sign-up-input" 
+        [(ngModel)]="password" 
+        placeholder="Password"> 
+      </div>
+      <div class="sign-up-input-fields">
+        <ion-icon name="phone-portrait" class="sign-up-icon"></ion-icon>
+        <input 
+        required 
+        id="phone" 
+        type="text"
+        name="phone" 
+        autocomplete="off" 
+        [(ngModel)]="phone"  
+        class="sign-up-input" 
+        placeholder="Phone Number"> 
+      </div>
+      <div class="sign-up-input-fields">
+        <ion-icon name="mail" class="sign-up-icon"></ion-icon>
+        <input 
+        required 
+        id="email" 
+        name="email" 
+        type="email" 
+        autocomplete="off" 
+        [(ngModel)]="email" 
+        placeholder="Email"
+        class="sign-up-input"> 
+      </div>
+      <div class="sign-up-input-fields">
+        <ion-icon name="calender" class="sign-up-icon"></ion-icon>
+        <input 
+        required 
+        id="dob" 
+        name="dob" 
+        type="date" 
+        autocomplete="off" 
+        [(ngModel)]="dob" 
+        placeholder="Date of Birth"
+        class="sign-up-input"> 
+      </div>
+      <div padding>
+        <button 
+        block 
+        primary 
+        ion-button
+        class="uppercase"
+        (click)="signUp(username, password, phone, email, dob);">Sign Up</button>
+      </div>
+    </form>
+    <!--<div class="center">
+      <img src="./assets/images/fb_icon.png" alt="">
+      <img src="./assets/images/googlePlus_icon.png" alt="">
+    </div>-->
+</ion-content>

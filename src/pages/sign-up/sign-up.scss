@@ -1,0 +1,32 @@
+page-sign-up {
+    .sign-up-input-fields{
+        padding: 0;
+        background-color: #1F2C27 ;
+        opacity: 0.75;
+        margin: 2% auto 2% auto;
+        width: 90%;
+        .sign-up-input{
+            padding: 15px 25px;
+            width: 90%;
+            background: #1F2C27;
+            border: none;
+            color: white;
+            font-size: 20px;
+        }
+        .sign-up-icon{
+            color: white;
+            font-size: 22px;
+            margin-left: 2%;
+        }
+        .center{
+            width: 20px!important;
+            height: auto!important;
+        }
+        ::-webkit-input-placeholder, 
+        :-moz-placeholder,
+        ::-moz-placeholder,
+        :-ms-input-placeholder{
+            text-align: center!important;
+        }
+    }
+}
