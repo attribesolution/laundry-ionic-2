@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
-/*
-  Generated class for the SignIn page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { SignInService } from './sign-in.service';
+import { LaundryMap } from '../map/map.component';
+import { SignUpPage } from '../sign-up/sign-up';
 @Component({
   selector: 'page-sign-in',
-  templateUrl: 'sign-in.html'
+  templateUrl: 'sign-in.html',
+  providers: [SignInService]
 })
 export class SignInPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private menuController: MenuController, private signInService: SignInService) {
+    this.menuController.swipeEnable(false);
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignInPage');
+  }
+  signIn(username, password){
+    console.log('Sign In successful with credentials', username, password);
+    if(this.signInService.getUser(username, password).signIn == 'SucessFull'){
+      this.navCtrl.setRoot(LaundryMap);
+    }else{
+      
+    }
+  }
+  signupPage(){
+    this.navCtrl.setRoot(SignUpPage);
   }
 
 }
