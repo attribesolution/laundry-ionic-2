@@ -16,6 +16,7 @@ import { ProfileComponent } from '../pages/profile/profile'
 import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list';
 import { SignInPage } from '../pages/sign-in/sign-in'
+import { SignUpPage } from '../pages/sign-up/sign-up';
 @NgModule({
   declarations: [
     MyApp,
@@ -31,7 +32,8 @@ import { SignInPage } from '../pages/sign-in/sign-in'
     ProfileComponent,
     NotificationComponent,
     RatesListComponent,
-    SignInPage
+    SignInPage,
+    SignUpPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -54,7 +56,8 @@ import { SignInPage } from '../pages/sign-in/sign-in'
     ProfileComponent,
     NotificationComponent,
     RatesListComponent,
-    SignInPage
+    SignInPage,
+    SignUpPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

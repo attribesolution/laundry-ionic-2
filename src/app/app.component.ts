@@ -27,7 +27,6 @@ export class MyApp {
       { title: 'Order History', component: LaundryMap },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
-
     ];
 
   }

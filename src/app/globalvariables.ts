@@ -30,6 +30,9 @@ export const globalVars =  {
     CareInstructionsURL: "/instructions",
     patchCareInstructionsURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.CareInstructionsURL;
+    },
+    AllUsers: "/api/v1/users",
+    PostNewUser(){
+        return ((this.BaseURL + this.AllUsers as string));
     }
-
 }
