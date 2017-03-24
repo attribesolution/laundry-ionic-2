@@ -6,10 +6,11 @@ import 'rxjs/add/operator/filter';
 
 export class MapService{
     constructor(private http: Http){}
-    myApiKey = 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY'
+    myApiKey = 'AIzaSyBifb4pycCZZCs1OqewdQ-d698bylvYjkw'
     
     getJSON = (place: string) => {
-        let stringQuery = place +  " in UAE";
+        let stringQuery: string; //= place +  " in UAE";
+        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  " in UAE";
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
 

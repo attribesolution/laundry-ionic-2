@@ -49,7 +49,7 @@ export class DropOffDetails{
          console.log(this.hours, this.minutes);
          this.preGenData = this.navParams.get('preGenData');
          this.loc = JSON.parse(localStorage.getItem("Location"));
-         console.clear();
+        //  console.clear();
          console.log(navParams.get('preGenData'));
          console.log('Location: ', this.loc);
      }
@@ -73,7 +73,7 @@ export class DropOffDetails{
         segment === 'amPm' ? 
             this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
     }
-     startNextScreen(){
+     startNextScreen(textareaValue){
             console.log("Next clicked!");
             let newDate = this.selectedDate.day.getFullYear() + ' ' + 
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
@@ -83,13 +83,13 @@ export class DropOffDetails{
                                  this.selectedDate.amPm
             console.log(new Date(newDate));
             let when = new Date(newDate);
-            this.patchDropOffDetails(when);
+            this.patchDropOffDetails(when, textareaValue);
             this.navCtrl.push(OrderPlaced, {
                 preGenData: this.preGenData
             });
     }
 
-    patchDropOffDetails(whenDate){
+    patchDropOffDetails(whenDate, textareaValue){
         console.log((this.loc as any).geometry.location.lat);
         
         let data = {
@@ -100,7 +100,7 @@ export class DropOffDetails{
                     address: (this.loc as any).formatted_address || 'ABC'
                 },
                 when: whenDate,
-                instruction: "None"
+                instruction: textareaValue
             }
         }
         let URL = globalVars.patchDropOffApiURL((this.preGenData.data as any)._id);

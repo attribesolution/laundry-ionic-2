@@ -135,14 +135,14 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea [(ngModel)]="pickupInstructions" name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Pickup instructions"></textarea>
+          <textarea #textarea [(ngModel)]="pickupInstructions" name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Pickup instructions"></textarea>
         </div>
       </ion-item-divider>
     </div>
     </div>   
 </ion-content>
 <ion-footer style="padding: 10px;">
-        <button ion-button full style="height: 50px" (click)="startNextScreen()">
+        <button ion-button full style="height: 50px" (click)="startNextScreen(textarea.value)">
         <p style="font-size: 20px;" color="secondary">Next</p>
         </button>
 </ion-footer>

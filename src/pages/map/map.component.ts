@@ -43,14 +43,19 @@ export class LaundryMap implements AfterViewInit{
     lat: number; 
     lng: number;
     inputFieldValue: string = '';
+    search1;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
+      console.log(this.search1);
       this.createPreGen();  
     }
     ngAfterViewInit(){
         
         this.listenToSearchInput();
-        this.loadMap();
+        // this.loadMap();
         this.getMapLocation(location);
+    }
+    ionViewDidLoad(){
+        this.loadMap();      
     }
     createPreGen(){
         this.mapService.hitPreGen(this.preGenApiURL)
@@ -210,7 +215,7 @@ export class LaundryMap implements AfterViewInit{
 
 		this.addInfoWindow(marker, content);
 
-  }
+    }
 
   addInfoWindow(marker, content){
 
@@ -236,7 +241,7 @@ export class LaundryMap implements AfterViewInit{
 
   openAdditionalNoteDialog(myEvent)
   {
-    let popover = this.popoverCtrl.create(AdditionalNote);
+    let popover = this.popoverCtrl.create(AdditionalNote, {}, {showBackdrop: true});
     popover.present({
       ev: myEvent
     });
@@ -244,13 +249,14 @@ export class LaundryMap implements AfterViewInit{
 
   additionButtonClicked(myEvent){ 
     this.addition=this.addition?false:true;
-    console.log("savedButtonClicked");
+    console.log("additionButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
 
   locationClicked(location){
     console.log("You have clicked on: ", location);
-    this.inputFieldValue = location.formatted_address || '';
+    this.available_locations = undefined;
+    this.inputFieldValue = location.formatted_address;
     localStorage.setItem("Location", JSON.stringify(location));
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
