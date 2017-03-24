@@ -51,8 +51,11 @@ export class LaundryMap implements AfterViewInit{
     ngAfterViewInit(){
         
         this.listenToSearchInput();
-        this.loadMap();
+        // this.loadMap();
         this.getMapLocation(location);
+    }
+    ionViewDidLoad(){
+        this.loadMap();      
     }
     createPreGen(){
         this.mapService.hitPreGen(this.preGenApiURL)
@@ -210,7 +213,7 @@ export class LaundryMap implements AfterViewInit{
 
 		this.addInfoWindow(marker, content);
 
-  }
+    }
 
   addInfoWindow(marker, content){
 
@@ -236,7 +239,7 @@ export class LaundryMap implements AfterViewInit{
 
   openAdditionalNoteDialog(myEvent)
   {
-    let popover = this.popoverCtrl.create(AdditionalNote);
+    let popover = this.popoverCtrl.create(AdditionalNote, {}, {showBackdrop: true});
     popover.present({
       ev: myEvent
     });
@@ -244,7 +247,7 @@ export class LaundryMap implements AfterViewInit{
 
   additionButtonClicked(myEvent){ 
     this.addition=this.addition?false:true;
-    console.log("savedButtonClicked");
+    console.log("additionButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
 

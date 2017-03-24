@@ -100,7 +100,7 @@ export class DropOffDetails{
                     address: (this.loc as any).formatted_address || 'ABC'
                 },
                 when: whenDate,
-                instruction: "None"
+                instruction: textareaValue
             }
         }
         let URL = globalVars.patchDropOffApiURL((this.preGenData.data as any)._id);
