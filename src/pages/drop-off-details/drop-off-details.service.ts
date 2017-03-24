@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+    import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Injectable()
@@ -7,7 +7,7 @@ export class DropOffService{
    
      hitDropOffPatch = (URL:string, data: any, options?) => {
         console.log("Hitting: ", URL);
-        console.log(data, JSON.stringify(data));
+        console.log(data);
         return this.http.patch(URL, data, options)
             // .map(res => JSON.parse(res['_body']).results);
     }   
