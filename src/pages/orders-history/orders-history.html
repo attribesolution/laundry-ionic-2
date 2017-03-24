@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar color="header">
+    <button ion-button menuToggle>
+      <img src="./assets/images/burger_menu.png" style =" width:15px; height: 15px;">
+    </button>
+    <ion-title>Orders History</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="fill-bg">
+  <div *ngIf="!(response?.data)" style="font-size: 150%;">
+    <ion-item-divider class="fill-bg center" padding>
+        <!--<div *ngIf="response?.data">
+          History <br>
+          {{ response?.data }}
+        </div>-->
+          <h2 style="overflow-wrap: break-word;">
+            You have not placed any orders.
+          </h2>
+    </ion-item-divider>
+    <ion-item-divider class="fill-bg center" padding style="border: 0; font-size: 120%;">
+      <button ion-button block primary padding class="center uppercase" (click)="placeOrder();">Place an order</button>
+    </ion-item-divider>
+        <!--<h1 *ngSwitchDefault class="center">Loading...</h1>-->
+  </div>
+</ion-content>
