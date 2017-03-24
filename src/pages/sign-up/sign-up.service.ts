@@ -4,11 +4,7 @@ import { Http } from '@angular/http';
 export class SignUpService{
     constructor(private http: Http){}
     PostNewUser = (URL, data, options?) =>{
-        this.http.post(URL, data, options)
-            .subscribe(res => {
-                if(res.status = 200){
-                    console.log(res['_body']);
-                }
-            });
+        return this.http.post(URL, data, options)
+            
     }
 }
