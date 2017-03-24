@@ -34,5 +34,9 @@ export const globalVars =  {
     AllUsers: "/api/v1/users",
     PostNewUser(){
         return ((this.BaseURL + this.AllUsers as string));
+    },
+    UsersURL: 'user/',
+    getOrdersHistoryURL(userID: string){
+        return this.BaseURL + this.OrderURL + this.UsersURL + userID;
     }
 }

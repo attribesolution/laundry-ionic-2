@@ -66,7 +66,7 @@ export class LaundryMap implements AfterViewInit{
                 href: response["href"],
                 data: response["data"]
               }
-              console.log('Respose From PreGen', this.preGenData); 
+              console.log('Respose From PreGen', (this.preGenData.data as any)._id); 
             }
         });
     }

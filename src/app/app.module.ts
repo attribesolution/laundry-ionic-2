@@ -17,6 +17,7 @@ import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list';
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { SignUpPage } from '../pages/sign-up/sign-up';
+import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 @NgModule({
   declarations: [
     MyApp,
@@ -33,7 +34,8 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
     NotificationComponent,
     RatesListComponent,
     SignInPage,
-    SignUpPage
+    SignUpPage,
+    OrdersHistoryPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -57,7 +59,8 @@ import { SignUpPage } from '../pages/sign-up/sign-up';
     NotificationComponent,
     RatesListComponent,
     SignInPage,
-    SignUpPage
+    SignUpPage,
+    OrdersHistoryPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

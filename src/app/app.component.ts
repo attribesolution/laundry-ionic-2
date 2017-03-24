@@ -6,6 +6,7 @@ import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
+import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 @Component({
   templateUrl: 'app.html'
 })
@@ -24,7 +25,7 @@ export class MyApp {
       { title: 'Home', component: LaundryMap },
       { title: 'Profile', component: ProfileComponent },
       { title: 'Payment Method', component: LaundryMap },
-      { title: 'Order History', component: LaundryMap },
+      { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
     ];
