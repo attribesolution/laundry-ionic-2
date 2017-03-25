@@ -2,7 +2,6 @@ import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController, NavParams,PopoverController,Popover } from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
-// import { MapService } from '../pages/map/map.service';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -12,6 +11,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
 import { LaundryItems } from '../laundryitems/laundryitems';
 import { AdditionalNote } from '../modals/additional-note/additional-note';
+import { SavedLocations } from '../modals/saved-locations/saved-locations';
 declare var google;
 import { PreGenModel } from "../../models/preGen.model";
 
@@ -25,7 +25,6 @@ import { globalVars } from "../../app/globalvariables";
 
 
 export class LaundryMap implements AfterViewInit{
-    // @ViewChid('map') laundryMap;
     @ViewChild('search') button: ElementRef;
     @ViewChild('map') mapElement: ElementRef;
     map: any;
@@ -42,11 +41,14 @@ export class LaundryMap implements AfterViewInit{
     address: string; 
     lat: number; 
     lng: number;
+    locationAlias: string;
     inputFieldValue: string = '';
     search1;
+    addressReponse: any;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
       console.log(this.search1);
       this.createPreGen();  
+
     }
     ngAfterViewInit(){
         
@@ -66,7 +68,7 @@ export class LaundryMap implements AfterViewInit{
                 href: response["href"],
                 data: response["data"]
               }
-              console.log('Respose From PreGen', (this.preGenData.data as any)._id); 
+              console.log('Response From PreGen', (this.preGenData.data as any)._id); 
             }
         });
     }
@@ -228,14 +230,41 @@ export class LaundryMap implements AfterViewInit{
 
   }
 
-  savedButtonClicked(){ 
+  savedButtonClicked(myEvent){ 
     this.saved=this.saved?false:true;
     console.log("savedButtonClicked");
+    let userID = localStorage.getItem("userID");
+    let URL = globalVars.UserAddress(userID);
+    this.mapService.getAddress(URL)
+      .subscribe(res =>{
+        res.status == 200 ? this.addressReponse = ["_body"]: this.addressReponse = null;
+      });
+    this.addition=this.addition?false:true;
+    this.openSavedLocationModal(myEvent);
   }
+  openSavedLocationModal(myEvent)
+  {
+    let popover = this.popoverCtrl.create(SavedLocations, {}, {showBackdrop: true});
+    popover.present({
+      ev: myEvent
+    });
+    this.saved = this.saved?false:true;
+  }
+
   saveButtonClicked(){ 
     this.save=this.save?false:true;
     console.log("saveButtonClicked");
+    let userID = localStorage.getItem("userID");
+    let URL = globalVars.UserAddress(userID);
+    let data = {
+      alias : this.locationAlias,
+      address: this.address,
+      lat: this.lat,
+      long: this.lng
+    }
+    this.mapService.patchAddress(URL, data);
   }
+
 
   openAdditionalNoteDialog(myEvent)
   {
@@ -259,6 +288,7 @@ export class LaundryMap implements AfterViewInit{
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
     this.address = location.formatted_address;
+    this.locationAlias = location.name;
   }
       
     startNextScreen(){

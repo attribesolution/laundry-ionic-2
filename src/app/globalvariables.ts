@@ -38,5 +38,9 @@ export const globalVars =  {
     UsersURL: 'user/',
     getOrdersHistoryURL(userID: string){
         return this.BaseURL + this.OrderURL + this.UsersURL + userID;
+    },
+    UsersAddressURL: '/address',
+    UserAddress(userID: string){
+        return this.BaseURL + '/' +  userID + this.UsersAddressURL;
     }
 }
