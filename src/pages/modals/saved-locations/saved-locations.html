@@ -1,0 +1,34 @@
+<ion-content class="fill-bg" style="opacity: 0.9">
+    <div style="background:rgba(0,0,0,0.1)">
+        <div class="fill-bg">
+            <ion-item-divider class="fill-bg" style="border-bottom: 0">
+                <div id="heading-bg" 
+                style="padding: 10px; 
+                    background-color:rgba(0,0,0,0.1);
+                    background-image: url('./assets/images/heading_bg.png');  
+                    text-align: center;
+                    background-size: 100%; 
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    border: 0px;
+                    width: 100%; 
+                    height: 100%;"
+                    color="secondary">
+                    <p color="secondary" class="uppercase">Saved Locations</p>
+                </div>
+            </ion-item-divider>
+            <ion-list *ngIf="addressResponse">
+                <ion-row *ngFor="let address of addressResponse">
+                    {{ address.address }}
+                </ion-row>
+            </ion-list>
+            <ion-item-divider class="fill-bg" *ngIf="!addressResponse">
+                You do not have any saved locations.
+            </ion-item-divider>
+            <div style="margin: 2% 3%;">
+                <img src="./assets/images/inc_icon.png" style="float: left" (click)=close() />
+                <img src="./assets/images/inc_icon.png" alt="" style="float: right" (click)="done()">
+            </div>
+        </div>
+    </div>
+</ion-content>
