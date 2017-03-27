@@ -7,6 +7,7 @@ import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
+import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,6 +29,7 @@ export class MyApp {
       { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
+      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage }
     ];
 
   }

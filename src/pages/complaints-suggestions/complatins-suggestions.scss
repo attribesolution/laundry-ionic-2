@@ -1,0 +1,20 @@
+complaints-suggestions{
+    .parentDiv1{
+        text-align: center;
+    }
+    textarea{
+        background: color($colors, secondary)!important;
+        display: block;
+        margin: 0 auto;
+        border: 2px solid #7D7979;
+        height: 25vh;
+        width: 100%;
+        font-size: 125%;
+        padding: 5%;
+    }   
+}
+
+ion-content#complaintsSuggestions{
+    background: color($colors, secondary)!important;
+    color: color($colors, secondary)!important;
+}
