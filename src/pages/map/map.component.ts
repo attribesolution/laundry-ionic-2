@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController, NavParams,PopoverController,Popover } from 'ionic-angular';
-import {Geolocation} from 'ionic-native';
+import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs/Observable'
