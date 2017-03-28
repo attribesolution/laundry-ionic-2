@@ -24,6 +24,14 @@ export class MapService{
         return this.http.get(URL)
             // .map(res => JSON.parse(res['_body']).results);
     }
+    patchAddress = (URL: string, data: any, options?:any) =>{
+        console.log("Hitting", URL);
+        return this.http.patch(URL, data, options);
+    }
+    getAddress = (URL) => {
+        console.log("Hitting", URL);
+        return this.http.get(URL);
+    }
 
     
 }

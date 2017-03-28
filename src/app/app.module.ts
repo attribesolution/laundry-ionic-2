@@ -9,12 +9,16 @@ import { CareInstructions } from '../pages/care-instructions/care-instructions';
 import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
 import { ServicesPage } from '../pages/services/services';
 import { LaundryItems } from '../pages/laundryitems/laundryitems';
-import { AdditionalInfoModal } from '../pages/modals/additional-info-modal/additional-info-modal.component';
+import { SavedLocations } from '../pages/modals/saved-locations/saved-locations';
 import { PickUpDetails } from '../pages/pick-up-details/pick-up-details'
 import { AdditionalNote } from '../pages/modals/additional-note/additional-note'
 import { ProfileComponent } from '../pages/profile/profile'
 import { NotificationComponent } from '../pages/notifications/notifications';
-import { RatesListComponent } from '../pages/rates-list/rates-list'
+import { RatesListComponent } from '../pages/rates-list/rates-list';
+import { SignInPage } from '../pages/sign-in/sign-in'
+import { SignUpPage } from '../pages/sign-up/sign-up';
+import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
+import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 @NgModule({
   declarations: [
     MyApp,
@@ -24,12 +28,16 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
-    AdditionalInfoModal,
+    SavedLocations,
     PickUpDetails,
     AdditionalNote,
     ProfileComponent,
     NotificationComponent,
-    RatesListComponent
+    RatesListComponent,
+    SignInPage,
+    SignUpPage,
+    OrdersHistoryPage,
+    ComplaintsSuggestionsPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -46,12 +54,16 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
     DropOffDetails,
     ServicesPage,
     LaundryItems,
-    AdditionalInfoModal,
+    SavedLocations,
     PickUpDetails,
     AdditionalNote,
     ProfileComponent,
     NotificationComponent,
-    RatesListComponent
+    RatesListComponent,
+    SignInPage,
+    SignUpPage,
+    OrdersHistoryPage,
+    ComplaintsSuggestionsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

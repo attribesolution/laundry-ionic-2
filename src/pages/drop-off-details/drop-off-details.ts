@@ -10,6 +10,7 @@ import { PreGenModel } from '../../models/preGen.model';
 
 import { DropOffService } from './drop-off-details.service';
 
+import { OrdersHistoryPage } from './../orders-history/orders-history';
 @Component ({
     selector: 'drop-off-details',
     templateUrl: 'drop-off-details.html',
@@ -84,7 +85,7 @@ export class DropOffDetails{
             console.log(new Date(newDate));
             let when = new Date(newDate);
             this.patchDropOffDetails(when, textareaValue);
-            this.navCtrl.push(OrderPlaced, {
+            this.navCtrl.push(OrdersHistoryPage, {
                 preGenData: this.preGenData
             });
     }
