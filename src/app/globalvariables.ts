@@ -42,5 +42,9 @@ export const globalVars =  {
     UsersAddressURL: '/address',
     UserAddress(userID: string){
         return this.BaseURL + '/' +  userID + this.UsersAddressURL;
+    },
+    ComplainUrl:'/complain',
+    PatchComplainURL(userID){
+        return this.BaseURL + this.AllUsers + '/' + userID + this.ComplainUrl; 
     }
 }

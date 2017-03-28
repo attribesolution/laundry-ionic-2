@@ -26,19 +26,19 @@
               height: 100%;"
                                     
                                     color="secondary">
-        <p color="secondary" class="uppercase">Complaints</p>
+        <p color="secondary" class="uppercase">Suggestions and Complaints</p>
         </div>
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="complaints" #complaints cols="30" rows="6" placeholder="Enter Complaints"></textarea>
+          <textarea name="complaints" #complaints cols="30" rows="6" placeholder="Enter Suggestions and/or Complaints"></textarea>
         </div>
       </ion-item-divider>
     </div>
 
 </ion-row>
 
-    <div class="heading">
+    <div class="heading" *ngIf="null">
       <ion-item-divider class="fill-bg"
                         style="
                                 padding-top: 5px; 
@@ -60,13 +60,13 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="suggestions" #suggestions cols="30" rows="6" placeholder="Enter Suggestions"></textarea>
+          <textarea name="suggestions" #suggestions cols="30" rows="6" placeholder="Enter Suggestions and/or complaints"></textarea>
         </div>
       </ion-item-divider>
     </div>
 </ion-content>
 <ion-footer color="secondary" style="padding: 10px">
-        <button ion-button full style="height: 50px" (click)="startNextScreen(complaints.value, suggestions.value)">
+        <button ion-button full style="height: 50px" (click)="startNextScreen(complaints.value)">
         <p style="font-size: 20px;" color="secondary" class="uppercase">Send</p>
         </button>
 </ion-footer>

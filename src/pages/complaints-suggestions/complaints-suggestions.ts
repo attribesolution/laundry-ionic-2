@@ -5,7 +5,7 @@ import { PickUpDetails } from '../pick-up-details/pick-up-details';
 
 import { PreGenModel } from '../../models/preGen.model';
 
-import { ComplaintsSuggestionsService } from './complatins-suggestions';
+import { ComplaintsSuggestionsService } from './complatins-suggestions.service';
 
 import { globalVars } from '../../app/globalvariables';
 
@@ -15,23 +15,24 @@ import { globalVars } from '../../app/globalvariables';
     providers: [ComplaintsSuggestionsService]
 })
 
-export class ComplaintsSuggestionsPage{
+export class ComplaintsSuggestionsPage{suggestions
      preGenData: PreGenModel;
      constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService){
         // this.preGenData = this.navParams.get('preGenData')
      }
 
-startNextScreen(complaints, suggestions){
-      console.log(complaints, suggestions);
-      // let URL = globalVars.patchCareInstructionsURL((this.preGenData.data as any)._id);
+startNextScreen(complaints){
+      console.log(complaints);
+      let userID = localStorage.getItem("userID");
+      let URL = globalVars.PatchComplainURL(userID);
       
-      let complaintsAndSuggestions = {complaints: complaints, suggestions: suggestions};
+      let complaintsAndSuggestions = {complaints: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
       console.log(complaintsAndSuggestions);
       
-      // this.complaintsSuggestionsService.hitCareInstructionsPatch(URL, {instructions: instructions})
-      //   .subscribe(res => {
-      //     console.log(res['_body']);
-      //   });
+      this.complaintsSuggestionsService.hitComplaintsSuggestionsPatchURL(URL, complaintsAndSuggestions)
+        .subscribe(res => {
+          console.log(res['_body']);
+        });
       // this.navCtrl.push(PickUpDetails, {
       //   preGenData: this.preGenData
       // });
