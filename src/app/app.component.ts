@@ -8,13 +8,14 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
+import{PaymentComponent} from '../pages/Payment/payment.component';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SignInPage;
+  rootPage: any = OrdersHistoryPage;
 
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform) {
@@ -25,7 +26,7 @@ export class MyApp {
     this.pages = [      
       { title: 'Home', component: LaundryMap },
       { title: 'Profile', component: ProfileComponent },
-      { title: 'Payment Method', component: LaundryMap },
+      { title: 'Payment Method', component: PaymentComponent },
       { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
