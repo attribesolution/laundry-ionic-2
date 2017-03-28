@@ -14,13 +14,20 @@
                     width: 100%; 
                     height: 100%;"
                     color="secondary">
-                    <p color="secondary" class="uppercase">Additional Information</p>
+                    <p color="secondary" class="uppercase">Saved Locations</p>
                 </div>
             </ion-item-divider>
-            <ion-textarea placeholder="Add notes..." style="border-bottom: 1px solid #ccc"></ion-textarea>
+            <ion-list *ngIf="addressResponse">
+                <ion-row *ngFor="let address of addressResponse">
+                    {{ address.address }}
+                </ion-row>
+            </ion-list>
+            <ion-item-divider class="fill-bg" *ngIf="!addressResponse">
+                You do not have any saved locations.
+            </ion-item-divider>
             <div style="margin: 2% 3%;">
-                <img src="./assets/images/inc_icon.png" class="button-icon-size" style="float: left" (click)=close() />
-                <img src="./assets/images/inc_icon.png" class="button-icon-size" alt="" style="float: right" (click)="done()">
+                <img src="./assets/images/inc_icon.png" style="float: left" (click)=close() />
+                <img src="./assets/images/inc_icon.png" alt="" style="float: right" (click)="done()">
             </div>
         </div>
     </div>

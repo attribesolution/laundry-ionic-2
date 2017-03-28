@@ -28,23 +28,41 @@
         <p color="secondary">NOTIFICATIONS SETTINGS</p>
         </div>
       </ion-item-divider>
-    
-    <ion-list>
-        <p style="display: inline; color: white; font-size:20px">Send app notifications</p>
-        <img src="" alt="" style="display: inline">
-    </ion-list>
-    <ion-list>
-         <p style="display: inline; color: white; font-size:20px">Send sms notifications</p>
-        <img src="" alt="" style="display: inline">
-    </ion-list>
-    <ion-list>
-         <p style="display: inline; color: white; font-size:20px">Send email notifications</p>
-        <img src="" alt="" style="display: inline">
-    </ion-list>
-    <ion-list>
-         <p style="display: inline; color: white; font-size:20px">Send app promo</p>
-        <img src="" alt="" style="display: inline">
-    </ion-list>
+      <form>
+        <ion-list>
+           <ion-item class="fill-bg">
+             <ion-label style="color: white; font-size: 20px;">Send app notifications</ion-label>
+             <ion-toggle 
+              name="toggle1" 
+              (change)="toggle(toggle1)" 
+              [(ngModel)]="toggle1" 
+              checked="false"
+              #toggle
+              (ionChange)=appNotification(toggle1)
+              color="primary"></ion-toggle>
+           </ion-item>
+            
+            
+        </ion-list>
+        
+        <ion-list *ngIf="null">
+          
+              <span style="display: inline; color: white; font-size:20px">Send sms notifications</span>
+          
+          
+              <ion-toggle checked="false" style="display: inline!important"></ion-toggle>
+          
+            
+        </ion-list>
+        <ion-list *ngIf="null">
+            <p style="display: inline; color: white; font-size:20px">Send email notifications</p>
+            <ion-toggle checked="false"></ion-toggle>
+        </ion-list>
+        <ion-list *ngIf="null">
+            <p style="display: inline; color: white; font-size:20px">Send app promo</p>
+            <ion-toggle checked="false"></ion-toggle>
+        </ion-list>
+      </form>
     </div>
 
  </div>   

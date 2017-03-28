@@ -11,7 +11,8 @@ import { globalVars } from '../../app/globalvariables';
 
 @Component ({
     selector: 'care-instructions',
-    templateUrl: 'care-instructions.html'
+    templateUrl: 'care-instructions.html',
+    providers: [CareInstructionsService]
 })
 
 export class CareInstructions{
@@ -23,7 +24,11 @@ export class CareInstructions{
 startNextScreen(shirtsIns, dryCleanIns){
       console.log(shirtsIns, dryCleanIns);
       let URL = globalVars.patchCareInstructionsURL((this.preGenData.data as any)._id);
-      this.careInstructionsService.hitCareInstructionsPatch(URL, {laundryInstruction: shirtsIns, drycleanInstruction: dryCleanIns});
+      let instructions = {laundryInstruction: shirtsIns, drycleanInstruction: dryCleanIns};
+      this.careInstructionsService.hitCareInstructionsPatch(URL, {instructions: instructions})
+        .subscribe(res => {
+          console.log(res['_body']);
+        });
       this.navCtrl.push(PickUpDetails, {
         preGenData: this.preGenData
       });

@@ -1,0 +1,38 @@
+<ion-content padding class="fill-bg">
+    <img src="./assets/images/logo.png">
+    <form novalidate #f>
+      <div class="sign-in-input-fields">
+        <ion-icon name="contact" class="sign-in-icon"></ion-icon>
+        <input
+         required 
+         id="username" 
+         type="password"
+         name="username" 
+         autocomplete="off" 
+         class="sign-in-input"
+         [(ngModel)]="username"  
+         placeholder="Username"> 
+      </div>
+      <div class="sign-in-input-fields">
+        <ion-icon name="lock" class="sign-in-icon"></ion-icon>
+        <input required id="password" name="password" autocomplete="off" [(ngModel)]="password" type="password" class="sign-in-input" placeholder="Password"> 
+      </div>
+      <div padding>
+        <button ion-button block primary (click)="signIn(username, password);">SIGN IN</button>
+      </div>
+    </form>
+    <div class="center">
+      <img src="./assets/images/fb_icon.png" alt="">
+      <img src="./assets/images/googlePlus_icon.png" alt="">
+    </div>
+</ion-content>
+<ion-footer>
+  <button 
+    block
+    ion-button
+    (click)="signupPage();"
+    color="secondary"
+    class="center uppercase">
+      Don't have an account? Sign Up here.
+  </button>
+</ion-footer>

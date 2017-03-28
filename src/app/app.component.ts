@@ -2,21 +2,19 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { LaundryMap } from '../pages/map/map.component';
-// import { LaundryItems } from '../pages/laundryitems/laundryitems';
-// import { CareInstructions } from '../pages/care-instructions/care-instructions';
-// import { OrderPlaced } from '../pages/order-placed/order-placed';
-// import { DropOffDetails } from '../pages/drop-off-details/drop-off-details'
-// import { ServicesPage } from '../pages/services/services';
 import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list'
+import { SignInPage } from '../pages/sign-in/sign-in'
+import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
+import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = LaundryMap;
+  rootPage: any = SignInPage;
 
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform) {
@@ -28,10 +26,10 @@ export class MyApp {
       { title: 'Home', component: LaundryMap },
       { title: 'Profile', component: ProfileComponent },
       { title: 'Payment Method', component: LaundryMap },
-      { title: 'Order History', component: LaundryMap },
+      { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
-
+      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage }
     ];
 
   }

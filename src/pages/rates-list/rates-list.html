@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar color="secondary">
+        <button ion-button menuToggle>
+            <img src="./assets/images/burger_menu.png" alt="" style="width:15px; height:15px;">
+        </button>
+        <ion-title color="primary">Rates List</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="fill-bg">
+    <div class="heading">
+        <ion-item-divider class="fill-bg" style="padding: 5px 10px 0 10px; border-bottom:0;">
+            <div id="heading-bg" style="padding:10px; background: url('./assets/images/heading_bg.png'); text-align: center; background-size: 100%; background-repeat: no-repeat; background-position: center; width: 100%; height: 100%;" color="secondary">
+                <p color="secondary">LAUNDRY ITEMS RATE LIST</p>
+            </div>
+        </ion-item-divider>
+    </div>
+    <div *ngIf="responseArray">
+        <ion-list color="secondary" style="border-bottom:0">
+            <ion-item-divider color="secondary">
+                <ion-row>
+                    <ion-col width-40><div class="center col-heading">Name</div></ion-col>                    
+                    <ion-col width-30><div class="center col-heading" block disabled>Dry Clean</div></ion-col>
+                    <ion-col width-30><div block class="center col-heading">Wash</div></ion-col>
+                </ion-row>
+            </ion-item-divider>
+            <ion-item-divider color="secondary" *ngFor="let item of responseArray">
+                <ion-row>
+                    <ion-col>
+                        {{ item.name }}
+                    </ion-col>
+                    <ion-col class="center">
+                        {{ item.rate.dryclean }}
+                    </ion-col>
+                    <ion-col class="center">
+                        {{ item.rate.wash }}
+                    </ion-col>
+                </ion-row>
+            </ion-item-divider>
+        </ion-list>
+    </div>
+</ion-content>
