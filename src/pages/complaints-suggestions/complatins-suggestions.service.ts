@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 export class ComplaintsSuggestionsService{
     constructor(private http: Http){}
    
-     hitCareInstructionsPatch = (URL:string, data: any, options?) => {
+     hitComplaintsSuggestionsPatchURL = (URL:string, data: any, options?) => {
         console.log("Hitting: ", URL);
         console.log(data, JSON.stringify(data));
         return this.http.patch(URL, data, options)
