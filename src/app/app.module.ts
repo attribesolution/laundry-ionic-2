@@ -19,6 +19,7 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
+import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 @NgModule({
   declarations: [
     MyApp,
@@ -37,7 +38,8 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
     SignInPage,
     SignUpPage,
     OrdersHistoryPage,
-    ComplaintsSuggestionsPage
+    ComplaintsSuggestionsPage,
+    FBSignInPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -63,7 +65,8 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
     SignInPage,
     SignUpPage,
     OrdersHistoryPage,
-    ComplaintsSuggestionsPage
+    ComplaintsSuggestionsPage,
+    FBSignInPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
