@@ -46,5 +46,9 @@ export const globalVars =  {
     ComplainUrl:'/complain',
     PatchComplainURL(userID){
         return this.BaseURL + this.AllUsers + '/' + userID + this.ComplainUrl; 
+    },
+    NotificationURL: '/notificationSettings',
+    NotificationSettingsURL(userID){
+        return this.BaseURL + this.AllUsers + '/' + this.notificationSettings;
     }
 }
