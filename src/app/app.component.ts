@@ -8,7 +8,7 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
-import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
+import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 @Component({
   templateUrl: 'app.html'
 })
@@ -26,7 +26,7 @@ export class MyApp {
     this.pages = [      
       { title: 'Home', component: LaundryMap },
       { title: 'Profile', component: ProfileComponent },
-      { title: 'Payment Method', component: LaundryMap },
+      { title: 'Payment Method', component: PaymentMethodsPage },
       { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
@@ -39,20 +39,20 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //Facebook Login
-      let env = this;
-      NativeStorage.getItem('user')
-      .then( function (data) {
-        // user is previously logged and we have his data
-        // we will let him access the app
-        env.nav.push(OrdersHistoryPage);
-        Splashscreen.hide();
-      }, function (error) {
-        //we don't have the user data so we will ask him to log in
-        env.nav.push(FBSignInPage);
-        Splashscreen.hide();
-      });
-
+      // //Facebook Login
+      // let env = this;
+      // NativeStorage.getItem('user')
+      // .then( function (data) {
+      //   // user is previously logged and we have his data
+      //   // we will let him access the app
+      //   env.nav.push(OrdersHistoryPage);
+      //   Splashscreen.hide();
+      // }, function (error) {
+      //   //we don't have the user data so we will ask him to log in
+        
+      
+      // });
+      Splashscreen.hide();
       StatusBar.styleDefault();
     });
   }
