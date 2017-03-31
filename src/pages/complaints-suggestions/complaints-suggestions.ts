@@ -17,11 +17,25 @@ import { globalVars } from '../../app/globalvariables';
 
 export class ComplaintsSuggestionsPage{suggestions
      preGenData: PreGenModel;
+     complaints1: any = '';
      constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService){
         // this.preGenData = this.navParams.get('preGenData')
      }
+    ionViewDidLoad(){
 
-startNextScreen(complaints){
+    }     
+    getHistory = () => {
+      let userID = localStorage.getItem("userID");
+      let URL = globalVars.PatchComplainURL(userID);
+      this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL)
+        .subscribe(res =>{
+          if (res.status == 200){
+            console.log(res['_body']);
+            this.complaints1 = res['_body']['complains'];
+          }
+        });
+    }
+   startNextScreen(complaints){
       console.log(complaints);
       let userID = localStorage.getItem("userID");
       let URL = globalVars.PatchComplainURL(userID);
@@ -31,7 +45,16 @@ startNextScreen(complaints){
       
       this.complaintsSuggestionsService.hitComplaintsSuggestionsPatchURL(URL, complaintsAndSuggestions)
         .subscribe(res => {
-          console.log(res['_body']);
+          if(res.status == 200){
+            console.log(res['_body']);
+            let URL2 = (URL as string).concat('s');
+            this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
+              .subscribe(response => {
+                if (response.status == 200){
+                  console.log(response['body']);
+                }
+              })
+          }
         });
       // this.navCtrl.push(PickUpDetails, {
       //   preGenData: this.preGenData

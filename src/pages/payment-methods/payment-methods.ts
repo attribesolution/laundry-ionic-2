@@ -23,7 +23,7 @@ export class PaymentMethodsPage {
   };
   methods = [this.cashOnDelivery, this.creditCard];
   toggleMethod(method){
-    console.log(method);
+    console.log(method.name, ' is ', method.checked);
     method == 'cashOnDelivery' ? this.creditCard.checked = false : this.cashOnDelivery.checked = true;
   }
   ionViewDidLoad() {

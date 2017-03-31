@@ -35,9 +35,38 @@
         </div>
       </ion-item-divider>
     </div>
-
 </ion-row>
 
+<div class="heading">
+      <ion-item-divider class="fill-bg"
+                        style=" display: block;margin: 0 auto;
+                                padding-top: 5px; 
+                                padding-bottom: 5px; 
+                                border-bottom: 0px">
+        <div
+        style="padding: 10px; 
+              background: url('./assets/images/heading_bg.png');  
+              text-align: center;
+              background-size: 100%; 
+              background-repeat: no-repeat;
+              background-position: center;
+              width: 100%; 
+              height: 100%;"
+                                    
+                                    color="secondary">
+        <p color="secondary" class="uppercase">History</p>
+        </div>
+      </ion-item-divider>
+    </div>
+
+    <ion-list style="height: 20vh; overflow-y: scroll; ">
+      <ion-item-divider *ngIf="complaints1 == ''" style="color: aqua">
+        No Suggestions/Complaints found.
+      </ion-item-divider>
+      <ion-item-divider class="fill-bg" *ngFor="let item of complaints1" style="color: red;">
+        {{ item }}
+      </ion-item-divider>
+    </ion-list>
     <div class="heading" *ngIf="null">
       <ion-item-divider class="fill-bg"
                         style="
