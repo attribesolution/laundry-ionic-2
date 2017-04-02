@@ -24,10 +24,9 @@ export class MyApp {
     // used for an example of ngFor and navigation
 
     this.pages = [      
-      { title: 'Home', component: LaundryMap },
+      { title: 'Home', component: OrdersHistoryPage },
       { title: 'Profile', component: ProfileComponent },
       { title: 'Payment Method', component: PaymentMethodsPage },
-      { title: 'Order History', component: OrdersHistoryPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage }
