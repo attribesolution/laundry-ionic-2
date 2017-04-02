@@ -25,6 +25,11 @@
             <ion-item-divider class="fill-bg" *ngIf="!addressResponse">
                 You do not have any saved locations.
             </ion-item-divider>
+            <ion-item-divider class="fill-bg" *ngIf="addressResponse">
+                <ion-row *ngFor="let address of addressResponse">
+                    <ion-col>{{ address }}</ion-col>
+                </ion-row>
+            </ion-item-divider>
             <div style="margin: 2% 3%;">
                 <img src="./assets/images/inc_icon.png" style="float: left" (click)=close() />
                 <img src="./assets/images/inc_icon.png" alt="" style="float: right" (click)="done()">
