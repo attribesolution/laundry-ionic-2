@@ -10,5 +10,10 @@ export class ComplaintsSuggestionsService{
         console.log(data, JSON.stringify(data));
         return this.http.patch(URL, data, options)
             // .map(res => JSON.parse(res['_body']).results);
-    }   
+    }
+     hitComplaintsSuggestionsGetURL = (URL:string, options?) => {
+        console.log("Hitting: ", URL);
+        return this.http.get(URL, options)
+    }
+    
 }

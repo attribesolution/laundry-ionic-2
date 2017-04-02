@@ -30,15 +30,13 @@
       </ion-item-divider>
       <form>
         <ion-list>
-           <ion-item class="fill-bg">
-             <ion-label style="color: white; font-size: 20px;">Send app notifications</ion-label>
-             <ion-toggle 
-              name="toggle1" 
-              (change)="toggle(toggle1)" 
-              [(ngModel)]="toggle1" 
-              checked="false"
-              #toggle
-              (ionChange)=appNotification(toggle1)
+           <ion-item class="fill-bg" *ngFor="let notification of notifications">
+             <ion-label style="color: white; font-size: 20px;">{{ notification.htmlValue }}</ion-label>
+             <ion-toggle  
+              checked="{{notification.checked}}"
+              #{{notification.name}}
+              disabled="{{notification.disabled}}"
+              (ionChange)=appNotification(notification.name)
               color="primary"></ion-toggle>
            </ion-item>
             
@@ -68,7 +66,7 @@
  </div>   
 </ion-content>
 <ion-footer style="padding: 10px;">
-        <button ion-button full style="height: 50px" (click)="save()">
+        <button ion-button full style="height: 50px" (click)="save(appNotification.value, smsNotification, emailNotification, promoNotification)">
         <p style="font-size: 20px;" color="secondary">Save</p>
         </button>
 </ion-footer>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Facebook, NativeStorage } from 'ionic-native';
+import {  NativeStorage,FacebookLoginResponse,Facebook } from 'ionic-native';
+//import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { OrdersHistoryPage } from './../orders-history/orders-history';
 /*
   Generated class for the FBSignIn page.
@@ -15,11 +16,31 @@ import { OrdersHistoryPage } from './../orders-history/orders-history';
 export class FBSignInPage {
   FB_APP_ID: number = 424333447903216;
 
-  constructor(public navCtrl: NavController) {
-    Facebook.browserInit(this.FB_APP_ID, "v2.8");
+  constructor(public navCtrl: NavController , private fb: Facebook) {
+    //fb.browserInit(this.FB_APP_ID, "v2.8")
+    //fb.browserInit(this.FB_APP_ID, "v2.8");
+
+    Facebook.browserInit(424333447903216, "v2.8")
+    
   }
 
-  doFbLogin(){
+ ngAfterViewInit(){
+        
+        Facebook.login(['public_profile', 'user_friends', 'email'])
+  .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+  .catch(e => console.log('Error logging into Facebook', e));
+
+  //       this.fb.login(['public_profile', 'user_friends', 'email'])
+  // .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+  // .catch(e => console.log('Error logging into Facebook', e));
+    }
+    ionViewDidLoad(){
+           Facebook.login(['public_profile', 'user_friends', 'email'])
+  .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+  .catch(e => console.log('Error logging into Facebook', e));
+    }
+
+  /*doFbLogin(){
     let permissions = new Array();
     let nav = this.navCtrl;
     //the permissions your facebook app needs from the user
@@ -51,5 +72,5 @@ export class FBSignInPage {
     }, function(error){
       console.log(error);
     });
-  }
+  }*/
 }
