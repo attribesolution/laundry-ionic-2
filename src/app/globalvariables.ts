@@ -50,6 +50,9 @@ export const globalVars =  {
     PatchComplainURL(userID){
         return this.BaseURL + this.AllUsers + '/' + userID + this.ComplainUrl; 
     },
+    getComplainsURL(userID){
+        return this.BaseURL + this.AllUsers + '/' + userID + this.ComplainUrl + 's';
+    },
     NotificationURL: '/notificationSettings',
     NotificationSettingsURL(userID){
         return this.BaseURL + this.AllUsers + '/' + userID + this.NotificationURL;
