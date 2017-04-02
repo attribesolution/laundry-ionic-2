@@ -57,7 +57,7 @@ export class ComplaintsSuggestionsPage{suggestions
               })
           }
         });
-      // this.navCtrl.push(PickUpDetails, {
+      
       //   preGenData: this.preGenData
       // });
       console.log("Next clicked!");
