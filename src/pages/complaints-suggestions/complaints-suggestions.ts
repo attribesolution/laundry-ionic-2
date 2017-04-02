@@ -20,13 +20,14 @@ export class ComplaintsSuggestionsPage{suggestions
      complaints1: any = '';
      constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService){
         // this.preGenData = this.navParams.get('preGenData')
+        this.getHistory();
      }
     ionViewDidLoad(){
-      this.getHistory();
+      
     }     
     getHistory = () => {
       let userID = localStorage.getItem("userID");
-      let URL = globalVars.PatchComplainURL(userID);
+      let URL = globalVars.getComplainsURL(userID);
       this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL)
         .subscribe(res =>{
           if (res.status == 200){

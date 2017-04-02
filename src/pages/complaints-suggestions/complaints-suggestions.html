@@ -59,8 +59,8 @@
       </ion-item-divider>
     </div>
 
-    <ion-list style="height: 20vh; overflow-y: scroll; ">
-      <ion-item-divider *ngIf="complaints1 == ''" style="color: aqua">
+    <ion-list style="height: 20vh; overflow-y: scroll; " class="fill-bg">
+      <ion-item-divider class="fill-bg" *ngIf="complaints1 == ''" style="color: white">
         No Suggestions/Complaints found.
       </ion-item-divider>
       <ion-item-divider class="fill-bg" *ngFor="let item of complaints1" style="color: red;">
