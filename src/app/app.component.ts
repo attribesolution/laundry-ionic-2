@@ -17,7 +17,7 @@ import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = FBSignInPage;
+  rootPage: any = SignInPage;
 
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform) {
