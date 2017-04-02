@@ -41,7 +41,10 @@ export const globalVars =  {
     },
     UsersAddressURL: '/address',
     UserAddress(userID: string){
-        return this.BaseURL + '/' +  userID + this.UsersAddressURL;
+        return this.BaseURL + this.AllUsers + '/' +  userID + this.UsersAddressURL;
+    },
+    getUsersAddress(userID: string){
+        return this.BaseURL + this.AllUsers +  '/' + userID +  '/addresses';
     },
     ComplainUrl:'/complain',
     PatchComplainURL(userID){
@@ -49,6 +52,6 @@ export const globalVars =  {
     },
     NotificationURL: '/notificationSettings',
     NotificationSettingsURL(userID){
-        return this.BaseURL + this.AllUsers + '/' + this.notificationSettings;
+        return this.BaseURL + this.AllUsers + '/' + userID + this.NotificationURL;
     }
 }

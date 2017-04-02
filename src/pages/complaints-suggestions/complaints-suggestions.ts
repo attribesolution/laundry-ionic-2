@@ -22,7 +22,7 @@ export class ComplaintsSuggestionsPage{suggestions
         // this.preGenData = this.navParams.get('preGenData')
      }
     ionViewDidLoad(){
-
+      this.getHistory();
     }     
     getHistory = () => {
       let userID = localStorage.getItem("userID");

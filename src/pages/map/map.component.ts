@@ -44,7 +44,7 @@ export class LaundryMap implements AfterViewInit{
     locationAlias: string;
     inputFieldValue: string = '';
     search1;
-    addressReponse: any;
+    addressResponse: any;
     constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
       console.log(this.search1);
       this.createPreGen();  
@@ -232,19 +232,26 @@ export class LaundryMap implements AfterViewInit{
 
   savedButtonClicked(myEvent){ 
     this.saved=this.saved?false:true;
-    console.log("savedButtonClicked");
-    let userID = localStorage.getItem("userID");
-    let URL = globalVars.UserAddress(userID);
-    this.mapService.getAddress(URL)
-      .subscribe(res =>{
-        res.status == 200 ? this.addressReponse = ["_body"]: this.addressReponse = null;
-      });
-    this.addition=this.addition?false:true;
+    // console.log("savedButtonClicked");
+    let userID = localStorage.getItem('userID');
+        console.log(userID);
+        let URL = globalVars.getUsersAddress(userID);
+        console.log(URL);        
+        let addressResponse: any;
+        this.mapService.getAddress(URL)
+            .subscribe(res =>{
+                if(res.status == 200){                    
+                    this.addressResponse = JSON.parse(res['_body'])['data'].contact;
+                    console.log(this.addressResponse);
+                    console.log(this.addressResponse);
+                }
+            });
+    // this.addition=this.addition?false:true;
     this.openSavedLocationModal(myEvent);
   }
   openSavedLocationModal(myEvent)
   {
-    let popover = this.popoverCtrl.create(SavedLocations, {}, {showBackdrop: true});
+    let popover = this.popoverCtrl.create(SavedLocations, {address: this.addressResponse}, {showBackdrop: true});
     popover.present({
       ev: myEvent
     });
@@ -262,7 +269,13 @@ export class LaundryMap implements AfterViewInit{
       lat: this.lat,
       long: this.lng
     }
-    this.mapService.patchAddress(URL, data);
+    this.mapService.patchAddress(URL, data)
+      .subscribe(res => {
+        if(res.status == 200){
+          console.log(res['_body']);
+        }
+        
+      });
   }
 
 
