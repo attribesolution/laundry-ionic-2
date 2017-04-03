@@ -32,7 +32,8 @@ export class ComplaintsSuggestionsPage{suggestions
         .subscribe(res =>{
           if (res.status == 200){
             console.log(res['_body']);
-            this.complaints1 = res['_body']['complains'];
+            this.complaints1 = res['_body'] == undefined ? '' : JSON.parse(res['_body'])['data'][0]['complains'];
+            console.log(this.complaints1);
           }
         });
     }
@@ -48,7 +49,7 @@ export class ComplaintsSuggestionsPage{suggestions
         .subscribe(res => {
           if(res.status == 200){
             console.log(res['_body']);
-            let URL2 = (URL as string).concat('s');
+            let URL2 = globalVars.getComplainsURL(userID);
             this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
               .subscribe(response => {
                 if (response.status == 200){
