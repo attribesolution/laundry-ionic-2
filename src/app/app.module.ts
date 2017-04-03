@@ -21,11 +21,7 @@ import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
-<<<<<<< HEAD
-
-=======
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
->>>>>>> 25641d348e11cd85bdeeccbfab30ead2f90c2c42
 @NgModule({
   declarations: [
     MyApp,
