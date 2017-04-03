@@ -152,7 +152,8 @@ calculateTotalAmount(item){
     };
 
     console.log("laundry data = ",laundryData);
-    
+    let items = JSON.stringify(laundryData.laundryItems);
+    localStorage.setItem('Laundry Items', items);
     let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
     console.log(URL)
     this.items_Service.patchService(URL,laundryData)
