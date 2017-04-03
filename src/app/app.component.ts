@@ -9,6 +9,7 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
+// import { OrderSummaryPage } from '../pages/order-summary/order-summary';
 @Component({
   templateUrl: 'app.html'
 })
