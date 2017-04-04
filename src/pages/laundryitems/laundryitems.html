@@ -32,13 +32,13 @@
   </ion-item-divider>
 </div>
   <div *ngIf="responseArray" class="list" >
-    <ion-list class="fill-bg" 
+    <ion-list class="fill-bg itemlist" 
               color="secondary"
               style="border-bottom: 0px" >
-      <ion-item-divider id="item-list"
-                        color="secondary"
-                        *ngFor="let item of responseArray"
-                        class="fill-bg">
+      <ion-item-divider
+              color="secondary"
+              *ngFor="let item of responseArray"
+              class=" fill-bg">
         <ion-col class="fill-bg"
                  style="background-color: transparent"
                  item-left

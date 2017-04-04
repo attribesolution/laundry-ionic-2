@@ -56,5 +56,9 @@ export const globalVars =  {
     NotificationURL: '/notificationSettings',
     NotificationSettingsURL(userID){
         return this.BaseURL + this.AllUsers + '/' + userID + this.NotificationURL;
+    },
+    SignInURL: '/api/v1/auth/local',
+    PostSignInApi(){
+        return this.BaseURL + this.SignInURL;
     }
 }

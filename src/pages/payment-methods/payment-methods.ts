@@ -11,7 +11,7 @@ export class PaymentMethodsPage {
   cashOnDelivery = {
     name: 'cashOnDelivery',
     checked: true,
-    disabled: false,
+    disabled: true,
     htmlValue: 'Cash On Delivery'
   };
   creditCard = {

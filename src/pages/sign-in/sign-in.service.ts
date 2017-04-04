@@ -4,11 +4,7 @@ import { Http } from '@angular/http';
 export class SignInService{
     constructor(private http: Http){}
 
-    getUser = (username, password) =>{
-        if(username == 'taha' && password == '1234'){
-            return {
-                signIn: 'SucessFull'
-            }
-        }
+    signInUser = (URL, body): any => {
+        return this.http.post(URL, body)
     }
 }
