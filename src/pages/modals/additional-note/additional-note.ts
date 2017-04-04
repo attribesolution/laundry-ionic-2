@@ -2,7 +2,8 @@ import { NavController ,ViewController, PopoverController } from 'ionic-angular'
 import {Component} from '@angular/core';
 
 @Component ({
-    templateUrl:'additional-note.html'
+    templateUrl:'additional-note.html',
+    selector: 'additional-note'
    
 })
 export class AdditionalNote
