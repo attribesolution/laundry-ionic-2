@@ -21,6 +21,6 @@ export class OrderSummaryPage {
     console.log(this.location);
   }
   startNextScreen = () => {
-    this.navCtrl.push(OrderPlaced)
+    this.navCtrl.setRoot(OrderPlaced)
   }
 }

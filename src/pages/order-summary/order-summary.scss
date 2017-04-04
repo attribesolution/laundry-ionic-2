@@ -5,6 +5,10 @@ page-order-summary {
     }
     ion-row{
         border: 0!important;
+        color: white;
+        ion-item-divider{
+            color: white!important;
+        }
     }
     .item-inner{
         border: 0!important;
