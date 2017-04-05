@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 
 
 @Component ({
-    templateUrl: 'profile.html'
+    templateUrl: 'profile.html',
+    selector: 'profile'
 })
 
 export class ProfileComponent{

@@ -18,17 +18,17 @@ export class SignInPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignInPage');
   }
-  signIn(username, password){
+  signIn(user, passwd){
     
     let body = {
-      username: username,
-      password: password
+      username: user,
+      password: passwd
     },
     URL = globalVars.PostSignInApi();
     this.signInService.signInUser(URL, body).subscribe(res => {
                 if(res.status == 200){
                     alert(true);       
-                    console.log('Sign In successful with credentials', username, password);     
+                    console.log('Sign In successful with credentials', user, passwd);     
                 }
             })
       // this.navCtrl.setRoot(OrdersHistoryPage);

@@ -36,6 +36,6 @@ export class OrdersHistoryPage{
       });
   }
   placeOrder(){
-    this.navCtrl.setRoot(LaundryMap);
+    this.navCtrl.push(LaundryMap);
   }
 }

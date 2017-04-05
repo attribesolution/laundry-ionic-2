@@ -67,7 +67,7 @@ export class NotificationComponent{
      presentToast = () =>{
          let toast = this.toastCtrl.create({
              message: 'Notifications settings updated.',
-             duration: 5000,
+             duration: 2500,
              position: 'bottom',
              cssClass: 'toastBg'
          });
