@@ -7,10 +7,11 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { OrdersHistoryService } from './orders-history.service';
 import { globalVars } from '../../app/globalvariables';
 import { LaundryMap } from '../map/map.component';
+import { User } from '../../app/user';
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [OrdersHistoryService, NativeStorage, Storage, JwtHelper]
+  providers: [User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
 })
 export class OrdersHistoryPage{
   OnInit(){
@@ -18,18 +19,17 @@ export class OrdersHistoryPage{
   }
   userID: string;
   response: any;
+  // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private ordersHistoryService: OrdersHistoryService,
               private storage: Storage,
               private nativeStorage: NativeStorage,
-              private jwtHelper: JwtHelper) {
-                storage.get("x-access-token")
-                  .then(token => {
-                    this.userID = this.jwtHelper.decodeToken((token)['xAccessToken'])['_id'];
-                    console.log(this.userID);
-                    this.getOrdersHistory();
-                  })
+              private jwtHelper: JwtHelper,
+              private user: User) {
+              let xAccessToken = this.user.getUserAccessToken();
+                
+              this.getOrdersHistory();
                 // this.userID = this.navParams.get('userID');
                 // console.log(this.userID);
                 
@@ -43,6 +43,7 @@ export class OrdersHistoryPage{
     console.log('ionViewDidLoad OrdersHistoryPage');
     let xAccessToken: any;
         let options, headers: any;
+        let token = 
         this.storage.get('x-access-token')
             .then(
                data => {
