@@ -10,28 +10,18 @@ import { globalVars } from '../../app/globalvariables';
 
 export class LaundryItemsService{
     
-    headers: Headers;
-    options: RequestOptions;
 
     constructor(private http: Http, private storage: Storage){
-        let xAccessToken: any;
-        this.storage.get('x-access-token')
-                .then(
-                        data => {
-                                xAccessToken = data['xAccessToken'];
-                                console.log('On OrdersHistoryService', xAccessToken);
-                                
-                        } 
-        )       
-        let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  xAccessToken});
-        let options = new RequestOptions({ headers: headers });
+        
     }
     
-    getItems = () => {
+    getItems = (token) => {
+        let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  token});
+        let options = new RequestOptions({ headers: headers });
          let URL = globalVars.getLaundryitemsApiURL();
         console.log(URL);
        // let URL = (globalVars.LaundryitemsApiURL());
-          return this.http.get(URL, this.options);
+          return this.http.get(URL, options);
             // .map(e=> e.formatted_address)
     } 
 

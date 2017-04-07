@@ -27,22 +27,25 @@ export class LaundryItems implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService, private storage: Storage) {
     this.selectedItem = navParams.get('item');
     this.preGenData = navParams.get('preGenData');
-    this.storage.get('xAccessToken').then(token  => {
-      console.log(tokenNotExpired(null, token));
-      
-    })
+    
     // this.loc = navParams.get('pickupDetails');
 }
 
 
   ngOnInit(){
-    this.getLaundryItems();
+    this.storage.get('x-access-token').then(token  => {
+      token = token['xAccessToken'];
+      this.getLaundryItems(token);
+      console.log(tokenNotExpired(null, token));
+      
+    })
+    
   }
 
-  getLaundryItems = () => {
+  getLaundryItems = (token) => {
     console.log(this.selectedItem);
     
-    var response$      =  this.items_Service.getItems()
+    var response$      =  this.items_Service.getItems(token)
     .subscribe(res => {
       if(res.status == 200) {
         let response = JSON.parse(res['_body']) 
@@ -59,19 +62,19 @@ export class LaundryItems implements OnInit{
   }
 
   refresher() {
-    var response2$ = this.items_Service.getItems()
-      .subscribe(res => {
-        if(res.status == 200){
-          let response = JSON.parse(res['_body']);
-          this.laundryitems2 = {
-            href: response["href"],
-            data: response["data"]
-          }
-          this.maplaundryitems(this.laundryitems2.data);
+    // var response2$ = this.items_Service.getItems(token)
+    //   .subscribe(res => {
+    //     if(res.status == 200){
+    //       let response = JSON.parse(res['_body']);
+    //       this.laundryitems2 = {
+    //         href: response["href"],
+    //         data: response["data"]
+    //       }
+    //       this.maplaundryitems(this.laundryitems2.data);
           
-        }
-        this.responseArray = this.responseArray1;
-      })
+    //     }
+    //     this.responseArray = this.responseArray1;
+    //   })
   }
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
