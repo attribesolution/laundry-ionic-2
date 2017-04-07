@@ -4,14 +4,17 @@ import { SignInService } from './sign-in.service';
 import { OrdersHistoryPage } from '../orders-history/orders-history';
 import { SignUpPage } from '../sign-up/sign-up';
 import { globalVars } from './../../app/globalvariables';
+import { NativeStorage } from 'ionic-native';
+import { Storage } from '@ionic/storage';
+import { JwtHelper } from 'angular2-jwt';
 @Component({
   selector: 'page-sign-in',
   templateUrl: 'sign-in.html',
-  providers: [SignInService]
+  providers: [SignInService, Storage, JwtHelper]
 })
 export class SignInPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private menuController: MenuController, private signInService: SignInService) {
+  token: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private menuController: MenuController, private signInService: SignInService, private storage: Storage, private jwtHelper: JwtHelper) {
     this.menuController.swipeEnable(false);
   }
 
@@ -20,15 +23,34 @@ export class SignInPage {
   }
   signIn(user, passwd){
     
-    let body = {
-      username: user,
-      password: passwd
-    },
-    URL = globalVars.PostSignInApi();
-    this.signInService.signInUser(URL, body).subscribe(res => {
+    let URL = globalVars.PostSignInApi();
+    this.signInService.signInUser(URL, {
+      "username": user,
+      "password": passwd
+    }).subscribe(res => {
                 if(res.status == 200){
-                    alert(true);       
-                    console.log('Sign In successful with credentials', user, passwd);     
+                    this.token = JSON.parse(res['_body'])['token'];
+                    let userID = this.jwtHelper.decodeToken(this.token);
+                    this.storage.set('userID', {"userID": userID})
+                      .then(
+                        () => {
+                          console.log('On Sign In, userID saved.');
+                        },
+                        error => {
+                          console.log('On Sign In, userID saved.');
+                          
+                        }
+                      )
+                    console.log(userID._id);
+                    this.storage.set('x-access-token', {"xAccessToken": this.token})  
+                      .then (
+                        () => {
+                          console.log('Stored X-Access-Token');
+                          this.navCtrl.setRoot(OrdersHistoryPage);
+                        },
+                        error => console.error('Error storing item', error)
+                      );
+                    console.log('Sign In successful with', this.token);     
                 }
             })
       // this.navCtrl.setRoot(OrdersHistoryPage);

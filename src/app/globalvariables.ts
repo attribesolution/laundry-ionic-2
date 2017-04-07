@@ -1,6 +1,7 @@
 export const globalVars =  {
 
-    BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
+    // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
+    BaseURL: "http://localhost:3000",
 
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
@@ -31,7 +32,7 @@ export const globalVars =  {
     patchCareInstructionsURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.CareInstructionsURL;
     },
-    AllUsers: "/api/v1/users",
+    AllUsers: "/api/v1/users/",
     PostNewUser(){
         return ((this.BaseURL + this.AllUsers as string));
     },

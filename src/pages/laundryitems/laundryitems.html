@@ -31,6 +31,10 @@
     </div>
   </ion-item-divider>
 </div>
+
+<ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div *ngIf="responseArray" class="list" >
     <ion-list class="fill-bg itemlist" 
               color="secondary"
