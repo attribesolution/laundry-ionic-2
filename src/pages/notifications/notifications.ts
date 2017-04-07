@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable'
 import { globalVars } from '../../app/globalvariables';
 import { NotificationsService } from './notifications.service';
 import { NotificationModel } from '../../models/notification.model'
+import { Storage } from '@ionic/storage'
 @Component ({
     templateUrl: 'notifications.html',
     providers: [NotificationsService]
@@ -12,16 +13,7 @@ import { NotificationModel } from '../../models/notification.model'
 export class NotificationComponent{
     
     notificationData:any;
-    getNotificationSettings(){
-        let userID = localStorage.getItem('userID');
-        let URL = globalVars.NotificationSettingsURL(userID);
-        this.notificationsService.getNotificationSettings(URL)
-            .subscribe(res => {
-                if(res.status == 200){
-                    console.log(JSON.stringify(res['_body'])['data']);
-                }
-            })
-    }
+    
     app = {
         name: 'appNotification',
         checked: true,
@@ -59,7 +51,7 @@ export class NotificationComponent{
      notificationSetting: NotificationModel;
     
      constructor(private navCtrl: NavController, private toastCtrl: ToastController, private notificationsService: NotificationsService){
-        this.getNotificationSettings();
+        this.getNotificatinSettings();
      }
 
      appNotification(value){
