@@ -28,10 +28,11 @@ export class MapService{
             .map(res => JSON.parse(res['_body']).results)
             // .map(e=> e.formatted_address)
      } 
-     hitPreGen = (URL:any) => {
+     hitPreGen = (URL:any, token) => {
         console.log("Hitting: ", URL);
-
-        return this.http.get(URL, this.options)
+        let headers = new Headers({'x-access-token': token});
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(URL, options)
             // .map(res => JSON.parse(res['_body']).results);
     }
     patchAddress = (URL: string, data: any, options?:any) =>{
