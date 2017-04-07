@@ -1,4 +1,9 @@
 page-sign-up {
+    .main-logo{
+        height: 25vh;
+        display: block;
+        margin: 2vh auto;
+    }
     .sign-up-input-fields{
         padding: 0;
         background-color: #1F2C27 ;
@@ -28,5 +33,14 @@ page-sign-up {
         :-ms-input-placeholder{
             text-align: center!important;
         }
+    }
+    input[type="date"]:before {
+        content: attr(placeholder) !important;
+        color: #aaa;
+        margin-right: 0.5em;
+    }
+    input[type="date"]:focus:before,
+    input[type="date"]:valid:before {
+        content: "";
     }
 }

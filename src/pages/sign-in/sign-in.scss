@@ -1,4 +1,9 @@
 page-sign-in {
+    .main-logo{
+        height: 25vh;
+        display: block;
+        margin: 10vh auto;
+    }
     .sign-in-input-fields{
         padding: 0;
         background-color: #1F2C27 ;
@@ -22,5 +27,8 @@ page-sign-in {
             width: 20px!important;
             height: auto!important;
         }
+    }
+    .fb-logo, .google-logo{
+        height: 10vh;
     }
 }

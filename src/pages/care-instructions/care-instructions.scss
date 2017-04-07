@@ -13,6 +13,9 @@ care-instructions{
         padding: 5%;
         color: white;
     }   
+    ion-item-divider{
+        border-bottom: 0!important; 
+    }
 }
 
 ion-content#careIns{

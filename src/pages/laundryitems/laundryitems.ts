@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { tokenNotExpired } from 'angular2-jwt';
 import { ServicesPage } from '../services/services';
 import { LaundryItemsService } from './laundryitems.service';
 import { LaundryItemModel } from '../../models/laundryitem.model';
@@ -16,19 +18,30 @@ export class LaundryItems implements OnInit{
   icons: string[];
   titles: string[];
   laundryitems : LaundryItemModel;
+  responseArray1 : Array<Object> = [];
   responseArray : Array<Object> = [];
   preGenData: PreGenModel;
   params : Array<Object> = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
+  laundryitems2: any;
+  selectedItem2: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService, private storage: Storage) {
     this.selectedItem = navParams.get('item');
     this.preGenData = navParams.get('preGenData');
+    this.storage.get('xAccessToken').then(token  => {
+      console.log(tokenNotExpired(null, token));
+      
+    })
     // this.loc = navParams.get('pickupDetails');
 }
 
 
   ngOnInit(){
+    this.getLaundryItems();
+  }
 
-    this.selectedItem = this.navParams.get('item');
+  getLaundryItems = () => {
+    console.log(this.selectedItem);
+    
     var response$      =  this.items_Service.getItems()
     .subscribe(res => {
       if(res.status == 200) {
@@ -37,11 +50,37 @@ export class LaundryItems implements OnInit{
             href : response["href"],
             data : response["data"]
           }
-           this.maplaundryitems(this.laundryitems.data);
           console.log('final laundry items: ', this.laundryitems)
+          this.maplaundryitems(this.laundryitems.data);
         }
+        this.responseArray = this.responseArray1;
     })
     console.log("laundryitems",this.laundryitems);
+  }
+
+  refresher() {
+    var response2$ = this.items_Service.getItems()
+      .subscribe(res => {
+        if(res.status == 200){
+          let response = JSON.parse(res['_body']);
+          this.laundryitems2 = {
+            href: response["href"],
+            data: response["data"]
+          }
+          this.maplaundryitems(this.laundryitems2.data);
+          
+        }
+        this.responseArray = this.responseArray1;
+      })
+  }
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.refresher();
+    // setTimeout(() => {
+    //   console.log('Async operation has ended');
+    //   refresher.complete();
+    // }, 2000);
+    refresher.complete();
   }
 
 maplaundryitems(data){
@@ -59,7 +98,7 @@ maplaundryitems(data){
     toWash:true,
 	  toDry:false
     }
-    this.responseArray.push(mappedObject);
+    this.responseArray1.push(mappedObject);
   });
 
 }

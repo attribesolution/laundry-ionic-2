@@ -1,13 +1,20 @@
-.text-input:-ms-input-placeholder {
-  color: #000;
+additional-note{
+  .text-input:-ms-input-placeholder {
+    color: white;
+  }
+
+  .button-icon-size{
+          width: 30px;
+          height: 35px;
+      }
+
+  .fill-bg{
+    background-color:color($colors, secondary);
+  }
+  textarea{
+    color: white;
+  }
+
+  
 }
-
-.button-icon-size{
-        width: 30px;
-        height: 35px;
-    }
-
-.fill-bg{
-   background-color:color($colors, secondary);
- }
  

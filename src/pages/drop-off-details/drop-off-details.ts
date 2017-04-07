@@ -85,7 +85,7 @@ export class DropOffDetails{
             console.log(new Date(newDate));
             let when = new Date(newDate);
             this.patchDropOffDetails(when, textareaValue);
-            this.navCtrl.setRoot(OrderSummaryPage)
+            this.navCtrl.push(OrderSummaryPage)
     }
 
     patchDropOffDetails(whenDate, textareaValue){

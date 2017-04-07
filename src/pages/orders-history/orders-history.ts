@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { NativeStorage } from '@ionic-native/native-storage';
+import { JwtHelper } from 'angular2-jwt';
 import { OrdersHistoryService } from './orders-history.service';
 import { globalVars } from '../../app/globalvariables';
 import { LaundryMap } from '../map/map.component';
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [OrdersHistoryService]
+  providers: [OrdersHistoryService, NativeStorage, Storage, JwtHelper]
 })
 export class OrdersHistoryPage{
   OnInit(){
@@ -16,12 +19,20 @@ export class OrdersHistoryPage{
   response: any;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private ordersHistoryService: OrdersHistoryService) {
-                this.userID = (JSON.stringify(localStorage.getItem("userID"))).slice(1,-1);
+              private ordersHistoryService: OrdersHistoryService,
+              private storage: Storage,
+              private nativeStorage: NativeStorage,
+              private jwtHelper: JwtHelper) {
+                storage.get("x-access-token")
+                  .then(token => {
+                    this.userID = this.jwtHelper.decodeToken((token)['xAccessToken'])['_id'];
+                    console.log(this.userID);
+                    this.getOrdersHistory();
+                  })
                 // this.userID = this.navParams.get('userID');
                 console.log(this.userID);
                 
-                this.getOrdersHistory();
+                
   }
   ionViewDidLoad(){
     // this.getOrdersHistory();
@@ -36,6 +47,6 @@ export class OrdersHistoryPage{
       });
   }
   placeOrder(){
-    this.navCtrl.setRoot(LaundryMap);
+    this.navCtrl.push(LaundryMap);
   }
 }
