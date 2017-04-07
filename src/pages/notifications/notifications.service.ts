@@ -9,7 +9,10 @@ export class NotificationsService{
         
         return this.http.put(URL, data, options)
     }
+
     getNotificationSettings(URL, options?){
-        return this.http.get(URL, options)
+        console.log(URL);
+
+        return this.http.get(URL, options);
     }
 }

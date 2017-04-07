@@ -3,6 +3,8 @@ import { NavController, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable'
 import { globalVars } from '../../app/globalvariables';
 import { NotificationsService } from './notifications.service';
+import { NotificationModel } from '../../models/notification.model'
+import { Storage } from '@ionic/storage'
 @Component ({
     templateUrl: 'notifications.html',
     providers: [NotificationsService]
@@ -11,16 +13,7 @@ import { NotificationsService } from './notifications.service';
 export class NotificationComponent{
     
     notificationData:any;
-    getNotificationSettings(){
-        let userID = localStorage.getItem('userID');
-        let URL = globalVars.NotificationSettingsURL(userID);
-        this.notificationsService.getNotificationSettings(URL)
-            .subscribe(res => {
-                if(res.status == 200){
-                    console.log(JSON.stringify(res['_body'])['data']);
-                }
-            })
-    }
+    
     app = {
         name: 'appNotification',
         checked: true,
@@ -31,7 +24,7 @@ export class NotificationComponent{
         name: 'smsNotification',
         checked: true,
         disabled: false,
-        htmlValue: 'Send sms notifications'
+        htmlValue: 'Send order notifications'
     }; 
     email = {
         name: 'emailNotification',
@@ -48,16 +41,17 @@ export class NotificationComponent{
     notifications = [
         this.app,
         this.sms, 
-        this.email ,
+        this.email,
         this.promo 
     ]
      toggle1: boolean = false;
      smsNotifications: boolean;
      emailNotifications: boolean;
      appPromo: boolean;
+     notificationSetting: NotificationModel;
     
      constructor(private navCtrl: NavController, private toastCtrl: ToastController, private notificationsService: NotificationsService){
-        this.getNotificationSettings();
+        this.getNotificatinSettings();
      }
 
      appNotification(value){
@@ -87,7 +81,11 @@ export class NotificationComponent{
             emailNotification: email,
             promoNotification: promo
         }
-        this.notificationsService.putNotificationsSettings(URL, data).
+
+        let settings = {
+            settings : data
+        }
+        this.notificationsService.putNotificationsSettings(URL, settings).
             subscribe(res => {
                 if(res.status == 200){
                     console.log(res['_body']);
@@ -96,5 +94,28 @@ export class NotificationComponent{
             });
         this.presentToast();
         console.log("save clicked");
+    }
+
+    /**
+     * Author: Muhammad Shahab
+     * Date: 6 apr 2017
+     * Usage: get the response from server of notification settings user saved before
+     */
+    getNotificatinSettings()
+    {
+        let userID = localStorage.getItem('userID');
+        console.log(userID);
+        let URL = globalVars.NotificationSettingsURL(userID);
+        this.notificationsService.getNotificationSettings(URL).subscribe(res=>{
+            if(res.status == 200){
+                this.notificationSetting = res.json();
+
+                // set the boolean values of notification settings 
+                this.app.checked = this.notificationSetting.data.settings.generalNotification;
+                this.sms.checked = this.notificationSetting.data.settings.orderNotification;
+                this.email.checked = this.notificationSetting.data.settings.emailNotification;
+                this.promo.checked = this.notificationSetting.data.settings.promoNotification;
+            }
+        });
     }
 }
