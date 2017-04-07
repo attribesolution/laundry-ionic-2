@@ -27,7 +27,7 @@ export class SignUpPage {
       "password": password,
       "contact": {
         "phone1": phone,
-        "email": email
+        "email1": email
       },
       "dob": dob
     }

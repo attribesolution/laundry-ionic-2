@@ -10,6 +10,17 @@ import { NotificationsService } from './notifications.service';
 
 export class NotificationComponent{
     
+    notificationData:any;
+    getNotificationSettings(){
+        let userID = localStorage.getItem('userID');
+        let URL = globalVars.NotificationSettingsURL(userID);
+        this.notificationsService.getNotificationSettings(URL)
+            .subscribe(res => {
+                if(res.status == 200){
+                    console.log(JSON.stringify(res['_body'])['data']);
+                }
+            })
+    }
     app = {
         name: 'appNotification',
         checked: true,
@@ -46,8 +57,8 @@ export class NotificationComponent{
      appPromo: boolean;
     
      constructor(private navCtrl: NavController, private toastCtrl: ToastController, private notificationsService: NotificationsService){
-        
-     }ordr
+        this.getNotificationSettings();
+     }
 
      appNotification(value){
         console.log(value);
@@ -56,7 +67,7 @@ export class NotificationComponent{
      presentToast = () =>{
          let toast = this.toastCtrl.create({
              message: 'Notifications settings updated.',
-             duration: 5000,
+             duration: 2500,
              position: 'bottom',
              cssClass: 'toastBg'
          });

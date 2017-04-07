@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { PickUpDetails } from '../pick-up-details/pick-up-details';
 
 import { PreGenModel } from '../../models/preGen.model';
@@ -18,7 +18,7 @@ import { globalVars } from '../../app/globalvariables';
 export class ComplaintsSuggestionsPage{suggestions
      preGenData: PreGenModel;
      complaints1: any = '';
-     constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService){
+     constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService, private toastCtrl: ToastController){
         // this.preGenData = this.navParams.get('preGenData')
         this.getHistory();
      }
@@ -37,6 +37,20 @@ export class ComplaintsSuggestionsPage{suggestions
           }
         });
     }
+
+    presentToast = () =>{
+         let toast = this.toastCtrl.create({
+             message: 'Your complaints/suggestion have been noted.',
+             duration: 2500,
+             position: 'bottom',
+             cssClass: 'toastBg'
+         });
+         toast.onDidDismiss(() => {
+             console.log('Dismissed Toast.');
+         });   
+        toast.present();
+     }
+
    startNextScreen(complaints){
       console.log(complaints);
       let userID = localStorage.getItem("userID");
@@ -49,6 +63,7 @@ export class ComplaintsSuggestionsPage{suggestions
         .subscribe(res => {
           if(res.status == 200){
             console.log(res['_body']);
+            this.presentToast()
             let URL2 = globalVars.getComplainsURL(userID);
             this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
               .subscribe(response => {

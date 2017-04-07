@@ -33,8 +33,10 @@
            <ion-item class="fill-bg" *ngFor="let notification of notifications">
              <ion-label style="color: white; font-size: 20px;">{{ notification.htmlValue }}</ion-label>
              <ion-toggle  
-              checked="{{notification.checked}}"
+              [checked]="notification.checked"
               #{{notification.name}}
+              name="{{notification.checked}}"
+              [(ngModel)]="notification.checked"
               disabled="{{notification.disabled}}"
               (ionChange)=appNotification(notification.name)
               color="primary"></ion-toggle>
