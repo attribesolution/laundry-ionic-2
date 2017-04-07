@@ -3,7 +3,8 @@ import { NavController, NavParams,PopoverController,Popover } from 'ionic-angula
 import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapService } from './map.service';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
@@ -45,9 +46,19 @@ export class LaundryMap implements AfterViewInit{
     inputFieldValue: string = '';
     search1;
     addressResponse: any;
-    constructor(private navCtrl: NavController, private mapService: MapService ,public popoverCtrl: PopoverController){
+    constructor(private navCtrl: NavController, 
+                private mapService: MapService, 
+                public popoverCtrl: PopoverController,
+                private storage: Storage){
       console.log(this.search1);
-      this.createPreGen();  
+      
+      storage.get("x-access-token")
+        .then(
+          token =>{
+            token = token['xAccessToken']
+            this.createPreGen(this.preGenApiURL, token);
+          }
+        )
 
     }
     ngAfterViewInit(){
@@ -59,16 +70,18 @@ export class LaundryMap implements AfterViewInit{
     ionViewDidLoad(){
         this.loadMap();      
     }
-    createPreGen(){
-        this.mapService.hitPreGen(this.preGenApiURL)
+    createPreGen(URL, token){
+        this.mapService.hitPreGen(URL, token)
           .subscribe(res => {
             if(res.status == 200) {
               let response = JSON.parse(res['_body'])
+              console.log(res['_body']);
+              
               this.preGenData = {
                 href: response["href"],
                 data: response["data"]
               }
-              console.log('Response From PreGen', (this.preGenData.data as any)._id); 
+              console.log('Response From PreGen', (this.preGenData.data as any)); 
             }
         });
     }

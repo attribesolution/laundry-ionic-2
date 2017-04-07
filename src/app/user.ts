@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage'
 
 /**
@@ -5,6 +6,7 @@ import { Storage } from '@ionic/storage'
  * Date: 7 Apr 2017
  * Description: Native Storage class to cache the key/value of user information 
  */
+@Injectable()
 export class User {
   constructor(private storage: Storage){}  
 
