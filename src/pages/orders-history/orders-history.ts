@@ -44,25 +44,18 @@ export class OrdersHistoryPage{
     console.log('ionViewDidLoad OrdersHistoryPage');
     let xAccessToken: any;
         let options, headers: any;
-        let token = this.user.getUserAccessToken();
-        console.log(token);
-        
-        this.storage.get('user-access-token')
-            .then(
-               data => {
-                   let token = data;
-                   this.userID = this.jwtHelper.decodeToken(token)._id;
-                   let URL = globalVars.getOrdersHistoryURL(this.userID); 
-                  //  console.log('On OrdersHistoryService', xAccessToken);
-                  //  headers = new Headers({'Content-Type': 'application/json', 'access_token':  xAccessToken});
-                  //  options = new RequestOptions({ headers: headers });
-                   this.ordersHistoryService.getOrdersHistory(URL, token)
-                    .then(res => {
-                      // this.response = JSON.parse(res['_body']);
-                      console.log(res);
-                    },err => {});
-                } 
-            )
+        // let token = this.user.getUserAccessToken();
+        // console.log(token);
+        let token = localStorage.getItem('x-access-token');
+        this.userID = localStorage.getItem('userID');
+        let URL = globalVars.getOrdersHistoryURL(this.userID); 
+        this.ordersHistoryService.getOrdersHistory(URL, token)
+          .subscribe(res => {
+            if(res.status == 200) {
+              console.log(JSON.parse(res['_body']));
+              
+            }
+          })
     
   }
   placeOrder(){

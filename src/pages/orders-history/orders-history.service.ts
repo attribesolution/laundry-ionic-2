@@ -20,30 +20,16 @@ class OrdersHistoryService {
         console.log(headers);
         
         console.log(this.jwtHelper.getTokenExpirationDate(token), 'isTokenExpired:', this.jwtHelper.isTokenExpired(token));
+        return this.http.get(URL, options);
         
+        // let getOrdersHistoryPromise = new Promise((resolve, reject)=>{
+            
+        //         .subscribe(res => {
+        //             !!res ? 
+        //                 resolve(res) : reject({status: 403, message: 'error 403'});
+        //         })
+        // })
+        // return getOrdersHistoryPromise;
         
-        let getOrdersHistoryPromise = new Promise((resolve, reject)=>{
-            return this.http.get(URL, options)
-                .subscribe(res => {
-                    !!res ? 
-                        resolve(res) : reject({status: 403, message: 'error 403'});
-                })
-        })
-        return getOrdersHistoryPromise;
-        // let headers,options: any;
-        // this.storage.get('x-access-token')
-        //     .then(
-        //        data => {
-        //            xAccessToken = data['xAccessToken'];
-        //            console.log('On OrdersHistoryService', xAccessToken);
-        //            headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  xAccessToken});
-        //             options = new RequestOptions({ headers: headers });
-        //             console.log('Options', options);
-        //             console.log('Headers:', headers);
-        //             console.log(xAccessToken);
-        //        } 
-        //     )
-        
-            //  return this.http.get(URL, options);  
     }
 }
