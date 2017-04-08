@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable'
 import { globalVars } from '../../app/globalvariables';
 import { NotificationsService } from './notifications.service';
@@ -50,8 +50,16 @@ export class NotificationComponent{
      appPromo: boolean;
      notificationSetting: NotificationModel;
     
-     constructor(private navCtrl: NavController, private toastCtrl: ToastController, private notificationsService: NotificationsService){
-        this.getNotificatinSettings();
+     constructor(private storage : Storage,private navCtrl: NavController, private toastCtrl: ToastController, private notificationsService: NotificationsService){
+        this.storage.get("user-access-token")
+        .then(
+          token =>{
+            let userID = localStorage.getItem('userID');
+            this.getNotificatinSettings(userID,token);
+          }
+        )
+        ;
+        
      }
 
      appNotification(value){
@@ -101,13 +109,13 @@ export class NotificationComponent{
      * Date: 6 apr 2017
      * Usage: get the response from server of notification settings user saved before
      */
-    getNotificatinSettings()
+    getNotificatinSettings(userID:String, token:String)
     {
-        let userID = localStorage.getItem('userID');
         console.log(userID);
         let URL = globalVars.NotificationSettingsURL(userID);
-        this.notificationsService.getNotificationSettings(URL).subscribe(res=>{
+        this.notificationsService.getNotificationSettings(URL,token).subscribe(res=>{
             if(res.status == 200){
+                console.log(res.json());
                 this.notificationSetting = res.json();
 
                 // set the boolean values of notification settings 
