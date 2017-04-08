@@ -36,6 +36,7 @@ export class PickUpDetails{
         amPm: 'AM'
      };
     loc: Object;
+    token: string;
     preGenData: PreGenModel;
     private pickupInstructions: string;
      dateArrayMaker(){
@@ -53,6 +54,7 @@ export class PickUpDetails{
          console.clear();
          console.log(navParams.get('preGenData'));
          console.log('Location: ', this.loc);
+         this.token = localStorage.getItem('x-access-token');
      }
 
      toggleHighlight(Elementid: any, segment: string){
@@ -105,7 +107,7 @@ export class PickUpDetails{
             }
         }
         let URL = globalVars.patchPickupApiURL((this.preGenData.data as any)._id);
-        this.pickupService.hitPickupPatch(URL, data)
+        this.pickupService.hitPickupPatch(URL, data, this.token)
             .subscribe(res => console.log(res));
     }
 }
