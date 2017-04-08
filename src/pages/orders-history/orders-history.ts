@@ -27,10 +27,10 @@ export class OrdersHistoryPage{
               private nativeStorage: NativeStorage,
               private jwtHelper: JwtHelper,
               private user: User) {
-              let xAccessToken = this.user.getUserAccessToken();
-                
+              // let xAccessToken = this.user.getUserAccessToken();
+              
               this.getOrdersHistory();
-                // this.userID = this.navParams.get('userID');
+                this.userID = this.navParams.get('userID');
                 // console.log(this.userID);
                 
                 
@@ -39,15 +39,20 @@ export class OrdersHistoryPage{
     // this.getOrdersHistory();
   }
   getOrdersHistory(){
-    let URL = globalVars.getOrdersHistoryURL(this.userID);
+   
+    
     console.log('ionViewDidLoad OrdersHistoryPage');
     let xAccessToken: any;
         let options, headers: any;
-        let token = 
-        this.storage.get('x-access-token')
+        let token = this.user.getUserAccessToken();
+        console.log(token);
+        
+        this.storage.get('user-access-token')
             .then(
                data => {
-                   let token = data['xAccessToken'];
+                   let token = data;
+                   this.userID = this.jwtHelper.decodeToken(token)._id;
+                   let URL = globalVars.getOrdersHistoryURL(this.userID); 
                   //  console.log('On OrdersHistoryService', xAccessToken);
                   //  headers = new Headers({'Content-Type': 'application/json', 'access_token':  xAccessToken});
                   //  options = new RequestOptions({ headers: headers });

@@ -52,10 +52,10 @@ export class LaundryMap implements AfterViewInit{
                 private storage: Storage){
       console.log(this.search1);
       
-      storage.get("x-access-token")
+      storage.get("user-access-token")
         .then(
           token =>{
-            token = token['xAccessToken']
+            
             this.createPreGen(this.preGenApiURL, token);
           }
         )
