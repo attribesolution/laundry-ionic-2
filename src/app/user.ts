@@ -34,8 +34,8 @@ export class User {
     this.storage.ready().then(() => {
 
        // to get a key/value pair of user-access-token
-       this.storage.get('user-access-token').then((val) => {
-        return val["user-access-token"];
+       this.storage.get('x-access-token').then((val) => {
+        return val["x-access-token"];
        })
      });
   }
@@ -45,7 +45,7 @@ export class User {
         this.storage.ready().then(() => {
 
        // set a key/value pair of user-access-token
-       this.storage.set('user-access-token', accessToken);
+       this.storage.set('x-access-token', accessToken);
      });
   }
 }
