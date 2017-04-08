@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
+import { JwtHelper } from 'angular2-jwt';
 import { LaundryMap } from '../pages/map/map.component';
 import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
@@ -13,15 +14,17 @@ import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [Storage]
+  providers: [Storage, JwtHelper]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SignInPage;
+  rootPage: any; //= SignInPage;
 
   pages: Array<{title: string, component: any}>;
-  constructor(public platform: Platform, private storage: Storage) {
+  constructor(public platform: Platform, 
+              private storage: Storage,
+              private jwtHelper: JwtHelper) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -41,7 +44,15 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.storage.get('x-access-token').then(
         token =>{
-          if(token){
+          console.log(token);
+          
+          if(!!token){
+            localStorage.setItem('x-access-token', token);
+            localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
+            console.log(localStorage.getItem('userID'), 'at App component \n',
+                        localStorage.getItem('x-access-token')
+                        );
+
             console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
           }else{

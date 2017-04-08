@@ -5,7 +5,8 @@ interface LaundryItemData {
     rate: {
         wash: number,
         dryclean: number
-    }
+    },
+    "x-access-token": string
 
 }
 
