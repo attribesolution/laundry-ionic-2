@@ -55,7 +55,7 @@ export class SignInPage {
               //   .then (
               //     () => {
               //       console.log('Stored X-Access-Token');
-              //       this.navCtrl.setRoot(OrdersHistoryPage);
+                    this.navCtrl.setRoot(OrdersHistoryPage);
               //     },
               //     error => console.error('Error storing item', error)
               //   );

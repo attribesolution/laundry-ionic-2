@@ -16,7 +16,7 @@ export class User {
 
        //  to get a key/value pair of user id
        this.storage.get('user-id').then((val) => {
-        return val;
+        return val["user-id"];
        })
      });
   }
@@ -35,7 +35,7 @@ export class User {
 
        // to get a key/value pair of user-access-token
        this.storage.get('user-access-token').then((val) => {
-        return val;
+        return val["user-access-token"];
        })
      });
   }

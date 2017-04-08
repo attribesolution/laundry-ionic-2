@@ -33,8 +33,8 @@ export class LaundryItems implements OnInit{
 
 
   ngOnInit(){
-    this.storage.get('x-access-token').then(token  => {
-      token = token['xAccessToken'];
+    this.storage.get('user-access-token').then(token  => {
+      
       this.getLaundryItems(token);
       console.log(tokenNotExpired(null, token));
       
