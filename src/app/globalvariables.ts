@@ -1,8 +1,8 @@
 export const globalVars =  {
 
     // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
-    BaseURL: "http://localhost:3000",
-
+    BaseURL: "http://192.168.100.26:3005",
+    // BaseURL: "http://localhost:3005",
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
