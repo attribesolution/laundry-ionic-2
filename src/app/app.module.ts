@@ -22,7 +22,6 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
-import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
 
@@ -57,7 +56,6 @@ export function getAuthHttp(http){
     SignUpPage,
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
-    FBSignInPage,
     PaymentMethodsPage,
     OrderSummaryPage
   ],
@@ -86,7 +84,6 @@ export function getAuthHttp(http){
     SignUpPage,
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
-    FBSignInPage,
     PaymentMethodsPage,
     OrderSummaryPage
   ],
