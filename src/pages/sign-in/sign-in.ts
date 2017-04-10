@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { SignInService } from './sign-in.service';
-import { OrdersHistoryPage } from '../orders-history/orders-history';
-import { SignUpPage } from '../sign-up/sign-up';
-import { globalVars } from './../../app/globalvariables';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { JwtHelper } from 'angular2-jwt';
 import { User } from '../../app/user';
+import { SignInService } from './sign-in.service';
+import { OrdersHistoryPage } from '../orders-history/orders-history';
+import { SignUpPage } from '../sign-up/sign-up';
+import { globalVars } from './../../app/globalvariables';
+
 @Component({
   selector: 'page-sign-in',
   templateUrl: 'sign-in.html',
-  providers: [SignInService, Storage, JwtHelper, User]
+  providers: [SignInService, Storage, JwtHelper, User, Facebook]
 })
 export class SignInPage {
   token: string;
@@ -21,7 +23,8 @@ export class SignInPage {
               private signInService: SignInService, 
               private storage: Storage, 
               private jwtHelper: JwtHelper,
-              private user: User) {
+              private user: User,
+              private fb: Facebook) {
     this.menuController.swipeEnable(false);
   }
 
@@ -70,6 +73,16 @@ export class SignInPage {
   }
   signupPage(){
     this.navCtrl.setRoot(SignUpPage);
+  }
+  fbSignIn(){
+    console.log('FB SignIn clicked.');
+    this.fb.login(['public_profile', 'email'])
+      .then(
+        (res: FacebookLoginResponse) => console.log('Logged into facebook:', res)
+      )
+      .catch( 
+        e => console.log('Error logging into facebook', e)
+        )
   }
 
 }
