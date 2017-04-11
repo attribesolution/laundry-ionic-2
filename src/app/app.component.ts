@@ -10,6 +10,7 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
+import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 
 @Component({
@@ -35,13 +36,15 @@ export class MyApp {
       { title: 'Payment Method', component: PaymentMethodsPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
-      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage }
+      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
+       { title: 'Sign Out', component: SignInPage }
+      
     ];
 
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready().then( () => {
       this.storage.get('x-access-token').then(
         token =>{
           console.log(token);
@@ -73,6 +76,25 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    //this.storage.get('x-access-token').then(
+    //    token =>{
+    if(page.title == "Sign Out"){
+
+      this.storage.clear().then( ( (result) => {
+
+          console.log("sign out called")
+          console.log(localStorage.getItem('userID'), 'at App component \n',
+                        localStorage.getItem('x-access-token')
+                        );
+
+          localStorage.clear();
+          console.log("token after clearing local storage and native storage")
+          console.log(localStorage.getItem('userID'), 'at App component \n',
+                        localStorage.getItem('x-access-token')
+                        );
+        } ));
+    }
+    else    
+      this.nav.setRoot(page.component);
   }
 }
