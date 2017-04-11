@@ -30,8 +30,7 @@ export class SignUpPage {
     console.log('ionViewDidLoad SignUpPage');
   }
   signUp(username, password, phone, email, dob) {
-    if(this.signUpForm.invalid)
-    {
+
     let URL, data: any;
     URL = globalVars.PostNewUser();
     data = {
@@ -60,7 +59,6 @@ export class SignUpPage {
         }
       });
     }
-  }
   signinPage() {
     this.navCtrl.setRoot(SignInPage);
   }
