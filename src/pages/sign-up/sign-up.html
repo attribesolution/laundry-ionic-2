@@ -1,6 +1,6 @@
 <ion-content padding class="fill-bg">
     <img class="main-logo" src="./assets/images/logo.png">
-    <form novalidate #f>
+    <form novalidate [formGroup]="signUpForm" #f>
       <div class="sign-up-input-fields">
         <ion-icon name="contact" class="sign-up-icon"></ion-icon>
         <input 
@@ -11,7 +11,8 @@
           autocomplete="off" 
           class="sign-up-input"
           [(ngModel)]="username"  
-          placeholder="Username"> 
+          placeholder="Username"
+          formControlName="username"> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="lock" class="sign-up-icon"></ion-icon>
@@ -23,7 +24,8 @@
           autocomplete="off" 
           class="sign-up-input" 
           [(ngModel)]="password" 
-          placeholder="Password"> 
+          placeholder="Password"
+          formControlName="password"> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="phone-portrait" class="sign-up-icon"></ion-icon>
@@ -35,7 +37,8 @@
         autocomplete="off" 
         [(ngModel)]="phone"  
         class="sign-up-input" 
-        placeholder="Phone Number"> 
+        placeholder="Phone Number"
+        formControlName="phone"> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="mail" class="sign-up-icon"></ion-icon>
@@ -47,7 +50,8 @@
         autocomplete="off" 
         [(ngModel)]="email" 
         placeholder="Email"
-        class="sign-up-input"> 
+        class="sign-up-input"
+        formControlName="email"> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="calender" class="sign-up-icon"></ion-icon>
@@ -59,7 +63,8 @@
         autocomplete="off" 
         [(ngModel)]="dob" 
         placeholder="Date of Birth"
-        class="sign-up-input"> 
+        class="sign-up-input"
+        formControlName="dob"> 
         <!--<ion-datetime 
           displayFormat="DD/MM/YYYY" 
           pickerFormat="DD MMMM YYYY" 

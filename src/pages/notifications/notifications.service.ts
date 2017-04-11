@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers,RequestOptions } from '@angular/http';
 @Injectable()
 export class NotificationsService{
     constructor(private http: Http){}
 
-    putNotificationsSettings(URL, data, options?){
-        console.log(URL);
-        
-        return this.http.put(URL, data, options)
+
+    putNotificationsSettings(URL, data, token?){
+       console.log("Request Url",URL);
+        let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  token});
+        let options = new RequestOptions({ headers: headers });
+        return this.http.put(URL, data, options);
     }
 
-    getNotificationSettings(URL, options?){
-        console.log(URL);
-
+    getNotificationSettings(URL, token?){
+        console.log("Request Url",URL);
+        let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  token});
+        let options = new RequestOptions({ headers: headers });
         return this.http.get(URL, options);
     }
 }
