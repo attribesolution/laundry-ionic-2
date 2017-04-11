@@ -1,5 +1,5 @@
 <ion-content padding class="fill-bg">
-    <img src="./assets/images/logo.png">
+    <img class="main-logo" src="./assets/images/logo.png">
     <form novalidate #f>
       <div class="sign-up-input-fields">
         <ion-icon name="contact" class="sign-up-icon"></ion-icon>
@@ -16,21 +16,21 @@
       <div class="sign-up-input-fields">
         <ion-icon name="lock" class="sign-up-icon"></ion-icon>
         <input
-        required 
-        id="password" 
-        type="password"
-        name="password" 
-        autocomplete="off" 
-        class="sign-up-input" 
-        [(ngModel)]="password" 
-        placeholder="Password"> 
+          required 
+          id="password" 
+          type="password"
+          name="password" 
+          autocomplete="off" 
+          class="sign-up-input" 
+          [(ngModel)]="password" 
+          placeholder="Password"> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="phone-portrait" class="sign-up-icon"></ion-icon>
         <input 
         required 
         id="phone" 
-        type="text"
+        type="tel"
         name="phone" 
         autocomplete="off" 
         [(ngModel)]="phone"  
@@ -60,6 +60,11 @@
         [(ngModel)]="dob" 
         placeholder="Date of Birth"
         class="sign-up-input"> 
+        <!--<ion-datetime 
+          displayFormat="DD/MM/YYYY" 
+          pickerFormat="DD MMMM YYYY" 
+          [(ngModel)]="myDate"
+        ></ion-datetime>-->
       </div>
       <div padding>
         <button 

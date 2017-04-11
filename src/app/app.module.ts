@@ -1,6 +1,9 @@
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Storage } from '@ionic/storage';
+import { Http } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { LaundryMap } from '../pages/map/map.component';
@@ -22,6 +25,19 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
 import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
+
+let storage: Storage;
+
+export function getAuthHttp(http){
+  let authConfig: AuthConfig = new AuthConfig({
+    headerPrefix: 'Autherization',
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('x-access-token'))
+  });
+  return new AuthHttp(authConfig, http)
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -74,6 +90,15 @@ import { OrderSummaryPage } from '../pages/order-summary/order-summary';
     PaymentMethodsPage,
     OrderSummaryPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{
+    provide: ErrorHandler, 
+    useClass: IonicErrorHandler
+  },
+  {
+    provide: AuthHttp,
+    useFactory: getAuthHttp,
+    deps: [Http]
+
+  }]
 })
 export class AppModule {}

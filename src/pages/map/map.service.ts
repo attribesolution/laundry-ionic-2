@@ -1,11 +1,21 @@
 import {Injectable} from '@angular/core';
-import { Http } from '@angular/http'
+import { Http, Headers, Response, RequestOptions } from '@angular/http'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
+import { Storage } from '@ionic/storage';
 @Injectable()
 
 export class MapService{
-    constructor(private http: Http){}
+    headers: Headers;
+    options: RequestOptions;
+    constructor(private http: Http, private storage: Storage){
+        this.headers = new Headers({
+                    'x-access-token': this.storage.get('authToken')
+            });
+            this.options = new RequestOptions({
+                    headers: this.headers
+            });
+    }
     myApiKey = 'AIzaSyBifb4pycCZZCs1OqewdQ-d698bylvYjkw'
     
     getJSON = (place: string) => {
@@ -18,10 +28,11 @@ export class MapService{
             .map(res => JSON.parse(res['_body']).results)
             // .map(e=> e.formatted_address)
      } 
-     hitPreGen = (URL:any) => {
+     hitPreGen = (URL:any, token) => {
         console.log("Hitting: ", URL);
-
-        return this.http.get(URL)
+        let headers = new Headers({'x-access-token': token});
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(URL, options)
             // .map(res => JSON.parse(res['_body']).results);
     }
     patchAddress = (URL: string, data: any, options?:any) =>{

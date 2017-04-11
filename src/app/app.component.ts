@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
+import { Storage } from '@ionic/storage';
+import { JwtHelper } from 'angular2-jwt';
 import { LaundryMap } from '../pages/map/map.component';
 import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
@@ -10,17 +12,20 @@ import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
-// import { OrderSummaryPage } from '../pages/order-summary/order-summary';
+
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [Storage, JwtHelper]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SignInPage;
+  rootPage: any; //= SignInPage;
 
   pages: Array<{title: string, component: any}>;
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, 
+              private storage: Storage,
+              private jwtHelper: JwtHelper) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -38,21 +43,29 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      // //Facebook Login
-      // let env = this;
-      // NativeStorage.getItem('user')
-      // .then( function (data) {
-      //   // user is previously logged and we have his data
-      //   // we will let him access the app
-      //   env.nav.push(OrdersHistoryPage);
-      //   Splashscreen.hide();
-      // }, function (error) {
-      //   //we don't have the user data so we will ask him to log in
-        
-      
-      // });
+      this.storage.get('x-access-token').then(
+        token =>{
+          console.log(token);
+          
+          if(!!token){
+            localStorage.setItem('x-access-token', token);
+            localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
+            console.log(localStorage.getItem('userID'), 'at App component \n',
+                        localStorage.getItem('x-access-token')
+                        );
+
+            console.log('Got token.', token);
+            this.rootPage = OrdersHistoryPage;  
+          }else{
+            this.rootPage = SignInPage
+            console.log('Authentication failed.');
+          }
+        },
+        error => {
+          console.log(error);
+            
+        }
+      );
       Splashscreen.hide();
       StatusBar.styleDefault();
     });

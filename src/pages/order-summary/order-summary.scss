@@ -1,12 +1,17 @@
 page-order-summary {
     ion-item{
         border-bottom: 0!important; 
+        color: white!important;
     }
     ion-row{
         border: 0!important;
+        color: white;
+        ion-item-divider{
+            color: white!important;
+        }
     }
     .item-inner{
         border: 0!important;
-    }
+    }    
 }
 

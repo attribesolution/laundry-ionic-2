@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { ServicesPage } from '../services/services';
 import { LaundryItemsService } from './laundryitems.service';
 import { LaundryItemModel } from '../../models/laundryitem.model';
@@ -8,7 +10,7 @@ import { PreGenModel } from '../../models/preGen.model';
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',
-    providers:[LaundryItemsService] 
+    providers:[LaundryItemsService, JwtHelper] 
 })
 
 export class LaundryItems implements OnInit{
@@ -16,20 +18,37 @@ export class LaundryItems implements OnInit{
   icons: string[];
   titles: string[];
   laundryitems : LaundryItemModel;
+  responseArray1 : Array<Object> = [];
   responseArray : Array<Object> = [];
   preGenData: PreGenModel;
   params : Array<Object> = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,private items_Service: LaundryItemsService) {
+  laundryitems2: any;
+  selectedItem2: any;
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private items_Service: LaundryItemsService, 
+              private storage: Storage) {
     this.selectedItem = navParams.get('item');
     this.preGenData = navParams.get('preGenData');
+    
     // this.loc = navParams.get('pickupDetails');
 }
 
 
   ngOnInit(){
+    this.storage.get('user-access-token').then(token  => {
+      
+      this.getLaundryItems(token);
+      console.log(tokenNotExpired(null, token));
+      
+    })
+    
+  }
 
-    this.selectedItem = this.navParams.get('item');
-    var response$      =  this.items_Service.getItems()
+  getLaundryItems = (token) => {
+    console.log(this.selectedItem);
+    
+    var response$      =  this.items_Service.getItems(token)
     .subscribe(res => {
       if(res.status == 200) {
         let response = JSON.parse(res['_body']) 
@@ -37,11 +56,37 @@ export class LaundryItems implements OnInit{
             href : response["href"],
             data : response["data"]
           }
-           this.maplaundryitems(this.laundryitems.data);
           console.log('final laundry items: ', this.laundryitems)
+          this.maplaundryitems(this.laundryitems.data);
         }
+        this.responseArray = this.responseArray1;
     })
     console.log("laundryitems",this.laundryitems);
+  }
+
+  refresher() {
+    // var response2$ = this.items_Service.getItems(token)
+    //   .subscribe(res => {
+    //     if(res.status == 200){
+    //       let response = JSON.parse(res['_body']);
+    //       this.laundryitems2 = {
+    //         href: response["href"],
+    //         data: response["data"]
+    //       }
+    //       this.maplaundryitems(this.laundryitems2.data);
+          
+    //     }
+    //     this.responseArray = this.responseArray1;
+    //   })
+  }
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.refresher();
+    // setTimeout(() => {
+    //   console.log('Async operation has ended');
+    //   refresher.complete();
+    // }, 2000);
+    refresher.complete();
   }
 
 maplaundryitems(data){
@@ -59,7 +104,7 @@ maplaundryitems(data){
     toWash:true,
 	  toDry:false
     }
-    this.responseArray.push(mappedObject);
+    this.responseArray1.push(mappedObject);
   });
 
 }
@@ -135,35 +180,45 @@ calculateTotalAmount(item){
  startNextScreen()
   {
     let jsonArray : Array<Object> = []
-    this.params.forEach(element => {
+    
+        this.params.forEach(element => {
       
         jsonArray.push({
               name: (element as any).name,
 	            rate:(element as any).amount,
 	            count: (element as any).count,
 	            toWash:(element as any).toWash,
-	            toDry:(element as any).toDry
+	            toDry:(element as any).toDry,
+              
 
+          })
         })
-    });
-    let laundryData: {laundryItems : Array<Object>} = {
       
-      laundryItems : jsonArray
+    this.storage.get('user-access-token').then(
+      token => {
+        let laundryData = {
+      
+        laundryItems : jsonArray,
+        "x-access-token": token
+      
     };
 
-    console.log("laundry data = ",laundryData);
-    let items = JSON.stringify(laundryData.laundryItems);
-    localStorage.setItem('Laundry Items', items);
-    let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
-    console.log(URL)
-    this.items_Service.patchService(URL,laundryData)
-    .subscribe(res => {
-          if(res.status == 200) {
-            let response = JSON.parse(res['_body']) 
-              
-              console.log('final response = ', response)
-            }
-        })
+      console.log("laundry data = ",laundryData);
+      let items = JSON.stringify(laundryData.laundryItems);
+      localStorage.setItem('Laundry Items', items);
+      let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
+      console.log(URL)
+      this.items_Service.patchService(URL,laundryData)
+      .subscribe(res => {
+            if(res.status == 200) {
+              let response = JSON.parse(res['_body']) 
+                
+                console.log('final response = ', response)
+              }
+          })
+      }
+    )
+    
 
       this.navCtrl.push(ServicesPage, {
         preGenData: this.preGenData

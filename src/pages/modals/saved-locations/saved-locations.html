@@ -22,8 +22,8 @@
                     {{ address.address }}
                 </ion-row>
             </ion-list>
-            <ion-item-divider class="fill-bg" *ngIf="!addressResponse">
-                You do not have any saved locations.
+            <ion-item-divider class="fill-bg" *ngIf="!addressResponse" style="font-size: 20px">
+                You do not have <br> any saved locations.
             </ion-item-divider>
             <ion-item-divider class="fill-bg" *ngIf="addressResponse">
                 <ion-row *ngFor="let address of addressResponse">
