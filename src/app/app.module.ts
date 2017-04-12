@@ -24,7 +24,7 @@ import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
-
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 let storage: Storage;
 
 export function getAuthHttp(http){
@@ -57,7 +57,8 @@ export function getAuthHttp(http){
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
     PaymentMethodsPage,
-    OrderSummaryPage
+    OrderSummaryPage,
+    ForgotPasswordPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -85,7 +86,8 @@ export function getAuthHttp(http){
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
     PaymentMethodsPage,
-    OrderSummaryPage
+    OrderSummaryPage,
+    ForgotPasswordPage
   ],
   providers: [{
     provide: ErrorHandler, 

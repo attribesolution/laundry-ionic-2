@@ -80,19 +80,38 @@ export class SignInPage {
   facebook = "facebook";
   fbSignIn(){
     console.log('FB SignIn clicked.');
-    this.fb.login(['public_profile', 'email'])
-      .then(
-        (res: FacebookLoginResponse) => console.log('Logged into facebook:', res)
-      )
-      .catch( 
-        e => {
-          console.log('Error logging into facebook', e)
-          this.facebook = e;
-        })
+    this.fb.getLoginStatus().then(
+      res =>{
+        if(res.status === 'connected'){
+          this.facebook = res.status;
+          let uid = res.authResponse.userID;
+          let accessToken = res.authResponse.accessToken;
+          this.user.saveFBData(res.authResponse);
+          localStorage.setItem('fbData', JSON.stringify(res.authResponse));
+        }else{
+          this.fb.login(['public_profile', 'email'])
+            .then(
+              (res: FacebookLoginResponse) => {
+                console.log('Logged into facebook:', res)
+                this.facebook = res.status;
+                this.user.saveFBData(res.authResponse);
+                localStorage.setItem('fbData', JSON.stringify(res.authResponse));
+              }
+            )
+            .catch( 
+              e => {
+                console.log('Error logging into facebook', e)
+                this.facebook = e
+            })
+        }
+        this.navCtrl.setRoot(OrdersHistoryPage);
+      }
+    )
+    
       
   }
   googleSignIn(){
-    this.googlePlus.login()
+    this.googlePlus.login({})
       .then(
         res => console.log(res)
       )

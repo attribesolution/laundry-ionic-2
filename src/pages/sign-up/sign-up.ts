@@ -36,13 +36,13 @@ export class SignUpPage {
     this.signUpService.PostNewUser(URL,data)
       .subscribe(res => {
                   if(res.status = 200){
-                      console.log(res['_body']);
+                      console.log(JSON.parse(res['_body']));
                       let body  = JSON.parse(res['_body']);
                       response = {
                         href: body["href"],
                         data: body["data"]
                       }
-                      console.log(response.data._id);
+                      console.log(response.data);
                       localStorage.setItem("userID", response.data._id);
                       this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
                   }

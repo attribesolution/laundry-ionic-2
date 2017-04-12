@@ -11,7 +11,7 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
-
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 @Component({
   templateUrl: 'app.html',
   providers: [Storage, JwtHelper]
@@ -35,7 +35,8 @@ export class MyApp {
       { title: 'Payment Method', component: PaymentMethodsPage },
       { title: 'Rates List', component: RatesListComponent },
       { title: 'Notifications', component: NotificationComponent },
-      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage }
+      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
+      { title: 'ForgotPassword', component: ForgotPasswordPage}
     ];
 
   }
@@ -45,7 +46,6 @@ export class MyApp {
       this.storage.get('x-access-token').then(
         token =>{
           console.log(token);
-          
           if(!!token){
             localStorage.setItem('x-access-token', token);
             localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
@@ -54,15 +54,14 @@ export class MyApp {
                         );
 
             console.log('Got token.', token);
-            this.rootPage = OrdersHistoryPage;  
+            this.rootPage = ForgotPasswordPage;  
           }else{
-            this.rootPage = SignInPage
+            this.rootPage = ForgotPasswordPage
             console.log('Authentication failed.');
           }
         },
         error => {
           console.log(error);
-            
         }
       );
       Splashscreen.hide();

@@ -1,8 +1,8 @@
 export const globalVars =  {
 
     // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
-    BaseURL: "http://192.168.100.26:3005",
-    // BaseURL: "http://localhost:3005",
+    // BaseURL: "http://192.168.100.26:3005",
+    BaseURL: "http://localhost:3005",
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
@@ -61,5 +61,9 @@ export const globalVars =  {
     SignInURL: '/api/v1/auth/local',
     PostSignInApi(){
         return this.BaseURL + this.SignInURL;
+    },
+    forgorPasswordURL: '/password/forgot',
+    getForgotPasswordAPIURL(userID){
+        return this.BaseURL + this.AllUsers + userID + this.forgorPasswordURL;
     }
 }
