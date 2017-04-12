@@ -35,7 +35,7 @@ export class MyApp {
       { title: 'Profile', component: ProfileComponent },
       { title: 'Payment Method', component: PaymentMethodsPage },
       { title: 'Rates List', component: RatesListComponent },
-      { title: 'Notifications', component: NotificationComponent },
+      // { title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
        { title: 'Sign Out', component: SignInPage }
       
@@ -80,6 +80,7 @@ export class MyApp {
     //    token =>{
     if(page.title == "Sign Out"){
 
+      this.nav.setRoot(page.component);
       this.storage.clear().then( ( (result) => {
 
           console.log("sign out called")

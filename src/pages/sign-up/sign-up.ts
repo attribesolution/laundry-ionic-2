@@ -42,8 +42,9 @@ export class SignUpPage {
                         href: body["href"],
                         data: body["data"]
                       }
-                      console.log(response.data._id);
+                      console.log("response date = ",response.data);
                       localStorage.setItem("userID", response.data._id);
+                      //this.user.saveUserAccessToken(response.data.);
                       this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
                   }
               });
