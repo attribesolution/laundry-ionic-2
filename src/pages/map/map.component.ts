@@ -109,6 +109,7 @@ export class LaundryMap implements AfterViewInit{
 
   loadMap(){
 
+    console.log("load map called");
   	Geolocation.getCurrentPosition().then((position) => {
 	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
@@ -205,8 +206,9 @@ export class LaundryMap implements AfterViewInit{
 
          this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
 
+          console.log("map loaded");
   	}, (err) => {
-  		console.log(err);
+  		console.log("error = ",err);
   	});
 
   }
@@ -220,7 +222,7 @@ export class LaundryMap implements AfterViewInit{
       draggable:false,
       optimized:false, // <-- required for animated gif
       position: this.postion,
-      icon: "./assets/gifs/ripple_marker.gif"
+      icon: "./assets/gifs/ripple_marker_Orange.gif"
 		});
 
 		let content = "<h4>Information!</h4>";          
