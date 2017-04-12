@@ -15,7 +15,7 @@
                     height: 100%;"
                     color="secondary">
                     <p color="secondary" class="uppercase">Saved Locations</p>
-                </div>
+                </div>      
             </ion-item-divider>
             <ion-list *ngIf="addressResponse">
                 <ion-row *ngFor="let address of addressResponse">
@@ -31,8 +31,8 @@
                 </ion-row>
             </ion-item-divider>
             <div style="margin: 2% 3%;">
-                <img src="./assets/images/inc_icon.png" style="float: left" (click)=close() />
-                <img src="./assets/images/inc_icon.png" alt="" style="float: right" (click)="done()">
+                <img src="./assets/images/modal_cancel.png" style="float: left" (click)=close() />
+                <img src="./assets/images/modal_done.png" alt="" style="float: right" (click)="done()">
             </div>
         </div>
     </div>

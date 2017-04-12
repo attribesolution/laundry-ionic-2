@@ -12,7 +12,7 @@ import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
-
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 @Component({
   templateUrl: 'app.html',
   providers: [Storage, JwtHelper]
@@ -35,9 +35,12 @@ export class MyApp {
       { title: 'Profile', component: ProfileComponent },
       { title: 'Payment Method', component: PaymentMethodsPage },
       { title: 'Rates List', component: RatesListComponent },
+      { title: 'Notifications', component: NotificationComponent },
+      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
+      { title: 'ForgotPassword', component: ForgotPasswordPage},
       // { title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
-       { title: 'Sign Out', component: SignInPage }
+      { title: 'Sign Out', component: SignInPage }
       
     ];
 
@@ -48,7 +51,6 @@ export class MyApp {
       this.storage.get('x-access-token').then(
         token =>{
           console.log(token);
-          
           if(!!token){
             localStorage.setItem('x-access-token', token);
             localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
@@ -57,15 +59,14 @@ export class MyApp {
                         );
 
             console.log('Got token.', token);
-            this.rootPage = OrdersHistoryPage;  
+            this.rootPage = ForgotPasswordPage;  
           }else{
-            this.rootPage = SignInPage
+            this.rootPage = ForgotPasswordPage
             console.log('Authentication failed.');
           }
         },
         error => {
           console.log(error);
-            
         }
       );
       Splashscreen.hide();

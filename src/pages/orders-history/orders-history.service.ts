@@ -20,7 +20,6 @@ class OrdersHistoryService {
         let options = new RequestOptions({ headers: headers });
         console.log(headers);
         
-        //console.log(this.jwtHelper.getTokenExpirationDate(token), 'isTokenExpired:', this.jwtHelper.isTokenExpired(token));
         return this.http.get(URL, options);
         
         // let getOrdersHistoryPromise = new Promise((resolve, reject)=>{

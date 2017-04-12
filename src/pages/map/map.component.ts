@@ -46,19 +46,18 @@ export class LaundryMap implements AfterViewInit{
     inputFieldValue: string = '';
     search1;
     addressResponse: any;
+    userID: string;
+    token: string;
     constructor(private navCtrl: NavController, 
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage){
       console.log(this.search1);
       
-      storage.get("user-access-token")
-        .then(
-          token =>{
-            
-            this.createPreGen(this.preGenApiURL, token);
-          }
-        )
+      this.token = localStorage.getItem('x-access-token');
+      this.userID = localStorage.getItem('userID');
+      this.createPreGen(this.preGenApiURL, this.token);
+      
 
     }
     ngAfterViewInit(){

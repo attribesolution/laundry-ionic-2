@@ -22,10 +22,9 @@ import { SignInPage } from '../pages/sign-in/sign-in'
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
-import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
-
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 let storage: Storage;
 
 export function getAuthHttp(http){
@@ -57,9 +56,9 @@ export function getAuthHttp(http){
     SignUpPage,
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
-    FBSignInPage,
     PaymentMethodsPage,
-    OrderSummaryPage
+    OrderSummaryPage,
+    ForgotPasswordPage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -86,9 +85,9 @@ export function getAuthHttp(http){
     SignUpPage,
     OrdersHistoryPage,
     ComplaintsSuggestionsPage,
-    FBSignInPage,
     PaymentMethodsPage,
-    OrderSummaryPage
+    OrderSummaryPage,
+    ForgotPasswordPage
   ],
   providers: [{
     provide: ErrorHandler, 

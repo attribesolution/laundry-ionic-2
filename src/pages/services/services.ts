@@ -19,11 +19,11 @@ export class ServicesPage {
 
     buttons:any = [[{title:'COLD WASH' , selected:true },{title:'HOT WASH' , selected:false}],[{title:'LOW DRY' , selected:true},{title:'REGULAR DRY' , selected:false}],[{title:'SCENTED' , selected:true},{title:'NO SCENT' , selected:false}],[{title:'SOFTNER' , selected:true},{title:'NO SOFTNER' , selected:false}]];
     data: PreGenModel;
-
+    token: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, public servicesPatcher: ServicesPatcher) {
     this.data = navParams.get('preGenData');
     console.log(this.data);
-    
+    this.token = localStorage.getItem('x-access-token');
   }
   
 
@@ -104,7 +104,7 @@ export class ServicesPage {
       
       let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
       let patchData = (URL,servicesDataToSend) => {
-      this.servicesPatcher.patchService(URL, servicesDataToSend)
+      this.servicesPatcher.patchService(URL, servicesDataToSend, this.token)
         .subscribe(res =>{
           if(res.status == 200) {
               let response = JSON.parse(res['_body'])

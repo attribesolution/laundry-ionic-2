@@ -43,4 +43,7 @@ page-sign-up {
     input[type="date"]:valid:before {
         content: "";
     }
+    .fb-logo, .google-logo{
+        height: 10vh;
+    }
 }
