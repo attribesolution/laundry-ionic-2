@@ -4,7 +4,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from './../shared/shared.module';
 import { MyApp } from './app.component';
 import { LaundryMap } from '../pages/map/map.component';
 import { OrderPlaced } from '../pages/order-placed/order-placed';
@@ -65,6 +66,9 @@ export function getAuthHttp(http){
       apiKey: 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY'
     }),
     IonicModule.forRoot(MyApp),
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

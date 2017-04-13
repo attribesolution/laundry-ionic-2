@@ -59,9 +59,9 @@ export class MyApp {
                         );
 
             console.log('Got token.', token);
-            this.rootPage = ForgotPasswordPage;  
+            this.rootPage = SignInPage;  
           }else{
-            this.rootPage = ForgotPasswordPage
+            this.rootPage = SignInPage
             console.log('Authentication failed.');
           }
         },

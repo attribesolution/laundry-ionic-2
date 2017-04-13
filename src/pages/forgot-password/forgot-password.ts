@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ForgotPasswordService } from './forgot-passwoord.service';
+import { ForgotPasswordService } from './forgot-password.service';
 import { globalVars } from '../../app/globalvariables';
 @Component({
   selector: 'page-forgot-password',
