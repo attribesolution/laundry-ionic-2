@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { JwtHelper } from 'angular2-jwt';
+import { FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { User } from '../../app/user';
 import { SignInService } from './sign-in.service';
 import { OrdersHistoryPage } from '../orders-history/orders-history';
 import { SignUpPage } from '../sign-up/sign-up';
+import { ForgotPasswordPage } from './../forgot-password/forgot-password';
 import { globalVars } from './../../app/globalvariables';
 
 @Component({
@@ -16,7 +18,8 @@ import { globalVars } from './../../app/globalvariables';
   templateUrl: 'sign-in.html',
   providers: [SignInService, Storage, JwtHelper, User, Facebook, GooglePlus]
 })
-export class SignInPage {
+export class SignInPage implements OnInit {
+  form: FormGroup;
   token: string;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -26,14 +29,27 @@ export class SignInPage {
               private jwtHelper: JwtHelper,
               private user: User,
               private fb: Facebook,
-              private googlePlus: GooglePlus) {
+              private googlePlus: GooglePlus,
+              private formBuilder: FormBuilder) {
     this.menuController.swipeEnable(false);
   }
 
+  ngOnInit(){
+    this.form = this.formBuilder.group({
+      email: ['', [
+        Validators.required,
+        
+        ]],
+      password: ['']
+    })
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignInPage');
   }
   signIn(user, passwd){
+    console.log(this.form.value );
+    
+    console.log(user,passwd);
     
     let URL = globalVars.PostSignInApi();
     this.signInService.signInUser(URL, {
@@ -120,5 +136,8 @@ export class SignInPage {
       )
   }
   
+  forgot(){
+    this.navCtrl.push(ForgotPasswordPage);
+  }
 
 }
