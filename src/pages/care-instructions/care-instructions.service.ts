@@ -6,6 +6,7 @@ export class CareInstructionsService{
     constructor(private http: Http){}
    
      hitCareInstructionsPatch = (URL:string, data: any, token?) => {
+         
         console.log("Hitting: ", URL);
         console.log(data, JSON.stringify(data));
         let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token':  token});
