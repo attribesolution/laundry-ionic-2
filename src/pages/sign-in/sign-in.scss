@@ -2,7 +2,7 @@ page-sign-in {
     .main-logo{
         height: 25vh;
         display: block;
-        margin: 10vh auto;
+        margin: 5vh auto;
     }
     .sign-in-input-fields{
         padding: 0;
@@ -17,6 +17,10 @@ page-sign-in {
             border: none;
             color: white;
             font-size: 20px;
+        }
+        .ng-valid{
+            border-right: 3px dashed color($colors, primary);
+            color: color($colors, danger);
         }
         .sign-in-icon{
             color: white;
