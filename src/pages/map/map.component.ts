@@ -205,7 +205,7 @@ export class LaundryMap implements AfterViewInit{
 	    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
          this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
-
+         this.addMarker();
           console.log("map loaded");
   	}, (err) => {
   		console.log("error = ",err);
@@ -314,8 +314,14 @@ export class LaundryMap implements AfterViewInit{
     localStorage.setItem("Location", JSON.stringify(location));
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
+
     this.address = location.formatted_address;
     this.locationAlias = location.name;
+    //gMap = new google.maps.Map(document.getElementById('map')); 
+    this.postion =  new google.maps.LatLng(this.lat, this.lng);
+    this.map.setCenter(this.postion);
+    this.addMarker();
+    // this.map.center = new google.maps.LatLng(this.lat, this.lng);
   }
       
     startNextScreen(){

@@ -39,7 +39,7 @@ export class ComplaintsSuggestionsPage{suggestions
             this.complaints1 = res['_body'] == undefined ? '' : JSON.parse(res['_body'])['data'][0]['complains'];
             console.log(this.complaints1);
           }
-          this.spinnerDialog.hide();
+          //this.spinnerDialog.hide();
         });
     }
 
