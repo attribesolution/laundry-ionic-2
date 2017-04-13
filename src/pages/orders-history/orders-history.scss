@@ -6,4 +6,24 @@ page-orders-history {
         border-bottom: 2px solid white;
     }
     
+
+      .spinner svg, ion-spinner *,.spinner-md-crescent circle {
+  width: 48px;
+  height: 48px;
+  stroke: #59bd84;
+   
+    }
+
+    .spinner-div{
+
+    text-align: center;
+    margin-top: 50%;
+    margin-bottom: 50%;
+    margin-left: 40%;
+    position: absolute;
+    top: 150px;
+    z-index: 2
+
+    }
+    
 }

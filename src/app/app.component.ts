@@ -10,12 +10,14 @@ import { RatesListComponent } from '../pages/rates-list/rates-list'
 import { SignInPage } from '../pages/sign-in/sign-in'
 import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
-import { FBSignInPage } from '../pages/fb-sign-in/fb-sign-in';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+//import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+
 @Component({
   templateUrl: 'app.html',
   providers: [Storage, JwtHelper]
+
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -25,7 +27,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform, 
               private storage: Storage,
-              private jwtHelper: JwtHelper) {
+              private jwtHelper: JwtHelper
+              ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -47,9 +50,13 @@ export class MyApp {
   }
 
   initializeApp() {
+    //this.spinnerDialog.show();
     this.platform.ready().then( () => {
+      
       this.storage.get('x-access-token').then(
+        
         token =>{
+          //this.spinnerDialog.hide();
           console.log(token);
           if(!!token){
             localStorage.setItem('x-access-token', token);
@@ -66,6 +73,7 @@ export class MyApp {
           }
         },
         error => {
+          //this.spinnerDialog.hide();
           console.log(error);
         }
       );
