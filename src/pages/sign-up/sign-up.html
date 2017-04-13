@@ -12,7 +12,10 @@
           class="sign-up-input"
           [(ngModel)]="username"  
           placeholder="Username"
-          formControlName="username"> 
+          formControlName="username">
+          <ion-item *ngIf="!signUpForm.controls.username.valid  && (signUpForm.controls.username.dirty || submitAttempt)">
+                <p>Please enter a valid Username.</p>
+          </ion-item> 
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="lock" class="sign-up-icon"></ion-icon>
@@ -26,6 +29,9 @@
           [(ngModel)]="password" 
           placeholder="Password"
           formControlName="password"> 
+          <ion-item *ngIf="!signUpForm.controls.password.valid  && (signUpForm.controls.password.dirty || submitAttempt)">
+                <p>password required 8 character to be validate itself.</p>
+          </ion-item>
       </div>
       <div class="sign-up-input-fields">
         <ion-icon name="phone-portrait" class="sign-up-icon"></ion-icon>
