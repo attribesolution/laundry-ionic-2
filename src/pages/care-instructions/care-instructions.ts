@@ -40,7 +40,13 @@ startNextScreen(shirtsIns, dryCleanIns){
          
                 preGenData: this.preGenData
       
-          });
+          },error=>{
+
+      //this.hideActivityLoaders();
+    },()=>{
+     
+     // this.hideActivityLoaders();
+    });
           
          }
          
