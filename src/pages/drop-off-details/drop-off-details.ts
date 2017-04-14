@@ -37,7 +37,7 @@ export class DropOffDetails{
      };
      preGenData: PreGenModel;
      loc: Object;
-
+     token: string;
      dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
@@ -53,6 +53,7 @@ export class DropOffDetails{
         //  console.clear();
          console.log(navParams.get('preGenData'));
          console.log('Location: ', this.loc);
+         this.token = localStorage.getItem('x-access-token');
      }
 
      getClassofDate(e){
@@ -103,7 +104,7 @@ export class DropOffDetails{
             }
         }
         let URL = globalVars.patchDropOffApiURL((this.preGenData.data as any)._id);
-        this.dropOffService.hitDropOffPatch(URL, data)
+        this.dropOffService.hitDropOffPatch(URL, data, this.token)
             .subscribe(res => console.log(res));
     }
 }

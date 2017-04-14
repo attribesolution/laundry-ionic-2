@@ -26,6 +26,7 @@ import { globalVars } from "../../app/globalvariables";
 })
 
 
+<<<<<<< HEAD
 export class LaundryMap implements AfterViewInit {
   @ViewChild('search') button: ElementRef;
   @ViewChild('map') mapElement: ElementRef;
@@ -53,6 +54,41 @@ export class LaundryMap implements AfterViewInit {
     private storage: Storage,
     private alertCntrl: AlertDialogFactory) {
     console.log(this.search1);
+=======
+export class LaundryMap implements AfterViewInit{
+    @ViewChild('search') button: ElementRef;
+    @ViewChild('map') mapElement: ElementRef;
+    map: any;
+    zoom: number = 10;
+    saved :boolean;
+    addition : boolean;
+    save : boolean;
+    available_locations: Array<Object> = []
+    isModalVisible : boolean;
+    popOver : Popover;
+    postion : any;
+    preGenData: PreGenModel;
+    preGenApiURL = globalVars.PreGenApiURL();
+    address: string; 
+    lat: number; 
+    lng: number;
+    locationAlias: string;
+    inputFieldValue: string = '';
+    search1;
+    addressResponse: any;
+    userID: string;
+    token: string;
+    constructor(private navCtrl: NavController, 
+                private mapService: MapService, 
+                public popoverCtrl: PopoverController,
+                private storage: Storage){
+      console.log(this.search1);
+      
+      this.token = localStorage.getItem('x-access-token');
+      this.userID = localStorage.getItem('userID');
+      this.createPreGen(this.preGenApiURL, this.token);
+      
+>>>>>>> eb4421f8ff9d3d6039b859fdd233f814f31eef37
 
     storage.get("user-access-token")
       .then(
@@ -112,8 +148,14 @@ export class LaundryMap implements AfterViewInit {
 
   loadMap() {
 
+<<<<<<< HEAD
     Geolocation.getCurrentPosition().then((position) => {
       this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+=======
+    console.log("load map called");
+  	Geolocation.getCurrentPosition().then((position) => {
+	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+>>>>>>> eb4421f8ff9d3d6039b859fdd233f814f31eef37
 
       let mapOptions = {
         center: this.postion,
@@ -206,11 +248,20 @@ export class LaundryMap implements AfterViewInit {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+<<<<<<< HEAD
       this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
 
     }, (err) => {
       console.log(err);
     });
+=======
+         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
+         this.addMarker();
+          console.log("map loaded");
+  	}, (err) => {
+  		console.log("error = ",err);
+  	});
+>>>>>>> eb4421f8ff9d3d6039b859fdd233f814f31eef37
 
   }
 
@@ -223,8 +274,13 @@ export class LaundryMap implements AfterViewInit {
       draggable: false,
       optimized: false, // <-- required for animated gif
       position: this.postion,
+<<<<<<< HEAD
       icon: "./assets/gifs/ripple_marker.gif"
     });
+=======
+      icon: "./assets/gifs/ripple_marker_Orange.gif"
+		});
+>>>>>>> eb4421f8ff9d3d6039b859fdd233f814f31eef37
 
     let content = "<h4>Information!</h4>";
 
@@ -313,8 +369,14 @@ export class LaundryMap implements AfterViewInit {
     localStorage.setItem("Location", JSON.stringify(location));
     this.lat = location.geometry.location.lat;
     this.lng = location.geometry.location.lng;
+
     this.address = location.formatted_address;
     this.locationAlias = location.name;
+    //gMap = new google.maps.Map(document.getElementById('map')); 
+    this.postion =  new google.maps.LatLng(this.lat, this.lng);
+    this.map.setCenter(this.postion);
+    this.addMarker();
+    // this.map.center = new google.maps.LatLng(this.lat, this.lng);
   }
 
   validate():boolean

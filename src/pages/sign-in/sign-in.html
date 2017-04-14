@@ -1,30 +1,46 @@
 <ion-content padding class="fill-bg">
     <img class="main-logo" src="./assets/images/logo.png">
-    <form novalidate #f>
-      <div class="sign-in-input-fields">
+    <form novalidate (ngSubmit)="signIn(username, password);" [formGroup]="form" >
+      <div class="form-group sign-in-input-fields">
         <ion-icon name="contact" class="sign-in-icon"></ion-icon>
         <input
          required 
-         id="username" 
+         id="email" 
          type="email"
-         name="username" 
+         name="email" 
          autocomplete="off" 
-         class="sign-in-input"
-         [(ngModel)]="username"  
-         placeholder="Email"> 
+         class="sign-in-input form-control"
+         placeholder="Email"
+         formControlName="email"
+         #email> 
       </div>
+      <div 
+          *ngIf="email.touched && email.required"
+          class="alert alert-danger">Email is required</div>
+      <!--{{name.className}}-->
       <div class="sign-in-input-fields">
         <ion-icon name="lock" class="sign-in-icon"></ion-icon>
-        <input required id="password" name="password" autocomplete="off" [(ngModel)]="password" type="password" class="sign-in-input" placeholder="Password"> 
+        <input 
+          required 
+          id="password" 
+          name="password" 
+          type="password" 
+          autocomplete="off" 
+          class="sign-in-input" 
+          placeholder="Password"
+          formControlName="password"> 
       </div>
-      <div padding>
-        <button ion-button block primary (click)="signIn(username, password);">SIGN IN</button>
+      <div padding class="form-group">
+        <button type="submit" ion-button block primary>SIGN IN</button>
       </div>
     </form>
     <div class="center">
-      <img class="fb-logo" src="./assets/images/fb_icon.png" alt="">
-      <img class="google-logo" src="./assets/images/googlePlus_icon.png" alt="">
+      <img class="fb-logo" src="./assets/images/fb_icon.png" (click)="fbSignIn()" alt="">
+      <img class="google-logo" src="./assets/images/googlePlus_icon.png" (click)="googleSignIn()" alt="">
+      <p color="primary" ion-text (click)="forgot()">Forgot Password?</p>
     </div>
+    <!--{{ facebook | json }}-->
+    <!--{{ localStorage.getItem('x-access-token')}}-->
 </ion-content>
 <ion-footer>
   <button 

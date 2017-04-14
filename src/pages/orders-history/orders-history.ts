@@ -19,6 +19,8 @@ export class OrdersHistoryPage{
   }
   userID: string;
   response: any;
+  refreshController : any;
+  hideActivityLoader:boolean;
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -35,8 +37,11 @@ export class OrdersHistoryPage{
                 
                 
   }
-  ionViewDidLoad(){
-    // this.getOrdersHistory();
+ 
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.getOrdersHistory();
+    this.refreshController = refresher;
   }
   getOrdersHistory(){
    
@@ -53,11 +58,24 @@ export class OrdersHistoryPage{
           .subscribe(res => {
             if(res.status == 200) {
               console.log(JSON.parse(res['_body']));
-              
+              this.response = res;
             }
+          },error=>{
+            this.hideActivityLoaders();
+            console.log("Order history error = ", error);
+          },()=>{
+
+            this.hideActivityLoaders();
           })
     
   }
+  hideActivityLoaders(){
+
+      this.hideActivityLoader = true;
+      // check if refreshController is'nt undefined
+      if(this.refreshController)
+      this.refreshController.complete();
+}
   placeOrder(){
     this.navCtrl.push(LaundryMap);
   }

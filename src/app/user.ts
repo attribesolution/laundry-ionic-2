@@ -48,4 +48,12 @@ export class User {
        this.storage.set('x-access-token', accessToken);
      });
   }
+  saveFBData(fbData){
+    this.storage.ready()
+      .then(
+        () =>{
+          this.storage.set('fbData', fbData);
+        }
+      )
+  }
 }

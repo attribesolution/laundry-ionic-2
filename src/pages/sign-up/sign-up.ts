@@ -46,20 +46,23 @@ export class SignUpPage {
     let response: any;
     this.signUpService.PostNewUser(URL, data)
       .subscribe(res => {
-        if (res.status = 200) {
-          console.log(res['_body']);
-          let body = JSON.parse(res['_body']);
-          response = {
-            href: body["href"],
-            data: body["data"]
-          }
-          console.log(response.data._id);
-          localStorage.setItem("userID", response.data._id);
-          this.navCtrl.setRoot(OrdersHistoryPage, { userID: response.data._id });
-        }
-      });
-    }
-  signinPage() {
+
+                  if(res.status = 200){
+                      console.log(JSON.parse(res['_body']));
+                      let body  = JSON.parse(res['_body']);
+                      response = {
+                        href: body["href"],
+                        data: body["data"]
+                      }
+                      console.log("response data = ",response.data);
+                      localStorage.setItem("userID", response.data._id);
+                      //this.user.saveUserAccessToken(response.data.);
+                      this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                  }
+              });
+  }
+  signinPage(){
+
     this.navCtrl.setRoot(SignInPage);
   }
 }

@@ -18,37 +18,36 @@ export class LaundryItems implements OnInit{
   icons: string[];
   titles: string[];
   laundryitems : LaundryItemModel;
-  responseArray1 : Array<Object> = [];
   responseArray : Array<Object> = [];
   preGenData: PreGenModel;
   params : Array<Object> = [];
   laundryitems2: any;
   selectedItem2: any;
+  token: string;
+  refreshController : any;
+  hideActivityLoader:boolean;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private items_Service: LaundryItemsService, 
               private storage: Storage) {
     this.selectedItem = navParams.get('item');
     this.preGenData = navParams.get('preGenData');
+    this.token = localStorage.getItem('x-access-token');
+    console.log(this.token);
     
     // this.loc = navParams.get('pickupDetails');
 }
 
 
   ngOnInit(){
-    this.storage.get('user-access-token').then(token  => {
-      
-      this.getLaundryItems(token);
-      console.log(tokenNotExpired(null, token));
-      
-    })
-    
+    this.getLaundryItems();
+    console.log(tokenNotExpired(null, this.token));
   }
 
-  getLaundryItems = (token) => {
+  getLaundryItems = () => {
     console.log(this.selectedItem);
     
-    var response$      =  this.items_Service.getItems(token)
+    var response$      =  this.items_Service.getItems(this.token)
     .subscribe(res => {
       if(res.status == 200) {
         let response = JSON.parse(res['_body']) 
@@ -59,39 +58,35 @@ export class LaundryItems implements OnInit{
           console.log('final laundry items: ', this.laundryitems)
           this.maplaundryitems(this.laundryitems.data);
         }
-        this.responseArray = this.responseArray1;
+        
+    },error=>{
+
+      this.hideActivityLoaders();
+    },()=>{
+     
+      this.hideActivityLoaders();
     })
     console.log("laundryitems",this.laundryitems);
   }
 
-  refresher() {
-    // var response2$ = this.items_Service.getItems(token)
-    //   .subscribe(res => {
-    //     if(res.status == 200){
-    //       let response = JSON.parse(res['_body']);
-    //       this.laundryitems2 = {
-    //         href: response["href"],
-    //         data: response["data"]
-    //       }
-    //       this.maplaundryitems(this.laundryitems2.data);
-          
-    //     }
-    //     this.responseArray = this.responseArray1;
-    //   })
-  }
+hideActivityLoaders(){
+
+      this.hideActivityLoader = true;
+      // check if refreshController is'nt undefined
+      if(this.refreshController)
+      this.refreshController.complete();
+}
+
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.refresher();
-    // setTimeout(() => {
-    //   console.log('Async operation has ended');
-    //   refresher.complete();
-    // }, 2000);
-    refresher.complete();
+    this.getLaundryItems();
+  
+   this.refreshController = refresher;
   }
 
 maplaundryitems(data){
 
-  
+  this.responseArray= [];
   data.forEach(element => {
     
    let mappedObject =  {
@@ -104,7 +99,7 @@ maplaundryitems(data){
     toWash:true,
 	  toDry:false
     }
-    this.responseArray1.push(mappedObject);
+    this.responseArray.push(mappedObject);
   });
 
 }
@@ -194,21 +189,15 @@ calculateTotalAmount(item){
           })
         })
       
-    this.storage.get('user-access-token').then(
-      token => {
-        let laundryData = {
-      
-        laundryItems : jsonArray,
-        "x-access-token": token
-      
-    };
+    
+        let laundryData = {laundryItems : jsonArray,};
 
       console.log("laundry data = ",laundryData);
       let items = JSON.stringify(laundryData.laundryItems);
       localStorage.setItem('Laundry Items', items);
       let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
       console.log(URL)
-      this.items_Service.patchService(URL,laundryData)
+      this.items_Service.patchService(URL,laundryData, this.token)
       .subscribe(res => {
             if(res.status == 200) {
               let response = JSON.parse(res['_body']) 
@@ -216,8 +205,8 @@ calculateTotalAmount(item){
                 console.log('final response = ', response)
               }
           })
-      }
-    )
+      
+    
     
 
       this.navCtrl.push(ServicesPage, {
