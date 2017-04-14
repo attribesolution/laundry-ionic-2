@@ -16,7 +16,6 @@ export class AlertDialogFactory {
         let alert = this.alertCtrl.create({
             title: title,
             message: msg,
-            cssClass:'alert-dialog',
             buttons: ['Ok']
         });
         alert.present();

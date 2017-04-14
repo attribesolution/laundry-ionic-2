@@ -37,10 +37,13 @@ ion-header {
    padding: 10px;
  }
 
- .alert-dialog{
-   $alert-md-background-color:color($colors, secondary);
-   $alert-md-message-text-color:white;
-   $alert-md-title-text-color:color($colors, primary)
+ .alert-wrapper {
+   background-color:color($colors, secondary)!important;
+    color: color($colors, primary);
+    .alert-message {
+    color: white;
  }
+ }
+ 
 
 .footer-padding { padding: 1% 3%; }
