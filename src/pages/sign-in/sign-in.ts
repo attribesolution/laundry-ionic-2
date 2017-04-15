@@ -25,11 +25,6 @@ export class SignInPage implements OnInit {
   signInForm: FormGroup;
   token: string;
   submitted = false;
-
-  onSubmit(){
-    
-
-  }
   active = true;
   ngOnInit(): void{
     this.buildForm();

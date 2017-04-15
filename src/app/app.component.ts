@@ -68,7 +68,7 @@ export class MyApp {
             console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
           }else{
-            this.rootPage = OrdersHistoryPage
+            this.rootPage = SignInPage;
             console.log('Authentication failed.');
           }
         },
