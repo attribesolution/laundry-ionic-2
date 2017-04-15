@@ -9,6 +9,15 @@
 
 
 <ion-content padding class="fill-bg">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="!(hideActivityLoader)" class="spinner-div">
+  <ion-spinner></ion-spinner>
+  </div>
+
   <div *ngIf="!(response?.data)" style="font-size: 150%;">
     <ion-item-divider class="fill-bg center" padding>
         <!--<div *ngIf="response?.data">

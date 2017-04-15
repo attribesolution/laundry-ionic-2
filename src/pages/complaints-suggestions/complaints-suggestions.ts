@@ -9,6 +9,8 @@ import { ComplaintsSuggestionsService } from './complatins-suggestions.service';
 
 import { globalVars } from '../../app/globalvariables';
 
+//import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+
 @Component ({
     selector: 'complaints-suggestions',
     templateUrl: 'complaints-suggestions.html',
@@ -26,15 +28,18 @@ export class ComplaintsSuggestionsPage{suggestions
       
     }     
     getHistory = () => {
+      //this.spinnerDialog.show();
       let userID = localStorage.getItem("userID");
       let URL = globalVars.getComplainsURL(userID);
       this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL)
         .subscribe(res =>{
           if (res.status == 200){
+            this.complaints1= [];
             console.log(res['_body']);
             this.complaints1 = res['_body'] == undefined ? '' : JSON.parse(res['_body'])['data'][0]['complains'];
             console.log(this.complaints1);
           }
+          //this.spinnerDialog.hide();
         });
     }
 
@@ -58,19 +63,25 @@ export class ComplaintsSuggestionsPage{suggestions
       
       let complaintsAndSuggestions = {complaints: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
       console.log(complaintsAndSuggestions);
-      
+      //this.spinnerDialog.show();
       this.complaintsSuggestionsService.hitComplaintsSuggestionsPatchURL(URL, complaintsAndSuggestions)
         .subscribe(res => {
           if(res.status == 200){
+            //this.spinnerDialog.hide();
             console.log(res['_body']);
             this.presentToast()
-            let URL2 = globalVars.getComplainsURL(userID);
-            this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
-              .subscribe(response => {
-                if (response.status == 200){
-                  console.log(response['body']);
-                }
-              })
+            
+            this.getHistory();
+            // let URL2 = globalVars.getComplainsURL(userID);
+            // this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
+            //   .subscribe(response => {
+            //     this.spinnerDialog.hide();
+            //     if (response.status == 200){
+            //       console.log(response['body']);
+                  
+                  
+            //     }
+            //   })
           }
         });
       

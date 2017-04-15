@@ -18,13 +18,14 @@ export class LaundryItems implements OnInit{
   icons: string[];
   titles: string[];
   laundryitems : LaundryItemModel;
-  responseArray1 : Array<Object> = [];
   responseArray : Array<Object> = [];
   preGenData: PreGenModel;
   params : Array<Object> = [];
   laundryitems2: any;
   selectedItem2: any;
   token: string;
+  refreshController : any;
+  hideActivityLoader:boolean;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private items_Service: LaundryItemsService, 
@@ -57,39 +58,35 @@ export class LaundryItems implements OnInit{
           console.log('final laundry items: ', this.laundryitems)
           this.maplaundryitems(this.laundryitems.data);
         }
-        this.responseArray = this.responseArray1;
+        
+    },error=>{
+
+      this.hideActivityLoaders();
+    },()=>{
+     
+      this.hideActivityLoaders();
     })
     console.log("laundryitems",this.laundryitems);
   }
 
-  refresher() {
-    // var response2$ = this.items_Service.getItems(token)
-    //   .subscribe(res => {
-    //     if(res.status == 200){
-    //       let response = JSON.parse(res['_body']);
-    //       this.laundryitems2 = {
-    //         href: response["href"],
-    //         data: response["data"]
-    //       }
-    //       this.maplaundryitems(this.laundryitems2.data);
-          
-    //     }
-    //     this.responseArray = this.responseArray1;
-    //   })
-  }
+hideActivityLoaders(){
+
+      this.hideActivityLoader = true;
+      // check if refreshController is'nt undefined
+      if(this.refreshController)
+      this.refreshController.complete();
+}
+
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.refresher();
-    // setTimeout(() => {
-    //   console.log('Async operation has ended');
-    //   refresher.complete();
-    // }, 2000);
-    refresher.complete();
+    this.getLaundryItems();
+  
+   this.refreshController = refresher;
   }
 
 maplaundryitems(data){
 
-  
+  this.responseArray= [];
   data.forEach(element => {
     
    let mappedObject =  {
@@ -102,7 +99,7 @@ maplaundryitems(data){
     toWash:true,
 	  toDry:false
     }
-    this.responseArray1.push(mappedObject);
+    this.responseArray.push(mappedObject);
   });
 
 }
