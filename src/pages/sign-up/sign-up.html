@@ -78,21 +78,19 @@
                 {{ formsError.email }}
           </div>
       <div class="sign-up-input-fields">
-        <ion-icon name="calender" class="sign-up-icon"></ion-icon>
+        <ion-icon ios="md-calendar" md="md-calendar" class="sign-up-icon"></ion-icon>
         <input 
         required 
         id="dob" 
         name="dob" 
-        type="date" 
+        type="text" 
+        onfocus="(this.type='date')" 
+        onblur="if(this.value)this.placeholder=''"
         autocomplete="off" 
         placeholder="Date of Birth"
         class="sign-up-input"
         formControlName="dob"> 
-        <!--<ion-datetime 
-          displayFormat="DD/MM/YYYY" 
-          pickerFormat="DD MMMM YYYY" 
-          [(ngModel)]="myDate"
-        ></ion-datetime>-->
+        
       </div>
       <div 
             *ngIf="formsError.dob"
