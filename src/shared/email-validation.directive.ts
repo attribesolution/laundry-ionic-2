@@ -14,7 +14,13 @@ export function emailValidator(emailRegex: RegExp): ValidatorFn{
         const email = control.value;
         // let emailRegex: RegExp;
         const no = emailRegex.test(email);
-        return no ? { 'Email': {email}}: null;
+        if(email == '' ){
+            return {'required': {email}}
+        }else{
+            return no ? null: { 'invalidEmail': {email}} ;
+        }
+        
+        
     };
 }
 

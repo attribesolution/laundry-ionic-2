@@ -10,13 +10,16 @@
           name="username" 
           autocomplete="off" 
           class="sign-up-input"
-          [(ngModel)]="username"  
           placeholder="Username"
           formControlName="username">
-          <ion-item *ngIf="!signUpForm.controls.username.valid  && (signUpForm.controls.username.dirty || submitAttempt)">
-                <p>Please enter a valid Username.</p>
-          </ion-item> 
       </div>
+      <div 
+        *ngIf="formsError.username"
+        class="error"
+        center
+      >
+            {{ formsError.username }}
+      </div> 
       <div class="sign-up-input-fields">
         <ion-icon name="lock" class="sign-up-icon"></ion-icon>
         <input
@@ -26,13 +29,16 @@
           name="password" 
           autocomplete="off" 
           class="sign-up-input" 
-          [(ngModel)]="password" 
           placeholder="Password"
           formControlName="password"> 
-          <ion-item *ngIf="!signUpForm.controls.password.valid  && (signUpForm.controls.password.dirty || submitAttempt)">
-                <p>password required 8 character to be validate itself.</p>
-          </ion-item>
       </div>
+      <div 
+            *ngIf="formsError.password"
+            class="error"
+            center
+          >
+                {{ formsError.password }}
+          </div>
       <div class="sign-up-input-fields">
         <ion-icon name="phone-portrait" class="sign-up-icon"></ion-icon>
         <input 
@@ -41,11 +47,17 @@
         type="tel"
         name="phone" 
         autocomplete="off" 
-        [(ngModel)]="phone"  
         class="sign-up-input" 
         placeholder="Phone Number"
         formControlName="phone"> 
       </div>
+      <div 
+            *ngIf="formsError.phone"
+            class="error"
+            center
+          >
+                {{ formsError.phone }}
+          </div>
       <div class="sign-up-input-fields">
         <ion-icon name="mail" class="sign-up-icon"></ion-icon>
         <input 
@@ -54,29 +66,39 @@
         name="email" 
         type="email" 
         autocomplete="off" 
-        [(ngModel)]="email" 
         placeholder="Email"
         class="sign-up-input"
         formControlName="email"> 
       </div>
+      <div 
+            *ngIf="formsError.email"
+            class="error"
+            center
+          >
+                {{ formsError.email }}
+          </div>
       <div class="sign-up-input-fields">
-        <ion-icon name="calender" class="sign-up-icon"></ion-icon>
+        <ion-icon ios="md-calendar" md="md-calendar" class="sign-up-icon"></ion-icon>
         <input 
         required 
         id="dob" 
         name="dob" 
-        type="date" 
+        type="text" 
+        onfocus="(this.type='date')" 
+        onblur="if(this.value)this.placeholder=''"
         autocomplete="off" 
-        [(ngModel)]="dob" 
         placeholder="Date of Birth"
         class="sign-up-input"
         formControlName="dob"> 
-        <!--<ion-datetime 
-          displayFormat="DD/MM/YYYY" 
-          pickerFormat="DD MMMM YYYY" 
-          [(ngModel)]="myDate"
-        ></ion-datetime>-->
+        
       </div>
+      <div 
+            *ngIf="formsError.dob"
+            class="error"
+            center
+          >
+                {{ formsError.dob }}
+          </div>
       <div padding>
         <button 
         block 

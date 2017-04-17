@@ -40,7 +40,7 @@ export class MyApp {
       { title: 'Rates List', component: RatesListComponent },
       //{ title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
-      { title: 'ForgotPassword', component: ForgotPasswordPage},
+      // { title: 'ForgotPassword', component: ForgotPasswordPage},
       // { title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
       { title: 'Sign Out', component: SignInPage }
@@ -68,7 +68,7 @@ export class MyApp {
             console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
           }else{
-            this.rootPage = OrdersHistoryPage
+            this.rootPage = SignInPage;
             console.log('Authentication failed.');
           }
         },

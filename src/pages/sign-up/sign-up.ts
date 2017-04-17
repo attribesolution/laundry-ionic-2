@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams, MenuController} from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { emailValidator } from '../../shared/email-validation.directive';
+
 import { SignUpService } from './sign-up.service';
 import { globalVars } from '../../app/globalvariables';
 import { OrdersHistoryPage } from '../orders-history/orders-history';
@@ -11,26 +14,100 @@ import { SignInPage } from '../sign-in/sign-in';
   templateUrl: 'sign-up.html',
   providers: [SignUpService]
 })
-export class SignUpPage {
+export class SignUpPage implements OnInit{
 
- public signUpForm = new FormGroup({
-      username: new FormControl("username", Validators.required),
-      password: new FormControl("password", Validators.required),
-      phone: new FormControl("phone", Validators.required),
-      email: new FormControl("email", Validators.required),
-      dob: new FormControl("dob", Validators.required),
+  signUpForm: FormGroup;
+  submitted = false;
+  active = true;
+  ngOnInit(){
+    this.buildForm();
+  }
+  buildForm(): void{
+    let emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    this.signUpForm = this.formBuilder.group({
+      username: ['',[
+        Validators.required
+      ]],
+      password: ['',[
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(36)
+      ]],
+      phone: ['',[
+        Validators.required
+      ]],
+      email: ['',[
+        Validators.required,
+        emailValidator(emailReg)
+      ]],
+      dob: ['',[
+        Validators.required
+      ]]
     });
+  }
+  validateForm(data?: any){
+    
+    if (!this.signUpForm) {return;}
+    const form = this.signUpForm;
+    
+    for(const field in this.formsError){
+      const control = form.get(field);
+      
+      if(control){
+        this.formsError[field] = '';
+        const messages = this.validationMessages[field];
+        for (const key in control.errors){  
+          console.log(control.errors);
+          this.formsError[field] = messages[key];
+        }
+      }
+    }
+  }
+  formsError = {
+    username: '',
+    password: '',
+    phone: '',
+    email: '',
+    dob: ''
+  }
+
+  validationMessages = {
+    username:{
+      'required': 'Username is required.',
+    },
+    password: {
+      'required': 'Password is required.',
+      'minlength': 'Password should contain atleast 4 characters',
+      'maxlength': 'Password should be less than 36 characters'
+    },
+    phone:{
+      'required': 'Phone number is required.',
+    },
+    email: {
+      'required': 'Email is required.',
+      'invalidEmail': 'Invalid Email address.'
+    },
+    dob:{
+      'required': 'Date of Birth is required.',
+    }
+  }
+
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    private signUpService: SignUpService,
-    public formBuilder: FormBuilder) {
+              public navParams: NavParams,
+              private signUpService: SignUpService,
+              private formBuilder: FormBuilder,
+              private menuController: MenuController) {
+                this.menuController.swipeEnable(false);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignUpPage');
   }
   signUp(username, password, phone, email, dob) {
-
+    this.validateForm(this.signUpForm.value);
+    this.submitted = true;
+    console.log(this.signUpForm.value);
+    
     let URL, data: any;
     URL = globalVars.PostNewUser();
     data = {
