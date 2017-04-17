@@ -48,11 +48,11 @@ export class User {
        this.storage.set('x-access-token', accessToken);
      });
   }
-  saveFBData(fbData){
+  saveSocialData(SocialData){
     this.storage.ready()
       .then(
         () =>{
-          this.storage.set('fbData', fbData);
+          this.storage.set('Social', SocialData);
         }
       )
   }

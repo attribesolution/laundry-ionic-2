@@ -18,6 +18,12 @@ page-sign-up {
             color: white;
             font-size: 20px;
         }
+        .ng-valid{
+            color: color($colors, primary);
+        }
+        .ng-invalid{
+            color: color($colors, danger);
+        }
         .sign-up-icon{
             color: white;
             font-size: 22px;
@@ -42,6 +48,11 @@ page-sign-up {
     input[type="date"]:focus:before,
     input[type="date"]:valid:before {
         content: "";
+    }
+    .error{
+            margin: 0 auto;
+            text-align: center;
+            color: color($colors, danger);
     }
     .fb-logo, .google-logo{
         height: 10vh;

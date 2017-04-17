@@ -19,7 +19,9 @@ page-sign-in {
             font-size: 20px;
         }
         .ng-valid{
-            border-right: 3px dashed color($colors, primary);
+            color: color($colors, primary);
+        }
+        .ng-invalid{
             color: color($colors, danger);
         }
         .sign-in-icon{
@@ -31,6 +33,11 @@ page-sign-in {
             width: 20px!important;
             height: auto!important;
         }
+    }
+    .error{
+            margin: 0 auto;
+            text-align: center;
+            color: color($colors, danger);
     }
     .fb-logo, .google-logo{
         height: 10vh;

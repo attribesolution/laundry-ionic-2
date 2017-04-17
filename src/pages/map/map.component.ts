@@ -146,12 +146,12 @@ export class LaundryMap implements AfterViewInit{
     }
   }
 
-  loadMap() {
+  loadMap(lat?, lng?) {
 
 
     console.log("load map called");
   	Geolocation.getCurrentPosition().then((position) => {
-	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	    this.postion = new google.maps.LatLng(lat || position.coords.latitude, lng || position.coords.longitude);
 
       let mapOptions = {
         center: this.postion,
@@ -362,6 +362,7 @@ export class LaundryMap implements AfterViewInit{
     this.postion =  new google.maps.LatLng(this.lat, this.lng);
     this.map.setCenter(this.postion);
     this.addMarker();
+    this.loadMap(this.lat, this.lng);
     // this.map.center = new google.maps.LatLng(this.lat, this.lng);
   }
 

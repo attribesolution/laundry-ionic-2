@@ -1,6 +1,6 @@
 <ion-content padding class="fill-bg">
     <img class="main-logo" src="./assets/images/logo.png">
-    <form novalidate (ngSubmit)="signIn(username, password);" [formGroup]="form" >
+    <form novalidate (ngSubmit)="signIn(username, password);" *ngIf="active" [formGroup]="signInForm" >
       <div class="form-group sign-in-input-fields">
         <ion-icon name="contact" class="sign-in-icon"></ion-icon>
         <input
@@ -12,12 +12,13 @@
          class="sign-in-input form-control"
          placeholder="Email"
          formControlName="email"
-         #email> 
+         > 
       </div>
       <div 
-          *ngIf="email.touched && email.required"
-          class="alert alert-danger">Email is required</div>
-      <!--{{name.className}}-->
+          *ngIf="formsError.email"
+          class="error"
+          center
+          >{{ formsError.email }}</div>
       <div class="sign-in-input-fields">
         <ion-icon name="lock" class="sign-in-icon"></ion-icon>
         <input 
@@ -26,10 +27,18 @@
           name="password" 
           type="password" 
           autocomplete="off" 
-          class="sign-in-input" 
+          class="sign-in-input form-control" 
           placeholder="Password"
           formControlName="password"> 
       </div>
+      <div 
+          *ngIf="formsError.password"
+          class="error"
+          center
+          >{{ formsError.password }}</div>
+       <!--<div 
+          *ngIf="formsError.password"
+          class="alert alert-danger">{{ formsError.password }}</div>-->
       <div padding class="form-group">
         <button type="submit" ion-button block primary>SIGN IN</button>
       </div>
