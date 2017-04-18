@@ -41,16 +41,17 @@ export class OrdersHistoryPage{
               // let xAccessToken = this.user.getUserAccessToken();
               
               
-              storage.get('user-id').then(
-                data =>{
-                  console.log(data);
-                  console.log(data._id);
+              // storage.get('user-id').then(
+              //   data =>{
+              //     console.log(data);
+              //     console.log(data._id);
                   
-                  this.userID = data._id;
-                  this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
-                  this.getOrdersHistory();
-                })
-              // this.userID = localStorage.getItem('userID');
+              //     this.userID = data._id;
+              //     this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
+              //     this.getOrdersHistory();
+              //   });
+              
+              this.userID = localStorage.getItem('userID');
               // // console.log(this.userID);
               
                 
@@ -77,6 +78,7 @@ export class OrdersHistoryPage{
               console.log(res);
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);
+              
             }
           },error=>{
             this.hideActivityLoaders();
@@ -85,7 +87,7 @@ export class OrdersHistoryPage{
 
             this.hideActivityLoaders();
           })
-    
+    // this.hideActivityLoaders();
   }
   hideActivityLoaders(){
 
