@@ -57,19 +57,19 @@ export class MyApp {
         
         token =>{
           //this.spinnerDialog.hide();
-          console.log(token);
+          // console.log(token);
           if(!!token){
             localStorage.setItem('x-access-token', token);
             localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
-            console.log(localStorage.getItem('userID'), 'at App component \n',
-                        localStorage.getItem('x-access-token')
-                        );
+            // console.log(localStorage.getItem('userID'), 'at App component \n',
+            //             localStorage.getItem('x-access-token')
+            //             );
 
-            console.log('Got token.', token);
+            // console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
           }else{
             this.rootPage = SignInPage;
-            console.log('Authentication failed.');
+            console.log('Could not find X-Access-Token. Please login or signup');
           }
         },
         error => {

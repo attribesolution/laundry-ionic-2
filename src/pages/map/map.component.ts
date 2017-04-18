@@ -73,19 +73,20 @@ export class LaundryMap implements AfterViewInit{
     lng: number;
     locationAlias: string;
     inputFieldValue: string = '';
-    search1;
     addressResponse: any;
     userID: string;
     token: string;
-    constructor(private navCtrl: NavController, 
+    constructor(private navCtrl: NavController,
+                private navParams: NavParams, 
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage,
                 private alertCntrl: AlertDialogFactory){
-      console.log(this.search1);
+      
       
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
+      this.preGenData = navParams.get('preGenData');
       // this.createPreGen(this.preGenApiURL, this.token);
       
 

@@ -3,7 +3,7 @@
   <name>KIITOOS</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content src="http://192.168.100.27:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
   <allow-navigation href="https://maps.googleapis.com/*"/>
