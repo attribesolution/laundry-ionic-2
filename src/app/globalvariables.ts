@@ -9,11 +9,11 @@ export const globalVars =  {
     },
     laundryURL:"/laundryItems",
     patchLaundryitemsApiURL(orderID){
-        return ((this.BaseURL + this.OrderURL+orderID+this.laundryURL) as string);
+        return ((this.BaseURL + this.OrderURL + orderID +this.laundryURL) as string);
     },
-    PreGenURL: "pregen/order",
-    PreGenApiURL(){
-        return this.BaseURL + this.OrderURL + this.PreGenURL;
+    PreGenURL: "pregen/order/user/",
+    PreGenApiURL(userID){
+        return this.BaseURL + this.OrderURL + this.PreGenURL + userID;
     },
     OrderURL: "/api/v1/orders/",
     ServicesURL: "/service",
@@ -33,8 +33,9 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + orderID + this.CareInstructionsURL;
     },
     AllUsers: "/api/v1/users/",
+    SignUp: "/api/v1/user/signup",
     PostNewUser(){
-        return ((this.BaseURL + this.AllUsers as string));
+        return ((this.BaseURL + this.SignUp as string));
     },
     UsersURL: 'user/',
     getOrdersHistoryURL(userID: string){

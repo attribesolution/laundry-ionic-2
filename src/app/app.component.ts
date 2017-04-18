@@ -13,10 +13,10 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 //import { SpinnerDialog } from '@ionic-native/spinner-dialog';
-
+import { User } from './user';
 @Component({
   templateUrl: 'app.html',
-  providers: [Storage, JwtHelper]
+  providers: [Storage, JwtHelper,User]
 
 })
 export class MyApp {
@@ -27,7 +27,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform, 
               private storage: Storage,
-              private jwtHelper: JwtHelper
+              private jwtHelper: JwtHelper,
+              private user : User
               ) {
     this.initializeApp();
 
@@ -57,19 +58,20 @@ export class MyApp {
         
         token =>{
           //this.spinnerDialog.hide();
-          console.log(token);
+          // console.log(token);
           if(!!token){
             localStorage.setItem('x-access-token', token);
             localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
-            console.log(localStorage.getItem('userID'), 'at App component \n',
-                        localStorage.getItem('x-access-token')
-                        );
+            // console.log(localStorage.getItem('userID'), 'at App component \n',
+            //             localStorage.getItem('x-access-token')
+            //             );
 
-            console.log('Got token.', token);
+            // console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
+            this.user.scheduleRefresh(token);
           }else{
             this.rootPage = SignInPage;
-            console.log('Authentication failed.');
+            console.log('Could not find X-Access-Token. Please login or signup');
           }
         },
         error => {

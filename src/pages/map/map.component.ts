@@ -39,34 +39,26 @@ export class LaundryMap implements AfterViewInit{
     popOver : Popover;
     postion : any;
     preGenData: PreGenModel;
-    preGenApiURL = globalVars.PreGenApiURL();
     address: string; 
     lat: number; 
     lng: number;
     locationAlias: string;
     inputFieldValue: string = '';
-    search1;
     addressResponse: any;
     userID: string;
     token: string;
-    constructor(private navCtrl: NavController, 
+    constructor(private navCtrl: NavController,
+                private navParams: NavParams, 
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage,
                 private alertCntrl: AlertDialogFactory){
-      console.log(this.search1);
+      
       
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
-      this.createPreGen(this.preGenApiURL, this.token);
-      
-
-    storage.get("user-access-token")
-      .then(
-      token => {
-
-        this.createPreGen(this.preGenApiURL, token);
-      })
+      this.preGenData = navParams.get('preGenData');
+      // this.createPreGen(this.preGenApiURL, this.token);
 
   }
   ngAfterViewInit() {
@@ -78,21 +70,7 @@ export class LaundryMap implements AfterViewInit{
   ionViewDidLoad() {
     this.loadMap();
   }
-  createPreGen(URL, token) {
-    this.mapService.hitPreGen(URL, token)
-      .subscribe(res => {
-        if (res.status == 200) {
-          let response = JSON.parse(res['_body'])
-          console.log(res['_body']);
-
-          this.preGenData = {
-            href: response["href"],
-            data: response["data"]
-          }
-          console.log('Response From PreGen', (this.preGenData.data as any));
-        }
-      });
-  }
+  
   listenToSearchInput() {
     let location: string;
     console.log('location1:', location)
@@ -116,12 +94,12 @@ export class LaundryMap implements AfterViewInit{
     }
   }
 
-  loadMap(lat?, lng?) {
+  loadMap() {
 
 
     console.log("load map called");
   	Geolocation.getCurrentPosition().then((position) => {
-	    this.postion = new google.maps.LatLng(lat || position.coords.latitude, lng || position.coords.longitude);
+	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       let mapOptions = {
         center: this.postion,
@@ -332,7 +310,6 @@ export class LaundryMap implements AfterViewInit{
     this.postion =  new google.maps.LatLng(this.lat, this.lng);
     this.map.setCenter(this.postion);
     this.addMarker();
-    this.loadMap(this.lat, this.lng);
     // this.map.center = new google.maps.LatLng(this.lat, this.lng);
   }
 
