@@ -28,7 +28,7 @@ export class OrdersHistoryPage{
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
-  preGenApiURL = globalVars.PreGenApiURL();
+  preGenApiURL : string;
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -39,11 +39,11 @@ export class OrdersHistoryPage{
               private user: User) {
               // let xAccessToken = this.user.getUserAccessToken();
               
-              this.getOrdersHistory();
-                this.userID = this.navParams.get('userID');
-                // console.log(this.userID);
-                
-                
+              
+                this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
+                 console.log("userID = ",this.userID);
+                this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
+                this.getOrdersHistory();
   }
  
   doRefresh(refresher) {
@@ -52,9 +52,12 @@ export class OrdersHistoryPage{
     this.refreshController = refresher;
   }
   getOrdersHistory(){
-   
-    
-    console.log('ionViewDidLoad OrdersHistoryPage');
+    console.log("x-access-token = ",localStorage.getItem('x-access-token'),"userID = ",localStorage.getItem('userID'));
+    let xAccessToken: any;
+        let options, headers: any;
+        // let token = this.user.getUserAccessToken();
+        // console.log(token);
+
         let token = localStorage.getItem('x-access-token');
         this.userID = localStorage.getItem('userID');
         let URL = globalVars.getOrdersHistoryURL(this.userID); 

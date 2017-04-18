@@ -26,35 +26,6 @@ import { globalVars } from "../../app/globalvariables";
 })
 
 
-// <<<<<<< HEAD
-// export class LaundryMap implements AfterViewInit {
-//   @ViewChild('search') button: ElementRef;
-//   @ViewChild('map') mapElement: ElementRef;
-//   map: any;
-//   zoom: number = 10;
-//   saved: boolean;
-//   addition: boolean;
-//   save: boolean;
-//   available_locations: Array<Object> = []
-//   isModalVisible: boolean;
-//   popOver: Popover;
-//   postion: any;
-//   preGenData: PreGenModel;
-//   preGenApiURL = globalVars.PreGenApiURL();
-//   address: string;
-//   lat: number;
-//   lng: number;
-//   locationAlias: string;
-//   inputFieldValue: string = '';
-//   search1;
-//   addressResponse: any;
-//   constructor(private navCtrl: NavController,
-//     private mapService: MapService,
-//     public popoverCtrl: PopoverController,
-//     private storage: Storage,
-//     private alertCntrl: AlertDialogFactory) {
-//     console.log(this.search1);
-// =======
 export class LaundryMap implements AfterViewInit{
     @ViewChild('search') button: ElementRef;
     @ViewChild('map') mapElement: ElementRef;
@@ -88,9 +59,6 @@ export class LaundryMap implements AfterViewInit{
       this.userID = localStorage.getItem('userID');
       this.preGenData = navParams.get('preGenData');
       // this.createPreGen(this.preGenApiURL, this.token);
-      
-
-    
 
   }
   ngAfterViewInit() {

@@ -168,6 +168,7 @@ export class SignUpPage implements OnInit{
         this.user.saveUserId(userID);
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);
+        this.user.scheduleRefresh(this.token);
         this.navCtrl.setRoot(OrdersHistoryPage);
         
       }, err => {
