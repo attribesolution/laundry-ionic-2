@@ -29,13 +29,6 @@ export class MapService{
             // .map(e=> e.formatted_address)
      } 
 
-     hitPreGen = (URL:any, token) => {
-        console.log("Hitting: ", URL);
-        let headers = new Headers({'x-access-token': token});
-        let options = new RequestOptions({ headers: headers });
-        return this.http.get(URL, options)
-            // .map(res => JSON.parse(res['_body']).results);
-    }
 
     patchAddress = (URL: string, data: any, options?:any) =>{
         console.log("Hitting", URL);

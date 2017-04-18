@@ -4,8 +4,12 @@ import { Storage } from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { JwtHelper } from 'angular2-jwt';
 import { Http, RequestOptions, Headers } from '@angular/http';
+
 import { OrdersHistoryService } from './orders-history.service';
+
 import { globalVars } from '../../app/globalvariables';
+import { PreGenModel } from '../../models/preGen.model';
+
 import { LaundryMap } from '../map/map.component';
 import { User } from '../../app/user';
 @Component({
@@ -14,13 +18,17 @@ import { User } from '../../app/user';
   providers: [User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
 })
 export class OrdersHistoryPage{
+  
   OnInit(){
     // this.getOrdersHistory();
   }
+  
   userID: string;
   response: any;
+  preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
+  preGenApiURL = globalVars.PreGenApiURL();
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -47,10 +55,6 @@ export class OrdersHistoryPage{
    
     
     console.log('ionViewDidLoad OrdersHistoryPage');
-    let xAccessToken: any;
-        let options, headers: any;
-        // let token = this.user.getUserAccessToken();
-        // console.log(token);
         let token = localStorage.getItem('x-access-token');
         this.userID = localStorage.getItem('userID');
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
@@ -77,6 +81,37 @@ export class OrdersHistoryPage{
       this.refreshController.complete();
 }
   placeOrder(){
-    this.navCtrl.push(LaundryMap);
+    this.storage.get("x-access-token")
+      .then(
+      token => {
+        // console.log(token);
+        
+        this.createPreGen(this.preGenApiURL, token);
+      }
+      )
+    
+  }
+
+  createPreGen(URL, token) {
+    console.log('Create Pre Gen Called');
+    
+    this.ordersHistoryService.hitPreGen(URL, token)
+      .subscribe(res => {
+        if (res.status == 200) {
+          let response = JSON.parse(res['_body'])
+          // console.log(res['_body']);
+
+          this.preGenData = {
+            href: response["href"],
+            data: response["data"]
+          }
+          console.log('Response From PreGen', (this.preGenData.data as any));
+          this.navCtrl.push(LaundryMap, {
+            preGenData: this.preGenData
+          });
+        }
+      }, err => {
+        console.log(err);        
+      });
   }
 }

@@ -7,18 +7,26 @@ export /**
  * OrdersHistoryService
  */
 class OrdersHistoryService {
+    headers: Headers;
+    options: RequestOptions;
+
     constructor(private http: Http, 
     private storage: Storage,
     private jwtHelper: JwtHelper) {
-        
+        this.headers = new Headers({
+                    'x-access-token': this.storage.get('authToken')
+            });
+            this.options = new RequestOptions({
+                    headers: this.headers
+            });
     }
    
     getOrdersHistory = (URL, token) =>{
         let xAccessToken: any;
-        console.log(token);
+        // console.log(token);
         let headers = new Headers({'x-access-token': token});
         let options = new RequestOptions({ headers: headers });
-        console.log(headers);
+        // console.log(headers);
         
         return this.http.get(URL, options);
         
@@ -31,5 +39,15 @@ class OrdersHistoryService {
         // })
         // return getOrdersHistoryPromise;
         
+    }
+
+    hitPreGen = (URL:any, token) => {
+        console.log("Hitting: ", URL);
+        let headers = new Headers({'x-access-token': token});
+        console.log(token);
+        
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(URL, options)
+            // .map(res => JSON.parse(res['_body']).results);
     }
 }

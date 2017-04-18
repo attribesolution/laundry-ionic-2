@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.laundryionic2.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-<<<<<<< HEAD
   <name>KIITOOS</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -18,6 +17,7 @@
   <allow-navigation href="http://192.168.100.38:8101"/>
   <allow-navigation href="http://192.168.100.40:8101"/>
   <allow-navigation href="http://192.168.100.5:8101"/>
+  <allow-navigation href="http://192.168.100.27:8100"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

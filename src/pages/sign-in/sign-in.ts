@@ -143,7 +143,7 @@ export class SignInPage implements OnInit {
               this.user.saveUserAccessToken(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
-      })
+      });
   }
   signupPage(){
     this.navCtrl.setRoot(SignUpPage);

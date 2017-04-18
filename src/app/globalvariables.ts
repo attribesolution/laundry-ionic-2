@@ -2,14 +2,14 @@ export const globalVars =  {
 
     // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
     // BaseURL: "http://192.168.100.26:3005",
-    BaseURL: "http://localhost:3005",
+    BaseURL: "http://localhost:3000",
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
     },
     laundryURL:"/laundryItems",
     patchLaundryitemsApiURL(orderID){
-        return ((this.BaseURL + this.OrderURL+orderID+this.laundryURL) as string);
+        return ((this.BaseURL + this.OrderURL + orderID +this.laundryURL) as string);
     },
     PreGenURL: "pregen/order",
     PreGenApiURL(){
@@ -33,8 +33,9 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + orderID + this.CareInstructionsURL;
     },
     AllUsers: "/api/v1/users/",
+    SignUp: "/api/v1/user/signup",
     PostNewUser(){
-        return ((this.BaseURL + this.AllUsers as string));
+        return ((this.BaseURL + this.SignUp as string));
     },
     UsersURL: 'user/',
     getOrdersHistoryURL(userID: string){
