@@ -28,7 +28,7 @@ export class OrdersHistoryPage{
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
-  preGenApiURL = globalVars.PreGenApiURL();
+  preGenApiURL: string;
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -39,10 +39,19 @@ export class OrdersHistoryPage{
               private user: User) {
               // let xAccessToken = this.user.getUserAccessToken();
               
-              this.getOrdersHistory();
-                this.userID = this.navParams.get('userID');
-                // console.log(this.userID);
-                
+              
+              storage.get('user-id').then(
+                data =>{
+                  console.log(data);
+                  console.log(data._id);
+                  
+                  this.userID = data._id;
+                  this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
+                  this.getOrdersHistory();
+                })
+              // this.userID = localStorage.getItem('userID');
+              // // console.log(this.userID);
+              
                 
   }
  
@@ -58,11 +67,15 @@ export class OrdersHistoryPage{
         let token = localStorage.getItem('x-access-token');
         this.userID = localStorage.getItem('userID');
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
+        console.log(URL);
+        console.log(token);
+        
         this.ordersHistoryService.getOrdersHistory(URL, token)
           .subscribe(res => {
             if(res.status == 200) {
+              console.log(res);
               console.log(JSON.parse(res['_body']));
-              this.response = res;
+              this.response = JSON.parse(res['_body']);
             }
           },error=>{
             this.hideActivityLoaders();
@@ -94,6 +107,7 @@ export class OrdersHistoryPage{
 
   createPreGen(URL, token) {
     console.log('Create Pre Gen Called');
+    console.log(URL);
     
     this.ordersHistoryService.hitPreGen(URL, token)
       .subscribe(res => {
@@ -111,7 +125,7 @@ export class OrdersHistoryPage{
           });
         }
       }, err => {
-        console.log(err);        
+        console.log(JSON.stringify(err));        
       });
   }
 }
