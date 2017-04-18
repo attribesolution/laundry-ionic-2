@@ -62,8 +62,8 @@ export const globalVars =  {
     PostSignInApi(){
         return this.BaseURL + this.SignInURL;
     },
-    forgorPasswordURL: '/password/forgot',
+    forgorPasswordURL: 'password/forgot',
     getForgotPasswordAPIURL(userID){
-        return this.BaseURL + this.AllUsers + userID + this.forgorPasswordURL;
+        return this.BaseURL + this.AllUsers + this.forgorPasswordURL;
     }
 }

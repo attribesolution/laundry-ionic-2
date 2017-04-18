@@ -5,7 +5,8 @@ import { Http } from '@angular/http';
 export class ForgotPasswordService{
     constructor(private http: Http){}
 
-    hitForgotPasswordAPI = (URL,options?) => {
-        return this.http.get(URL, options);
+    hitForgotPasswordAPI = (URL,body,options?) => {
+        console.log("forgot password api body = ",body);
+        return this.http.post(URL,body, options);
     }
 }

@@ -19,7 +19,10 @@ export class ForgotPasswordPage {
   forgot(email){
     console.log(email);
     let URL = globalVars.getForgotPasswordAPIURL(email);
-    this.forgotPasswordService.hitForgotPasswordAPI(URL)
+    let body = {
+      "emailID":email
+    };
+    this.forgotPasswordService.hitForgotPasswordAPI(URL,body)
       .subscribe(
         res =>{
           if(res.status == 200){

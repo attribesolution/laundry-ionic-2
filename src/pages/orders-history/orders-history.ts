@@ -46,7 +46,7 @@ export class OrdersHistoryPage{
   getOrdersHistory(){
    
     
-    console.log('ionViewDidLoad OrdersHistoryPage');
+    console.log("x-access-token = ",localStorage.getItem('x-access-token'),"userID = ",localStorage.getItem('userID'));
     let xAccessToken: any;
         let options, headers: any;
         // let token = this.user.getUserAccessToken();
