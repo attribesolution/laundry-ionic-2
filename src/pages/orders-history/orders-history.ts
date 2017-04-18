@@ -66,7 +66,7 @@ export class OrdersHistoryPage{
     
     console.log('ionViewDidLoad OrdersHistoryPage');
         let token = localStorage.getItem('x-access-token');
-        this.userID = localStorage.getItem('userID');
+        // this.userID = localStorage.getItem('userID');
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
         console.log(URL);
         console.log(token);
@@ -129,9 +129,9 @@ export class OrdersHistoryPage{
         console.log(JSON.stringify(err));        
       });
   }
-  showOrderSummary(itemID){
+  showOrderSummary(orderID){
     this.navCtrl.push(OrderSummaryPage, {
-      itemID: itemID
+      orderID: orderID
     })
   }
 }
