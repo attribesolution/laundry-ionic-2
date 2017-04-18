@@ -32,8 +32,15 @@ export class SignUpPage implements OnInit{
       username: ['',[
         Validators.required
       ]],
-      firstname: [''],
-      lastname: [''],
+      firstname: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(50)]],
+      lastname: ['',[
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50)],
+      ],
       password: ['',[
         Validators.required,
         Validators.minLength(4),
@@ -70,7 +77,8 @@ export class SignUpPage implements OnInit{
     }
   }
   formsError = {
-    username: '',
+    firstname: '',
+    lastname: '',
     password: '',
     phone: '',
     email: '',
@@ -78,8 +86,15 @@ export class SignUpPage implements OnInit{
   }
 
   validationMessages = {
-    username:{
-      'required': 'Username is required.',
+    firstname:{
+      'required': 'First name is required.',
+      'minLength': 'First name should contain atleast 4 characters',
+      'maxlength': 'First name should be less than 36 characters'
+    },
+    lastname:{
+      'required': 'Last name is required.',
+      'minLength': 'Last name should contain atleast 4 characters',
+      'maxlength': 'Last name should be less than 36 characters'
     },
     password: {
       'required': 'Password is required.',
@@ -120,15 +135,15 @@ export class SignUpPage implements OnInit{
     let URL, data: any;
     URL = globalVars.PostNewUser();
     data = {
-      "username": this.signUpForm.value.username,
-      "firstname": "this.signUpForm.value.firsname",
-      "lastname": "this.signUpForm.value.lastname",
-      "password": this.signUpForm.value.password,
+      "username": this.signUpForm.value.email || null,
+      "firstname": this.signUpForm.value.firsname || null,
+      "lastname": this.signUpForm.value.lastname || null,
+      "password": this.signUpForm.value.password || null,
       "contact": {
-        "phone1": this.signUpForm.value.phone,
-        "email1": this.signUpForm.value.email
+        "phone1": this.signUpForm.value.phone || null,
+        "email1": this.signUpForm.value.email || null
       },
-      "dob": this.signUpForm.value.dob
+      "dob": this.signUpForm.value.dob || null
     }
     console.log(`Sending to server ${data.username}, ${data.password}, ${data.contact.phone1}, ${data.contact.email1}`);
     let response: any;
@@ -165,6 +180,7 @@ export class SignUpPage implements OnInit{
         this.token = JSON.parse(res['_body'])['token'];
         let userID = this.jwtHelper.decodeToken(this.token);
         localStorage.setItem('x-access-token',this.token);
+        localStorage.setItem('user-id', userID._id);
         this.user.saveUserId(userID);
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);

@@ -160,13 +160,14 @@ export class SignInPage implements OnInit {
           this.user.saveSocialData(res.authResponse);
           localStorage.setItem('fbData', JSON.stringify(res.authResponse));
         }else{
-          this.fb.login(['public_profile', 'email'])
+          this.fb.login(['email'])
             .then(
               (res: FacebookLoginResponse) => {
                 console.log('Logged into facebook:', res)
                 this.facebook = res.status;
                 this.user.saveSocialData(res.authResponse);
                 localStorage.setItem('fbData', JSON.stringify(res.authResponse));
+                this.navCtrl.setRoot(OrdersHistoryPage);
               }
             )
             .catch( 
@@ -175,7 +176,6 @@ export class SignInPage implements OnInit {
                 this.facebook = e
             })
         }
-        this.navCtrl.setRoot(OrdersHistoryPage);
       }
     )
     
