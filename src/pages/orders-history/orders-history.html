@@ -24,7 +24,7 @@
   <ion-spinner></ion-spinner>
   </div>
 
-  <!--<div *ngIf="!(response?.data)" style="font-size: 150%;">
+  <div *ngIf="!(response?.data)" style="font-size: 150%;">
     <ion-item-divider class="fill-bg center" padding>
           <h2 style="overflow-wrap: break-word;">
             You have not placed any orders.
@@ -34,9 +34,9 @@
       <button ion-button block primary padding class="center uppercase" (click)="placeOrder();">Place an order</button>
     </ion-item-divider>
         <!--<h1 *ngSwitchDefault class="center">Loading...</h1>-->
-  <!--</div>-->
+  </div>
   <div *ngIf="response?.data">
-    <ion-list color="secondary" style="border-bottom:0">
+    <ion-list color="secondary" style="border-bottom:0; height: 80vh; overflow-y: scroll">
             <ion-item-divider color="secondary">
                 <ion-row>
                     <ion-col width-40><div class="center col-heading">Order ID</div></ion-col>                    
@@ -47,7 +47,8 @@
             <ion-item-divider color="secondary" *ngFor="let item of response?.data">
                 <ion-row>
                     <ion-col width-40 class="center">
-                        <p ion-text color="primary">{{ item._id.slice(item._id.length-5, item._id.length) }}</p>
+                        <p ion-text class="id-hyperlink" color="primary" (click)="showOrderSummary(item._id)">
+                          {{ item._id.slice(item._id.length-5, item._id.length) }}</p>
                     </ion-col >
                     <ion-col width-30 class="center">
                         {{ item.status }}
@@ -60,3 +61,14 @@
         </ion-list>
   </div>
 </ion-content>
+<ion-footer *ngIf="response?.data" style="padding: 10px;" >
+  <button 
+    full
+    ion-button
+    style="height: 50px" 
+    (click)="placeOrder();"
+    color="primary"
+    class="center uppercase">
+       <p style="font-size: 20px;" color="secondary">Place a new Order</p>
+  </button>
+</ion-footer>

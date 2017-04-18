@@ -11,6 +11,7 @@ import { globalVars } from '../../app/globalvariables';
 import { PreGenModel } from '../../models/preGen.model';
 
 import { LaundryMap } from '../map/map.component';
+import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
 @Component({
   selector: 'page-orders-history',
@@ -127,5 +128,10 @@ export class OrdersHistoryPage{
       }, err => {
         console.log(JSON.stringify(err));        
       });
+  }
+  showOrderSummary(itemID){
+    this.navCtrl.push(OrderSummaryPage, {
+      itemID: itemID
+    })
   }
 }
