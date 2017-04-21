@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { emailValidatorDirective } from './email-validation.directive';
+
 @NgModule({
     declarations: [ 
         emailValidatorDirective

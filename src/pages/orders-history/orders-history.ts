@@ -21,7 +21,7 @@ import { User } from '../../app/user';
 export class OrdersHistoryPage{
   
   OnInit(){
-    // this.getOrdersHistory();
+    
   }
   
   userID: string;
@@ -55,7 +55,7 @@ export class OrdersHistoryPage{
               // // console.log(this.userID);
               
                 
-  }
+              }
  
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);

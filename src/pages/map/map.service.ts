@@ -20,7 +20,7 @@ export class MapService{
     
     getJSON = (place: string) => {
         let stringQuery: string; //= place +  " in UAE";
-        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  " in UAE";
+        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\%20in\%20in UAE";
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
 

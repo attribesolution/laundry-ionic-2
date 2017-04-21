@@ -140,6 +140,7 @@ export class SignInPage implements OnInit {
               localStorage.setItem('x-access-token',this.token);
               this.user.saveUserId(userID);
               console.log(userID._id);
+              localStorage.setItem('userID', userID._id);
               this.user.saveUserAccessToken(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
