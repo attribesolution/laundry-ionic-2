@@ -1,8 +1,8 @@
 export const globalVars =  {
-
-    // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
-    // BaseURL: "http://192.168.100.26:3005",
-    BaseURL: "http://localhost:3000",
+    BaseURL: "http://localhost:3000", 
+    // BaseURL: "http://192.168.100.27:3000",
+    // BaseURL: "http://stage.dmenu.co:3005",
+    
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
@@ -11,11 +11,14 @@ export const globalVars =  {
     patchLaundryitemsApiURL(orderID){
         return ((this.BaseURL + this.OrderURL + orderID +this.laundryURL) as string);
     },
-    PreGenURL: "pregen/order",
-    PreGenApiURL(){
-        return this.BaseURL + this.OrderURL + this.PreGenURL;
+    PreGenURL: "pregen/order/user/",
+    PreGenApiURL(userID){
+        return this.BaseURL + this.OrderURL + this.PreGenURL + userID;
     },
     OrderURL: "/api/v1/orders/",
+    getOrderByIdURL(orderID){
+        return this.BaseURL + this.OrderURL + orderID;
+    },
     ServicesURL: "/service",
     ServicesApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.ServicesURL;
@@ -66,5 +69,9 @@ export const globalVars =  {
     forgorPasswordURL: '/password/forgot',
     getForgotPasswordAPIURL(userID){
         return this.BaseURL + this.AllUsers + userID + this.forgorPasswordURL;
+    },
+    profileURL: '/profile',
+    profileAPIURL(userID){
+        return this.BaseURL + this.AllUsers + userID + this.profileURL;
     }
 }
