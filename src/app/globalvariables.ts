@@ -1,6 +1,6 @@
 export const globalVars =  {
-    BaseURL: "http://localhost:3000", 
-    // BaseURL: "http://192.168.100.27:3000",
+    // BaseURL: "http://localhost:3000", 
+    BaseURL: "http://192.168.0.108:3000",
     // BaseURL: "http://stage.dmenu.co:3005",
     
     LaundryitemsURL: "/api/v1/laundryItems",
@@ -46,10 +46,10 @@ export const globalVars =  {
     },
     UsersAddressURL: '/address',
     UserAddress(userID: string){
-        return this.BaseURL + this.AllUsers + '/' +  userID + this.UsersAddressURL;
+        return this.BaseURL + this.AllUsers  +  userID + this.UsersAddressURL;
     },
     getUsersAddress(userID: string){
-        return this.BaseURL + this.AllUsers +  '/' + userID +  '/addresses';
+        return this.BaseURL + this.AllUsers  + userID +  '/addresses';
     },
     ComplainUrl:'/complain',
     PatchComplainURL(userID){
@@ -64,7 +64,7 @@ export const globalVars =  {
     },
     SignInURL: '/api/v1/auth/local',
     PostSignInApi(){
-        return this.BaseURL + this.SignInURL;
+        return (this.BaseURL + this.SignInURL as string);
     },
     forgorPasswordURL: '/password/forgot',
     getForgotPasswordAPIURL(userID){

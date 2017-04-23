@@ -239,19 +239,7 @@ export class LaundryMap implements AfterViewInit{
   savedButtonClicked(myEvent) {
     this.saved = this.saved ? false : true;
     // console.log("savedButtonClicked");
-    let userID = localStorage.getItem('userID');
-    console.log(userID);
-    let URL = globalVars.getUsersAddress(userID);
-    console.log(URL);
-    let addressResponse: any;
-    this.mapService.getAddress(URL)
-      .subscribe(res => {
-        if (res.status == 200) {
-          this.addressResponse = JSON.parse(res['_body'])['data'].contact;
-          console.log(this.addressResponse);
-          console.log(this.addressResponse);
-        }
-      });
+    
     // this.addition=this.addition?false:true;
     this.openSavedLocationModal(myEvent);
   }
@@ -261,6 +249,11 @@ export class LaundryMap implements AfterViewInit{
       ev: myEvent
     });
     this.saved = this.saved ? false : true;
+    popover.onDidDismiss(popoverAddress => {
+      console.log(popoverAddress);
+      popoverAddress ? 
+        this.locationClicked(popoverAddress) : '';
+    });
   }
 
   saveButtonClicked() {
@@ -274,7 +267,7 @@ export class LaundryMap implements AfterViewInit{
       lat: this.lat,
       long: this.lng
     }
-    this.mapService.patchAddress(URL, data)
+    this.mapService.patchAddress(URL, data, this.token)
       .subscribe(res => {
         if (res.status == 200) {
           console.log(res['_body']);
@@ -300,13 +293,23 @@ export class LaundryMap implements AfterViewInit{
   locationClicked(location) {
     console.log("You have clicked on: ", location);
     this.available_locations = undefined;
-    this.inputFieldValue = location.formatted_address;
-    localStorage.setItem("Location", JSON.stringify(location));
-    this.lat = location.geometry.location.lat;
-    this.lng = location.geometry.location.lng;
+    if(!!location.formatted_address){
+      this.inputFieldValue = location.formatted_address;
+      localStorage.setItem("Location", JSON.stringify(location));
+      this.lat = location.geometry.location.lat;
+      this.lng = location.geometry.location.lng;
 
-    this.address = location.formatted_address;
-    this.locationAlias = location.name;
+      this.address = location.formatted_address;
+      this.locationAlias = location.name;
+    }else{
+      this.inputFieldValue = location.address;
+      localStorage.setItem("Location", JSON.stringify(location));
+      this.lat = location.lat;
+      this.lng = location.long;
+      this.address = location.address;
+      this.locationAlias = location.alias;
+    };
+    
     //gMap = new google.maps.Map(document.getElementById('map')); 
     this.postion =  new google.maps.LatLng(this.lat, this.lng);
     this.map.setCenter(this.postion);

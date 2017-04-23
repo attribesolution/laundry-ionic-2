@@ -30,7 +30,9 @@ export class MapService{
      } 
 
 
-    patchAddress = (URL: string, data: any, options?:any) =>{
+    patchAddress = (URL: string, data: any, token?:any) =>{
+        let headers = new Headers({'x-access-token': token});
+        let options = new RequestOptions({ headers: headers });
         console.log("Hitting", URL);
         return this.http.patch(URL, data, options);
     }
