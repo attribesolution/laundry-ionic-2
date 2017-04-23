@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, MenuController} from 'ionic-angular';
+import { NavController, NavParams, MenuController, ToastController} from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { JwtHelper } from 'angular2-jwt';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 import { emailValidator } from '../../shared/email-validation.directive';
 
@@ -15,7 +16,11 @@ import { SignInPage } from '../sign-in/sign-in';
 @Component({
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html',
-  providers: [SignUpService, SignInService, JwtHelper, User]
+  providers: [SignUpService, 
+              SignInService,
+              Facebook, 
+              JwtHelper, 
+              User]
 })
 export class SignUpPage implements OnInit{
 
@@ -23,6 +28,7 @@ export class SignUpPage implements OnInit{
   submitted = false;
   active = true;
   token: any;
+  URL: any = globalVars.PostNewUser();;
   ngOnInit(){
     this.buildForm();
   }
@@ -116,11 +122,13 @@ export class SignUpPage implements OnInit{
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private jwtHelper: JwtHelper,
+              private toastCtrl: ToastController,
               private user: User,
               private signUpService: SignUpService,
               private signInService: SignInService,
               private formBuilder: FormBuilder,
-              private menuController: MenuController) {
+              private menuController: MenuController,
+              private fb: Facebook,) {
                 this.menuController.swipeEnable(false);
   }
 
@@ -135,7 +143,7 @@ export class SignUpPage implements OnInit{
     let URL, data: any;
     URL = globalVars.PostNewUser();
     data = {
-      "username": this.signUpForm.value.email || null,
+      
       "firstname": this.signUpForm.value.firsname || null,
       "lastname": this.signUpForm.value.lastname || null,
       "password": this.signUpForm.value.password || null,
@@ -143,7 +151,8 @@ export class SignUpPage implements OnInit{
         "phone1": this.signUpForm.value.phone || null,
         "email1": this.signUpForm.value.email || null
       },
-      "dob": this.signUpForm.value.dob || null
+      "dob": this.signUpForm.value.dob || null,
+      "username": this.signUpForm.value.email || null
     }
     console.log(`Sending to server ${data.username}, ${data.password}, ${data.contact.phone1}, ${data.contact.email1}`);
     let response: any;
@@ -174,7 +183,9 @@ export class SignUpPage implements OnInit{
     
     console.log('Inside Sign in call');
     
-    let URL = globalVars.PostSignInApi();
+    this.URL = globalVars.PostSignInApi();
+    console.log(this.URL);
+    
     this.signInService.signInUser(URL, data)
       .subscribe(res => {
         this.token = JSON.parse(res['_body'])['token'];
@@ -185,9 +196,10 @@ export class SignUpPage implements OnInit{
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);
         this.navCtrl.setRoot(OrdersHistoryPage);
+        console.log(JSON.stringify(res['_body']['data']));
         
       }, err => {
-        console.log(err);
+        console.log(JSON.stringify(err));
         
       })
   }
@@ -195,4 +207,132 @@ export class SignUpPage implements OnInit{
 
     this.navCtrl.setRoot(SignInPage);
   }
+  facebook = "facebook";
+  fbSignup(){
+    console.log('FB Signup clicked.');
+
+    this.fb.getLoginStatus().then(
+      res =>{
+        if(res.status === 'connected' || res.status !== 'connected'){
+          this.fb.login(['email', 'public_profile'])
+            .then(
+              (res: FacebookLoginResponse) => {
+                console.log('Logged into facebook:', res);
+                console.log(res.authResponse.sig);
+                console.log(res.authResponse['email']);
+                // console.log(res.);
+                
+                
+                this.facebook = res.status;
+                this.user.saveSocialData(res.authResponse);
+                localStorage.setItem('fbData', JSON.stringify(res.authResponse));
+                // this.navCtrl.setRoot(OrdersHistoryPage);
+
+                let fbUserID = res.authResponse.userID;
+
+                let params: Array<any>;
+                let data = {
+                  
+                }
+                params = ['email', 'public_profile']
+                this.fb.api(`/me?fields=
+                                        name,
+                                        email,
+                                        link,
+                                        locale,
+                                        gender,
+                                        first_name,
+                                        last_name,
+                                        hometown
+                              `, params).then(
+                                user => {
+                                  console.log(JSON.stringify(user), user.name);
+                                  data = {
+                                    "username": fbUserID,
+                                    "firstName": user.first_name,
+                                    "lastName": user.last_name,
+                                    "contact": {
+                                      "phone1": "",
+                                      "email1": fbUserID
+                                    },
+                                    "dob":"",
+                                    "isFacebookAuthenticated": true,
+                                    "social":{
+                                      "socialLink": user.link,
+                                      "name": fbUserID,
+                                      "gender": user.gender,
+                                      "currentCity": "",
+                                      "currentCountry":""
+                                    }
+                                  } 
+                                  
+                                }
+                              ).then(()  => {
+                                console.log(JSON.stringify(data));
+                                // this.requestSignIn(data);
+                                this.socialSignup(this.URL, data, fbUserID);
+                              });
+                
+                
+                
+              }
+            ).catch( e => {
+              console.log('Error logging into facebook', e);
+              this.facebook = e;
+            })
+        }
+      });
+
+
+  }
+
+socialSignup(URL, data, fbUserID){
+   let response: any;
+   console.log(URL);
+   
+    this.signUpService.PostNewUser(URL, data)
+      .subscribe(res => {
+
+                  if(res.status = 200){
+                      console.log(res['_body']);
+                      let body  = JSON.parse(res['_body']);
+                      response = {
+                        href: body["href"],
+                        data: body["data"]
+                      }
+                      console.log("response data = ",JSON.stringify(response.data));
+                      if(!!response.data && !response.error){
+                        localStorage.setItem("userID", response.data._id);
+
+
+                      }else{
+                        console.log('You are already signed up. Please sign in.');
+                        this.presentToast();
+                      }
+                      
+                      // //this.user.saveUserAccessToken(response.data.);
+                      // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                  }
+                  let signInData = {
+                    username: fbUserID,
+                    password: fbUserID + "facebook"
+                  };
+                  // this.requestSignIn(signInData);
+              });
+      }
+    presentToast(){
+      console.log('Inside toast');
+      
+      let toast = this.toastCtrl.create({
+        message: 'You are already signed up. Please sign in using facebook.',
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+      });
+
+      toast.present();
+
+      }
 }
