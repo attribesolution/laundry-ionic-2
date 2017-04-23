@@ -50,4 +50,9 @@ class OrdersHistoryService {
         return this.http.get(URL, options)
             // .map(res => JSON.parse(res['_body']).results);
     }
+
+
+    getStatus(URL){
+        return this.http.get(URL);
+    }
 }

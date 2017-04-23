@@ -20,16 +20,14 @@ import { User } from '../../app/user';
 })
 export class OrdersHistoryPage{
   
-  OnInit(){
-    
-  }
-  
   userID: string;
   response: any;
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
   preGenApiURL: string;
+  statusList: Array<Object>;
+  currentStatus = "ORI";  //Dummy Code for testing -- Remove it ASAP.
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -47,16 +45,90 @@ export class OrdersHistoryPage{
               //     console.log(data._id);
                   
               //     this.userID = data._id;
-              //     this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
+                  
               //     this.getOrdersHistory();
               //   });
-              
+              this.hideActivityLoader = false;
               this.userID = localStorage.getItem('userID');
               // // console.log(this.userID);
-              
+              this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
                 
               }
  
+  ionViewDidLoad(){
+    this.getOrdersHistory();
+    let URL = globalVars.statusAPIURL();
+    this.ordersHistoryService.getStatus(URL)
+      .subscribe( res => {
+        if(res.status == 200){
+          console.log(res);
+          let response = JSON.parse(res['_body'])["data"];
+          this.storage.set("statusList", response);
+
+          //Dummy status list below. Remove it and get stauts from server
+          this.statusList = [
+            {
+              "_id": "58bfbb19685648cd03929946",
+              "name": "Order Initiated",
+              "code": "ORI"
+            },
+            {
+              "_id": "58bfbb19685648cd03929948",
+              "name": "Ready for Pickup from Client",
+              "code": "RPC"
+            },
+            {
+              "_id": "58bfbb19685648cd0392994a",
+              "name": "Picked Up from Client - On way to vendor",
+              "code": "OPC"
+            },
+            {
+              "_id": "58bfbb19685648cd0392994c",
+              "name": "Delivered to Vendor",
+              "code": "DTV"
+            },
+            {
+              "_id": "58bfbb19685648cd0392994e",
+              "name": "Picked Up from Vendor",
+              "code": "OPV"
+            },
+            {
+              "_id": "58bfbb19685648cd03929950",
+              "name": "Out for Delivery",
+              "code": "OFD"
+            },
+            {
+              "_id": "58bfbb19685648cd03929952",
+              "name": "Delivered to Client",
+              "code": "ODC"
+            },
+            {
+              "_id": "58bfbb19685648cd03929954",
+              "name": "Order Amount Paid",
+              "code": "OAP"
+            },
+            {
+              "_id": "58bfbb19685648cd03929956",
+              "name": "Client Feedback Pending",
+              "code": "CFP"
+            },
+            {
+              "_id": "58bfbb19685648cd03929958",
+              "name": "Worker Feedback Pending",
+              "code": "WFP"
+            },
+            {
+              "_id": "58bfbb19685648cd0392995a",
+              "name": "Order Complete",
+              "code": "ORC"
+            }
+          ] ;
+          this.statusHtml = this.findStatus(this.currentStatus);
+          //Dummy status list above. Remove it and get stauts from server
+        }
+      })
+  }
+
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     this.getOrdersHistory();
@@ -84,7 +156,6 @@ export class OrdersHistoryPage{
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
           },()=>{
-
             this.hideActivityLoaders();
           })
     // this.hideActivityLoaders();
@@ -100,7 +171,7 @@ export class OrdersHistoryPage{
     this.storage.get("x-access-token")
       .then(
       token => {
-        // console.log(token);
+        console.log(token);
         
         this.createPreGen(this.preGenApiURL, token);
       }
@@ -135,5 +206,17 @@ export class OrdersHistoryPage{
     this.navCtrl.push(OrderSummaryPage, {
       orderID: orderID
     })
+  }
+  statusHtml;
+  findStatus(statusCode){
+    let self = this;
+    // console.log(this.statusList);
+    
+    return this.statusList.find((x) => {
+      if(x["code"] === status){
+        console.log(this.statusHtml);
+        return this.statusHtml;
+      }
+    });
   }
 }

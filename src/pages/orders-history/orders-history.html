@@ -51,7 +51,8 @@
                           {{ item._id.slice(item._id.length-5, item._id.length) }}</p>
                     </ion-col >
                     <ion-col width-30 class="center">
-                        {{ item.status }}
+                        <!--{{ item.status }}-->
+                        {{ findStatus(currentStatus) }}
                     </ion-col>
                     <ion-col class="center" width-30>
                         {{ item.expectedDeliveryDate | date:longDate }}
