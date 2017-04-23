@@ -25,13 +25,11 @@ export class OrdersHistoryPage{
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
-<<<<<<< HEAD
   preGenApiURL: string;
   statusList: Array<Object>;
   currentStatus = "ORI";  //Dummy Code for testing -- Remove it ASAP.
-=======
-  preGenApiURL : string;
->>>>>>> af71292feecf3af75d3e5f7cacbe893e49834df7
+
+
   // user = User;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -43,29 +41,13 @@ export class OrdersHistoryPage{
               // let xAccessToken = this.user.getUserAccessToken();
               
               
-<<<<<<< HEAD
-              // storage.get('user-id').then(
-              //   data =>{
-              //     console.log(data);
-              //     console.log(data._id);
-                  
-              //     this.userID = data._id;
-                  
-              //     this.getOrdersHistory();
-              //   });
-              this.hideActivityLoader = false;
-              this.userID = localStorage.getItem('userID');
-              // // console.log(this.userID);
-              this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
-                
-              }
-=======
+
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
                  console.log("userID = ",this.userID);
                 this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
                 this.getOrdersHistory();
   }
->>>>>>> af71292feecf3af75d3e5f7cacbe893e49834df7
+  
  
   ionViewDidLoad(){
     this.getOrdersHistory();
