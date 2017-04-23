@@ -1,6 +1,6 @@
 <ion-content padding class="fill-bg">
     <img class="main-logo" src="./assets/images/logo.png">
-    <form novalidate (ngSubmit)="signIn(username, password);" *ngIf="active" [formGroup]="signInForm" >
+    <form novalidate (ngSubmit)="signIn(username, password, false);" *ngIf="active" [formGroup]="signInForm" >
       <div class="form-group sign-in-input-fields">
         <ion-icon name="contact" class="sign-in-icon"></ion-icon>
         <input
