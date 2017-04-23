@@ -25,5 +25,34 @@ export class AlertDialogFactory {
         });
         alert.present();
     }
+    selected:any;
+    checkBoxAlertDialog(title: string, inputs){
+        let alert = this.alertCtrl.create({
+            title: title,
+        });
+
+        inputs.forEach(input => {
+            alert.addInput({
+                type: 'checkbox',
+                label: input.alias,
+                value: input,
+                checked: false
+            });
+        });
+        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Okay',
+            handler: data => {
+                console.log('Checkbox data:', data);
+                // this.testCheckboxOpen = false;
+                // this.testCheckboxResult = data;
+            }
+        });
+        alert.present();
+        alert.onDidDismiss((data) => {
+            return data;
+        });
+
+    }
 
 }

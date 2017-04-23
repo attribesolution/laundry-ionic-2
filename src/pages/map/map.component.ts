@@ -1,10 +1,12 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController, NavParams, PopoverController, Popover } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, Popover, AlertController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
+
+
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
@@ -14,6 +16,7 @@ import { AlertDialogFactory } from '../../app/alert.dialog'
 import { LaundryItems } from '../laundryitems/laundryitems';
 import { AdditionalNote } from '../modals/additional-note/additional-note';
 import { SavedLocations } from '../modals/saved-locations/saved-locations';
+import { SavedLocationService } from "../modals/saved-locations/saved-location.service";
 declare var google;
 import { PreGenModel } from "../../models/preGen.model";
 
@@ -22,7 +25,7 @@ import { globalVars } from "../../app/globalvariables";
 @Component({
   selector: 'laundry-map',
   templateUrl: 'map.template.html',
-  providers: [MapService, AlertDialogFactory]
+  providers: [MapService, AlertDialogFactory, SavedLocationService]
 })
 
 export class LaundryMap implements AfterViewInit{
@@ -51,7 +54,9 @@ export class LaundryMap implements AfterViewInit{
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage,
-                private alertCntrl: AlertDialogFactory){
+                private alertCntrl: AlertDialogFactory,
+                private alertCtrl: AlertController,
+                private savedLocationsService: SavedLocationService){
       
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
@@ -241,8 +246,56 @@ export class LaundryMap implements AfterViewInit{
     // console.log("savedButtonClicked");
     
     // this.addition=this.addition?false:true;
-    this.openSavedLocationModal(myEvent);
+    // this.openSavedLocationModal(myEvent);
+    let inputs;
+    let URL = globalVars.getUsersAddress(this.userID);
+    this.savedLocationsService.getAddressOfSavedLocations(URL, this.token).
+      subscribe(res => {
+        console.log(JSON.parse(res["_body"]));
+        inputs = JSON.parse(res["_body"])["data"]["contact"]["address"];
+        console.log(inputs);
+        // let result = this.alertCntrl.checkBoxAlertDialog("Saved Locations", inputs)
+        // console.log(result);
+        
+        this.checkBoxAlertDialog("Saved Locations", inputs)
+
+
+
+      })
+    
   }
+
+  checkBoxAlertDialog(title: string, inputs){
+        let alert = this.alertCtrl.create({
+            title: title,
+        });
+
+        inputs.forEach(input => {
+            alert.addInput({
+                type: 'checkbox',
+                label: input.alias,
+                value: input,
+                checked: false
+            });
+        });
+        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Okay',
+            handler: data => {
+                console.log('Checkbox data:', data);
+                // this.testCheckboxOpen = false;
+                // this.testCheckboxResult = data;
+            }
+        });
+        alert.present();
+        alert.onDidDismiss((data) => {
+          console.log(data);
+          
+            data ? 
+        this.locationClicked(data[0]) : '';
+        });
+
+    }
   openSavedLocationModal(myEvent) {
     let popover = this.popoverCtrl.create(SavedLocations, { address: this.addressResponse }, { showBackdrop: true });
     popover.present({
@@ -292,6 +345,7 @@ export class LaundryMap implements AfterViewInit{
 
   locationClicked(location) {
     console.log("You have clicked on: ", location);
+    
     this.available_locations = undefined;
     if(!!location.formatted_address){
       this.inputFieldValue = location.formatted_address;
