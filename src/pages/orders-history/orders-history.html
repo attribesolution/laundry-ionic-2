@@ -52,7 +52,7 @@
                     </ion-col >
                     <ion-col width-30 class="center">
                         <!--{{ item.status }}-->
-                        {{ findStatus(currentStatus) }}
+                        {{ this.statusHtml }}
                     </ion-col>
                     <ion-col class="center" width-30>
                         {{ item.expectedDeliveryDate | date:longDate }}
