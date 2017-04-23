@@ -73,5 +73,9 @@ export const globalVars =  {
     profileURL: '/profile',
     profileAPIURL(userID){
         return this.BaseURL + this.AllUsers + userID + this.profileURL;
+    },
+    statusURL: '/statuslist',
+    statusAPIURL(){
+        return this.BaseURL + this.OrderURL + this.statusURL;
     }
 }
