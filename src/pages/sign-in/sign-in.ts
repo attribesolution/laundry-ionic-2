@@ -154,10 +154,12 @@ export class SignInPage implements OnInit {
               console.log(userID._id);
               localStorage.setItem('userID', userID._id);
               this.user.saveUserAccessToken(this.token);
+              this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
       });
   }
+ 
   signupPage(){
     this.navCtrl.setRoot(SignUpPage);
   }

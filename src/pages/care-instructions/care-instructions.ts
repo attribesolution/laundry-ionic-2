@@ -36,17 +36,21 @@ startNextScreen(shirtsIns, dryCleanIns){
           //this.spinnerDialog.hide();
          if(res.status == 200){
            
-          //   this.navCtrl.push(PickUpDetails, {
+            this.navCtrl.push(PickUpDetails, {
          
-          //       preGenData: this.preGenData
+                preGenData: this.preGenData
       
-          // });
-          
-         }
-         
-       
-       });
-      
+            });
+
+          }
+        },error=>{
+
+      //this.hideActivityLoaders();
+    },()=>{
+     
+     // this.hideActivityLoaders();
+    });
+
       console.log("Next clicked!");
   }
 }

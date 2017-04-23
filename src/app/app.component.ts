@@ -13,9 +13,12 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 //import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+
+import { User } from './user';
+
 @Component({
   templateUrl: 'app.html',
-  providers: [Storage, JwtHelper]
+  providers: [Storage, JwtHelper,User]
 
 })
 export class MyApp {
@@ -26,7 +29,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform, 
               private storage: Storage,
-              private jwtHelper: JwtHelper
+              private jwtHelper: JwtHelper,
+              private user : User
               ) {
     this.initializeApp();
 
@@ -66,6 +70,7 @@ export class MyApp {
 
             // console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
+            this.user.scheduleRefresh(token);
           }else{
             this.rootPage = SignInPage;
             console.log('Could not find X-Access-Token. Please login or signup');

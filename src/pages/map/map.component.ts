@@ -28,6 +28,7 @@ import { globalVars } from "../../app/globalvariables";
   providers: [MapService, AlertDialogFactory, SavedLocationService]
 })
 
+
 export class LaundryMap implements AfterViewInit{
     @ViewChild('search') button: ElementRef;
     @ViewChild('map') mapElement: ElementRef;
@@ -62,9 +63,6 @@ export class LaundryMap implements AfterViewInit{
       this.userID = localStorage.getItem('userID');
       this.preGenData = navParams.get('preGenData');
       // this.createPreGen(this.preGenApiURL, this.token);
-      
-
-    
 
   }
   ngAfterViewInit() {
