@@ -5,24 +5,23 @@ page-orders-history {
     ion-item-divider{
         border-bottom: 2px solid white;
     }
-    
-
-      .spinner svg, ion-spinner *,.spinner-md-crescent circle {
-  width: 48px;
-  height: 48px;
-  stroke: #59bd84;
-   
+    .spinner svg, ion-spinner *,.spinner-md-crescent circle {
+        width: 48px;
+        height: 48px;
+        stroke: #59bd84;
     }
-
+    .id-hyperlink{
+        text-decoration: underline;
+    }
     .spinner-div{
 
-    text-align: center;
-    margin-top: 50%;
-    margin-bottom: 50%;
-    margin-left: 40%;
-    position: absolute;
-    top: 150px;
-    z-index: 2
+        text-align: center;
+        margin-top: 50%;
+        margin-bottom: 50%;
+        margin-left: 40%;
+        position: absolute;
+        top: 150px;
+        z-index: 2
 
     }
     

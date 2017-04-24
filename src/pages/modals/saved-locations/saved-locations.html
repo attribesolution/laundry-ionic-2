@@ -18,21 +18,16 @@
                 </div>      
             </ion-item-divider>
             <ion-list *ngIf="addressResponse">
-                <ion-row *ngFor="let address of addressResponse">
-                    {{ address.address }}
-                </ion-row>
+                <ion-item id="address" (click)="addressSelect(address);" class="fill-bg" *ngFor="let address of addressResponse">
+                    {{ address.alias }}
+                </ion-item>
             </ion-list>
             <ion-item-divider class="fill-bg" *ngIf="!addressResponse" style="font-size: 20px">
                 You do not have <br> any saved locations.
             </ion-item-divider>
-            <ion-item-divider class="fill-bg" *ngIf="addressResponse">
-                <ion-row *ngFor="let address of addressResponse">
-                    <ion-col>{{ address }}</ion-col>
-                </ion-row>
-            </ion-item-divider>
             <div style="margin: 2% 3%;">
-                <img src="./assets/images/modal_cancel.png" style="float: left" (click)=close() />
-                <img src="./assets/images/modal_done.png" alt="" style="float: right" (click)="done()">
+                <img class="button-icon-size" src="./assets/images/modal_cancel.png" style="float: left" (click)=close() />
+                <img class="button-icon-size" src="./assets/images/modal_done.png" alt="" style="float: right" (click)="done()">
             </div>
         </div>
     </div>

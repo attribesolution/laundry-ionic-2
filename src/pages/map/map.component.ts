@@ -1,10 +1,12 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController, NavParams, PopoverController, Popover } from 'ionic-angular';
+import { NavController, NavParams, PopoverController, Popover, AlertController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
+
+
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
@@ -14,6 +16,7 @@ import { AlertDialogFactory } from '../../app/alert.dialog'
 import { LaundryItems } from '../laundryitems/laundryitems';
 import { AdditionalNote } from '../modals/additional-note/additional-note';
 import { SavedLocations } from '../modals/saved-locations/saved-locations';
+import { SavedLocationService } from "../modals/saved-locations/saved-location.service";
 declare var google;
 import { PreGenModel } from "../../models/preGen.model";
 
@@ -22,7 +25,7 @@ import { globalVars } from "../../app/globalvariables";
 @Component({
   selector: 'laundry-map',
   templateUrl: 'map.template.html',
-  providers: [MapService, AlertDialogFactory]
+  providers: [MapService, AlertDialogFactory, SavedLocationService]
 })
 
 
@@ -52,8 +55,9 @@ export class LaundryMap implements AfterViewInit{
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage,
-                private alertCntrl: AlertDialogFactory){
-      
+                private alertCntrl: AlertDialogFactory,
+                private alertCtrl: AlertController,
+                private savedLocationsService: SavedLocationService){
       
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
@@ -238,28 +242,69 @@ export class LaundryMap implements AfterViewInit{
   savedButtonClicked(myEvent) {
     this.saved = this.saved ? false : true;
     // console.log("savedButtonClicked");
-    let userID = localStorage.getItem('userID');
-    console.log(userID);
-    let URL = globalVars.getUsersAddress(userID);
-    console.log(URL);
-    let addressResponse: any;
-    this.mapService.getAddress(URL)
-      .subscribe(res => {
-        if (res.status == 200) {
-          this.addressResponse = JSON.parse(res['_body'])['data'].contact;
-          console.log(this.addressResponse);
-          console.log(this.addressResponse);
-        }
-      });
+    
     // this.addition=this.addition?false:true;
-    this.openSavedLocationModal(myEvent);
+    // this.openSavedLocationModal(myEvent);
+    let inputs;
+    let URL = globalVars.getUsersAddress(this.userID);
+    this.savedLocationsService.getAddressOfSavedLocations(URL, this.token).
+      subscribe(res => {
+        console.log(JSON.parse(res["_body"]));
+        inputs = JSON.parse(res["_body"])["data"]["contact"]["address"];
+        console.log(inputs);
+        // let result = this.alertCntrl.checkBoxAlertDialog("Saved Locations", inputs)
+        // console.log(result);
+        
+        this.checkBoxAlertDialog("Saved Locations", inputs)
+
+
+
+      })
+    
   }
+
+  checkBoxAlertDialog(title: string, inputs){
+        let alert = this.alertCtrl.create({
+            title: title,
+        });
+
+        inputs.forEach(input => {
+            alert.addInput({
+                type: 'checkbox',
+                label: input.alias,
+                value: input,
+                checked: false
+            });
+        });
+        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Okay',
+            handler: data => {
+                console.log('Checkbox data:', data);
+                // this.testCheckboxOpen = false;
+                // this.testCheckboxResult = data;
+            }
+        });
+        alert.present();
+        alert.onDidDismiss((data) => {
+          console.log(data);
+          
+            data ? 
+        this.locationClicked(data[0]) : '';
+        });
+
+    }
   openSavedLocationModal(myEvent) {
     let popover = this.popoverCtrl.create(SavedLocations, { address: this.addressResponse }, { showBackdrop: true });
     popover.present({
       ev: myEvent
     });
     this.saved = this.saved ? false : true;
+    popover.onDidDismiss(popoverAddress => {
+      console.log(popoverAddress);
+      popoverAddress ? 
+        this.locationClicked(popoverAddress) : '';
+    });
   }
 
   saveButtonClicked() {
@@ -273,7 +318,7 @@ export class LaundryMap implements AfterViewInit{
       lat: this.lat,
       long: this.lng
     }
-    this.mapService.patchAddress(URL, data)
+    this.mapService.patchAddress(URL, data, this.token)
       .subscribe(res => {
         if (res.status == 200) {
           console.log(res['_body']);
@@ -298,14 +343,25 @@ export class LaundryMap implements AfterViewInit{
 
   locationClicked(location) {
     console.log("You have clicked on: ", location);
+    
     this.available_locations = undefined;
-    this.inputFieldValue = location.formatted_address;
-    localStorage.setItem("Location", JSON.stringify(location));
-    this.lat = location.geometry.location.lat;
-    this.lng = location.geometry.location.lng;
+    if(!!location.formatted_address){
+      this.inputFieldValue = location.formatted_address;
+      localStorage.setItem("Location", JSON.stringify(location));
+      this.lat = location.geometry.location.lat;
+      this.lng = location.geometry.location.lng;
 
-    this.address = location.formatted_address;
-    this.locationAlias = location.name;
+      this.address = location.formatted_address;
+      this.locationAlias = location.name;
+    }else{
+      this.inputFieldValue = location.address;
+      localStorage.setItem("Location", JSON.stringify(location));
+      this.lat = location.lat;
+      this.lng = location.long;
+      this.address = location.address;
+      this.locationAlias = location.alias;
+    };
+    
     //gMap = new google.maps.Map(document.getElementById('map')); 
     this.postion =  new google.maps.LatLng(this.lat, this.lng);
     this.map.setCenter(this.postion);
