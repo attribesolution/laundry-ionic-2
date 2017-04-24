@@ -140,13 +140,15 @@ export class SignInPage implements OnInit {
       }
     }
     
-    console.log(user,passwd);
+    console.log(data);
+    
     
     let URL = globalVars.PostSignInApi();
     this.signInService.signInUser(URL, data).subscribe(res => {
           if(res.status == 200){
             console.log(res['_body']);
-            
+              console.log(res['_body']);
+              
               this.token = JSON.parse(res['_body'])['token'];
               let userID = this.jwtHelper.decodeToken(this.token);
               localStorage.setItem('x-access-token',this.token);

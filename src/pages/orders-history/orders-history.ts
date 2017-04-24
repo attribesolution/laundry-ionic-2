@@ -201,7 +201,8 @@ export class OrdersHistoryPage{
   }
   showOrderSummary(orderID){
     this.navCtrl.push(OrderSummaryPage, {
-      orderID: orderID
+      orderID: orderID,
+      navigateFromOrderHistory: true
     })
   }
   statusHtml;
