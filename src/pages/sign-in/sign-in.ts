@@ -42,32 +42,8 @@ export class SignInPage implements OnInit {
         Validators.maxLength(36)
       ]]
     });
-    // this.signInForm.valueChanges
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-          
-    //       this.onValueChanged(data);
-    //     }
-    //   );
-    //   this.onValueChanged();
   }
-  // onValueChanged(data?: any){
-  //   if (!this.signInForm) {return;}
-  //   const form = this.signInForm;
-
-  //   for(const field in this.formsError){
-  //     this.formsError[field] = ''
-  //     const control = form.get(field);
-      
-  //     if(control && control.dirty && control.errors){
-  //       const messages = this.validationMessages[field];
-  //       for (const key in control.errors){
-  //         this.formsError[field] += messages[key] + ' ';
-  //       }
-  //     }
-  //   }
-  // }
+  
 
   validateForm(data?: any){
     
@@ -137,10 +113,11 @@ export class SignInPage implements OnInit {
           if(res.status == 200){
               this.token = JSON.parse(res['_body'])['token'];
               let userID = this.jwtHelper.decodeToken(this.token);
-              localStorage.setItem('x-access-token',this.token);
+              localStorage.setItem('x-access-token',this.token);   
+              localStorage.setItem('userID',this.jwtHelper.decodeToken(this.token)['_id']);
               this.user.saveUserId(userID);
-              console.log(userID._id);
               this.user.saveUserAccessToken(this.token);
+              console.log(userID._id);
               this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }

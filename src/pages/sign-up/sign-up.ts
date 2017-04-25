@@ -165,6 +165,7 @@ export class SignUpPage implements OnInit{
         this.token = JSON.parse(res['_body'])['token'];
         let userID = this.jwtHelper.decodeToken(this.token);
         localStorage.setItem('x-access-token',this.token);
+        localStorage.setItem('userID',this.jwtHelper.decodeToken(this.token)['_id']);
         this.user.saveUserId(userID);
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);
