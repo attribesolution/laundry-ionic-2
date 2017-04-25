@@ -8,12 +8,14 @@ import { globalVars } from '../../app/globalvariables';
 
 import { PickupService } from './pick-up.service';
 
-import { PreGenModel } from '../../models/preGen.model'
+import { PreGenModel } from '../../models/preGen.model';
+
+import { AuthService } from "../../auth/auth.service";
 
 @Component ({
     selector: 'pick-up-details',
     templateUrl: 'pick-up-details.html',
-    providers: [PickupService]
+    providers: [AuthService, PickupService]
 })
 
 export class PickUpDetails{
@@ -43,7 +45,10 @@ export class PickUpDetails{
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
      };
-     constructor(public navCtrl: NavController, public navParams: NavParams, public pickupService: PickupService){
+     constructor(public navCtrl: NavController, 
+                 public navParams: NavParams, 
+                 public pickupService: PickupService,
+                 private authservice: AuthService){
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
@@ -107,7 +112,7 @@ export class PickUpDetails{
             }
         }
         let URL = globalVars.patchPickupApiURL((this.preGenData.data as any)._id);
-        this.pickupService.hitPickupPatch(URL, data, this.token)
+        this.authservice.patchCall(URL, data)
             .subscribe(res => console.log(res));
     }
 }

@@ -1,8 +1,9 @@
 export const globalVars =  {
 
-    BaseURL: "http://localhost:3000", 
+    // BaseURL: "http://localhost:3000", 
     // BaseURL: "http://192.168.0.108:3000",
     // BaseURL: "http://stage.dmenu.co:3005",
+    BaseURL: "http://107.170.45.205:3000",
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
@@ -74,7 +75,7 @@ export const globalVars =  {
     profileAPIURL(userID){
         return this.BaseURL + this.AllUsers + userID + this.profileURL;
     },
-    statusURL: '/statuslist',
+    statusURL: 'statuslist',
     statusAPIURL(){
         return this.BaseURL + this.OrderURL + this.statusURL;
 

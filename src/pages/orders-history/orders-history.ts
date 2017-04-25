@@ -13,10 +13,12 @@ import { PreGenModel } from '../../models/preGen.model';
 import { LaundryMap } from '../map/map.component';
 import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
+
+import { AuthService } from "../../auth/auth.service";
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
+  providers: [AuthService, User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
 })
 export class OrdersHistoryPage{
   
@@ -37,11 +39,10 @@ export class OrdersHistoryPage{
               private storage: Storage,
               private nativeStorage: NativeStorage,
               private jwtHelper: JwtHelper,
-              private user: User) {
+              private user: User,
+              private authService: AuthService) {
               // let xAccessToken = this.user.getUserAccessToken();
               
-              
-
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
                  console.log("userID = ",this.userID);
                 this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
@@ -141,13 +142,13 @@ export class OrdersHistoryPage{
         console.log(URL);
         console.log(token);
         
-        this.ordersHistoryService.getOrdersHistory(URL, token)
+        this.authService.getCall(URL)
           .subscribe(res => {
             if(res.status == 200) {
               console.log(res);
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);
-              
+              // this.hideActivityLoaders();
             }
           },error=>{
             this.hideActivityLoaders();
@@ -180,7 +181,7 @@ export class OrdersHistoryPage{
     console.log('Create Pre Gen Called');
     console.log(URL);
     
-    this.ordersHistoryService.hitPreGen(URL, token)
+    this.authService.getCall(URL)
       .subscribe(res => {
         if (res.status == 200) {
           let response = JSON.parse(res['_body'])

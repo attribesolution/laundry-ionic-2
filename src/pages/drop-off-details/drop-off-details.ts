@@ -11,10 +11,11 @@ import { PreGenModel } from '../../models/preGen.model';
 import { DropOffService } from './drop-off-details.service';
 
 import { OrderSummaryPage } from './../order-summary/order-summary';
+import { AuthService } from "../../auth/auth.service";
 @Component ({
     selector: 'drop-off-details',
     templateUrl: 'drop-off-details.html',
-    providers: [DropOffService]
+    providers: [AuthService, DropOffService]
 })
 
 export class DropOffDetails{
@@ -43,7 +44,10 @@ export class DropOffDetails{
             this.dates.push(new Date(Date.now() + 24*i*36e5));
      };
     
-     constructor(private navCtrl: NavController, public navParams: NavParams, public dropOffService: DropOffService){
+     constructor(private navCtrl: NavController, 
+                 public navParams: NavParams, 
+                 public dropOffService: DropOffService,
+                 private authService: AuthService){
     
          this.dateArrayMaker();
          console.log(this.dates);
@@ -104,7 +108,7 @@ export class DropOffDetails{
             }
         }
         let URL = globalVars.patchDropOffApiURL((this.preGenData.data as any)._id);
-        this.dropOffService.hitDropOffPatch(URL, data, this.token)
+        this.authService.patchCall(URL, data)
             .subscribe(res => console.log(res));
     }
 }

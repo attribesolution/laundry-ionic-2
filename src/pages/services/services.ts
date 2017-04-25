@@ -4,6 +4,7 @@ import { CareInstructions } from '../care-instructions/care-instructions';
 import { globalVars } from '../../app/globalvariables'
 import { ServicesPatcher } from './services.service';
 import { PreGenModel } from '../../models/preGen.model';
+import { AuthService } from "../../auth/auth.service";
 /*
   Generated class for the Services page.
 
@@ -13,14 +14,17 @@ import { PreGenModel } from '../../models/preGen.model';
 @Component({
   selector: 'page-services',
   templateUrl: 'services.html',
-  providers: [ServicesPatcher]
+  providers: [AuthService, ServicesPatcher]
 })
 export class ServicesPage {
 
     buttons:any = [[{title:'COLD WASH' , selected:true },{title:'HOT WASH' , selected:false}],[{title:'LOW DRY' , selected:true},{title:'REGULAR DRY' , selected:false}],[{title:'SCENTED' , selected:true},{title:'NO SCENT' , selected:false}],[{title:'SOFTNER' , selected:true},{title:'NO SOFTNER' , selected:false}]];
     data: PreGenModel;
     token: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public servicesPatcher: ServicesPatcher) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              public servicesPatcher: ServicesPatcher,
+              private authService: AuthService) {
     this.data = navParams.get('preGenData');
     console.log(this.data);
     this.token = localStorage.getItem('x-access-token');
@@ -103,8 +107,14 @@ export class ServicesPage {
       console.log(servicesData);
       
       let URL = globalVars.ServicesApiURL((this.data.data as any)._id);
-      let patchData = (URL,servicesDataToSend) => {
-      this.servicesPatcher.patchService(URL, servicesDataToSend, this.token)
+      
+      this.patchData(URL,servicesDataToSend);
+      
+      console.log("Next clicked!");
+  }
+
+  patchData = (URL,servicesDataToSend) => {
+      this.authService.patchCall(URL, servicesDataToSend)
         .subscribe(res =>{
           if(res.status == 200) {
               let response = JSON.parse(res['_body'])
@@ -115,14 +125,8 @@ export class ServicesPage {
               console.log('Respose', Data); 
             }
         });
+        this.navCtrl.push(CareInstructions,{
+          preGenData: this.data
+        });
       }
-      
-      
-      patchData(URL,servicesDataToSend);
-      this.navCtrl.push(CareInstructions,{
-        preGenData: this.data
-      });
-      console.log("Next clicked!");
-  }
-
 }

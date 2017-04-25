@@ -20,11 +20,11 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="(hideActivityLoader)" class="spinner-div">
+  <div *ngIf="!(hideActivityLoader)" class="spinner-div">
   <ion-spinner></ion-spinner>
   </div>
 
-  <div *ngIf="!(response?.data)" style="font-size: 150%;">
+  <div *ngIf="(response?.data.length == 0)" style="font-size: 150%;">
     <ion-item-divider class="fill-bg center" padding>
           <h2 style="overflow-wrap: break-word;">
             You have not placed any orders.
@@ -35,7 +35,7 @@
     </ion-item-divider>
         <!--<h1 *ngSwitchDefault class="center">Loading...</h1>-->
   </div>
-  <div *ngIf="response?.data">
+  <div *ngIf="response?.data.length != 0">
     <ion-list color="secondary" style="border-bottom:0;">
             <ion-item-divider color="secondary">
                 <ion-row>
@@ -62,7 +62,7 @@
         </ion-list>
   </div>
 </ion-content>
-<ion-footer *ngIf="response?.data" style="padding: 10px;" >
+<ion-footer *ngIf="response?.data.length != 0" style="padding: 10px;" >
   <button 
     full
     ion-button

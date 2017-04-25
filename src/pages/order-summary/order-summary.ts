@@ -6,10 +6,12 @@ import { OrderPlaced } from '../order-placed/order-placed';
 
 import { OrderSummaryService } from './order-summary.service';
 import { globalVars } from '../../app/globalvariables';
+import { AuthService } from "../../auth/auth.service";
 @Component({
   selector: 'page-order-summary',
   templateUrl: 'order-summary.html',
   providers: [
+    AuthService,
     OrderSummaryService,
     Storage
     ]
@@ -25,7 +27,8 @@ export class OrderSummaryPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private orderSummaryService: OrderSummaryService,
-              private storage: Storage) {
+              private storage: Storage,
+              private authService: AuthService) {
                 this.orderID = this.navParams.get('orderID');
                 this.showFooter = this.navParams.get('navigateFromOrderHistory') || false;
               }
@@ -39,7 +42,7 @@ export class OrderSummaryPage {
       let URL = globalVars.getOrderByIdURL(this.orderID);
       this.storage.get('x-access-token')
         .then(token => {
-          this.orderSummaryService.getOrderByID(URL, token)
+          this.authService.getCall(URL)
             .subscribe(
               res => {
                 if(res.status == 200){
