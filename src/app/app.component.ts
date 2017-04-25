@@ -13,7 +13,9 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 //import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+
 import { User } from './user';
+
 @Component({
   templateUrl: 'app.html',
   providers: [Storage, JwtHelper,User]
@@ -43,7 +45,7 @@ export class MyApp {
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
       // { title: 'ForgotPassword', component: ForgotPasswordPage},
       // { title: 'Notifications', component: NotificationComponent },
-      { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
+      
       { title: 'Sign Out', component: SignInPage }
       
     ];

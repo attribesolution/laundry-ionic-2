@@ -9,7 +9,7 @@
 
 <ion-content padding class="fill-bg">
   <div class="parentDivScreen">
-    <div class="heading">
+    <!--<div class="heading">
       <ion-item-divider class="fill-bg"
                         style="
                                 padding-top: 5px; 
@@ -29,35 +29,139 @@
         </div>
       </ion-item-divider>
     
-    </div>
-
-   <ion-list class="fill-bg" style="padding: 10px">
-       <ion-item class="fill-bg">
-           <ion-label floating color="light">NAME</ion-label>
-           <ion-input type="text" class="item.item-input"></ion-input>
-       </ion-item>
-       <ion-item class="fill-bg">
-           <ion-label floating color="light">PHONE NUMBER</ion-label>
-           <ion-input type="number" class="item.item-input"></ion-input>
-       </ion-item>
-       <ion-item class="fill-bg">
-           <ion-label floating color="light">SECONDARY PHONE NUMBER</ion-label>
-           <ion-input type="text" class="item.item-input"></ion-input>
-       </ion-item>
-       <ion-item class="fill-bg">
-           <ion-label floating color="light">EMAIL ADDRESS</ion-label>
-           <ion-input type="text" class="item.item-input"></ion-input>
-       </ion-item>
-       <ion-item class="fill-bg">
-           <ion-label floating color="light">CURRENT CITY</ion-label>
-           <ion-input type="text" class="item.item-input"></ion-input>
-       </ion-item>
-       <ion-item class="fill-bg">
-           <!--<ion-label floating color="light">DATE OF BIRTH</ion-label>-->
-           <ion-input type="date" placeholder="DATE OF BIRTH" class="item.item-input"></ion-input>
-       </ion-item>
-   </ion-list>
-    
+    </div>-->
+    <form novalidate [formGroup]="profileForm">
+        <div class="profile-input-fields">
+            <input 
+                type="text" 
+                id="firstname" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="First name"
+                formControlName="firstname">
+        </div>
+        <div 
+            *ngIf="formsError.firstname" 
+            class="error"
+            
+        >
+            {{ formsError.firstname }}
+        </div>
+        <div *ngIf="null" class="profile-input-fields">
+            <input 
+                type="text" 
+                id="lastname" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Middle name"
+                formControlName="middlename">
+        </div>
+        <div 
+            *ngIf="null && formsError.middlename" 
+            class="error"
+            center
+        >
+            {{ formsError.middlename }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="text" 
+                id="lastname" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Last name"
+                formControlName="lastname">
+        </div>
+        <div 
+            *ngIf="formsError.lastname" 
+            class="error"
+            center
+        >
+            {{ formsError.lastname }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="text" 
+                id="city" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="City"
+                formControlName="city">
+        </div>
+        <div 
+            *ngIf="formsError.city" 
+            class="error"
+            center
+        >
+            {{ formsError.city }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="text" 
+                id="country" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Country"
+                formControlName="country">
+        </div>
+        <div 
+            *ngIf="formsError.country" 
+            class="error"
+            center
+        >
+            {{ formsError.country }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="tel" 
+                id="phone1" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Contact"
+                formControlName="phone1">
+        </div>
+        <div 
+            *ngIf="formsError.phone1" 
+            class="error"
+            center
+        >
+            {{ formsError.phone1 }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="tel" 
+                id="phone2" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Alternate Contact "
+                formControlName="phone2">
+        </div>
+        <div 
+            *ngIf="formsError.phone2" 
+            class="error"
+            center
+        >
+            {{ formsError.phone2 }}
+        </div>
+        <div class="profile-input-fields">
+            <input 
+                type="text" 
+                id="email1" 
+                autocomplete="off" 
+                class="profile-input" 
+                placeholder="Email"
+                value="this.userProfile?.email1"
+                formControlName="email1">
+        </div>
+        <div 
+            *ngIf="formsError.email1" 
+            class="error"
+            center
+        >
+            {{ formsError.email1 }}
+        </div>
+    </form>
+   
  </div>   
 </ion-content>
 <ion-footer style="padding: 10px;">

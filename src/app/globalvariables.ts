@@ -1,8 +1,8 @@
 export const globalVars =  {
 
-    // BaseURL: "http://stage.dmenu.co:3005",        //192.168.1.104
-    // BaseURL: "http://192.168.100.26:3005",
-    BaseURL: "http://localhost:3005",
+    // BaseURL: "http://localhost:3000", 
+    BaseURL: "http://192.168.0.108:3000",
+    // BaseURL: "http://stage.dmenu.co:3005",
     LaundryitemsURL: "/api/v1/laundryItems",
     getLaundryitemsApiURL(){
         return ((this.BaseURL + this.LaundryitemsURL) as string);
@@ -16,6 +16,9 @@ export const globalVars =  {
         return this.BaseURL + this.OrderURL + this.PreGenURL + userID;
     },
     OrderURL: "/api/v1/orders/",
+    getOrderByIdURL(orderID){
+        return this.BaseURL + this.OrderURL + orderID;
+    },
     ServicesURL: "/service",
     ServicesApiURL(orderID){
         return this.BaseURL + this.OrderURL + orderID + this.ServicesURL;
@@ -43,10 +46,10 @@ export const globalVars =  {
     },
     UsersAddressURL: '/address',
     UserAddress(userID: string){
-        return this.BaseURL + this.AllUsers + '/' +  userID + this.UsersAddressURL;
+        return this.BaseURL + this.AllUsers  +  userID + this.UsersAddressURL;
     },
     getUsersAddress(userID: string){
-        return this.BaseURL + this.AllUsers +  '/' + userID +  '/addresses';
+        return this.BaseURL + this.AllUsers  + userID +  '/addresses';
     },
     ComplainUrl:'/complain',
     PatchComplainURL(userID){
@@ -61,10 +64,19 @@ export const globalVars =  {
     },
     SignInURL: '/api/v1/auth/local',
     PostSignInApi(){
-        return this.BaseURL + this.SignInURL;
+        return (this.BaseURL + this.SignInURL as string);
     },
     forgorPasswordURL: 'password/forgot',
     getForgotPasswordAPIURL(userID){
-        return this.BaseURL + this.AllUsers + this.forgorPasswordURL;
+        return this.BaseURL + this.AllUsers + userID + this.forgorPasswordURL;
+    },
+    profileURL: '/profile',
+    profileAPIURL(userID){
+        return this.BaseURL + this.AllUsers + userID + this.profileURL;
+    },
+    statusURL: '/statuslist',
+    statusAPIURL(){
+        return this.BaseURL + this.OrderURL + this.statusURL;
+
     }
 }

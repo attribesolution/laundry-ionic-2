@@ -14,6 +14,25 @@
     
 }
 .button-icon-size{
-          width: 30px;
-          height: 35px;
-      }
+    width: 30px;
+    height: 35px;
+    margin-bottom: 2%;
+}
+
+
+ion-item#address{
+    white-space: wrap; 
+    overflow: hidden;  
+    text-overflow: inherit;
+        overflow: visible;
+    :hover{
+        color: color($colors, primary);
+        
+    }
+}
+
+    .popover-content{
+        top:  -100%;
+    }
+
+

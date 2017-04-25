@@ -40,19 +40,17 @@ startNextScreen(shirtsIns, dryCleanIns){
          
                 preGenData: this.preGenData
       
-          },error=>{
+            });
+
+          }
+        },error=>{
 
       //this.hideActivityLoaders();
     },()=>{
      
      // this.hideActivityLoaders();
     });
-          
-         }
-         
-       
-       });
-      
+
       console.log("Next clicked!");
   }
 }

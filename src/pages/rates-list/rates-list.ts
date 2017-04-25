@@ -12,18 +12,19 @@ export class RatesListComponent{
     responseArray : Array<Object> = [];
 
     constructor(private navCtrl: NavController, private laundryItemsService: LaundryItemsService){
-        // laundryItemsService.getItems(token).subscribe(res=> {
-        //     if(res.status == 200) {
-        //         let response = JSON.parse(res['_body'])
-        //         this.laundryItems = {
-        //             href: response["href"],
-        //             data: response["data"]
-        //         }
-        //         this.maplaundryitems(this.laundryItems.data);
-        //         console.log(this.responseArray);
+        let token = localStorage.getItem("x-access-token");
+        laundryItemsService.getItems(token).subscribe(res=> {
+            if(res.status == 200) {
+                let response = JSON.parse(res['_body'])
+                this.laundryItems = {
+                    href: response["href"],
+                    data: response["data"]
+                }
+                this.maplaundryitems(this.laundryItems.data);
+                console.log(this.responseArray);
                 
-        //     }
-        // });
+            }
+        });
     }
     maplaundryitems(data){
         data.forEach(element => {

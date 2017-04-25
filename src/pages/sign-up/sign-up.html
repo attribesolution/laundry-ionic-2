@@ -6,48 +6,39 @@
         <input 
           required 
           type="text" 
-          id="username" 
-          name="username" 
-          autocomplete="off" 
-          class="sign-up-input"
-          placeholder="Username"
-          formControlName="username">
-      </div>
-      <div 
-        *ngIf="formsError.username"
-        class="error"
-        center
-      >
-            {{ formsError.username }}
-      </div> 
-      <!--<div class="sign-up-input-fields">
-        <ion-icon name="contact" class="sign-up-icon"></ion-icon>
-      <input 
-          required 
-          type="text" 
           id="firstname" 
           name="firstname" 
           autocomplete="off" 
-          class="sign-up-input inline"
+          class="sign-up-input"
           placeholder="Firstname"
           formControlName="firstname">
+      </div>
+      <div 
+        *ngIf="formsError.firstname"
+        class="error"
+        center
+      >
+            {{ formsError.firstname }}
+      </div> 
+      <div class="sign-up-input-fields">
+        <ion-icon name="contact" class="sign-up-icon"></ion-icon>
         <input 
           required 
           type="text" 
           id="lastname" 
           name="lastname" 
           autocomplete="off" 
-          class="sign-up-input inline"
+          class="sign-up-input"
           placeholder="Lastname"
           formControlName="lastname">
       </div>
       <div 
-        *ngIf="formsError.firstname || formsError.lastname"
+        *ngIf="formsError.lastname"
         class="error"
         center
       >
-            {{ formsError.firstname || formsError.lastname }}
-      </div> -->
+            {{ formsError.lastname }}
+      </div> 
       <div class="sign-up-input-fields">
         <ion-icon name="lock" class="sign-up-icon"></ion-icon>
         <input
@@ -137,8 +128,8 @@
       </div>
     </form>
     <div class="center">
-      <img class="fb-logo" src="./assets/images/fb_icon.png" alt="">
-      <img class="google-logo" src="./assets/images/googlePlus_icon.png" alt="">
+      <img class="fb-logo" (click)="fbSignup();" src="./assets/images/fb_icon.png" alt="">
+      <img *ngIf="null" class="google-logo" src="./assets/images/googlePlus_icon.png" alt="">
     </div>
 </ion-content>
 <ion-footer>

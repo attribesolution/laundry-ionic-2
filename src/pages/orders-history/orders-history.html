@@ -9,21 +9,23 @@
 
 
 <ion-content padding class="fill-bg">
-
+  <div class="heading">
+        <ion-item-divider class="fill-bg" style="padding: 5px 10px 0 10px; border-bottom:0;">
+            <div id="heading-bg" style="padding:10px; background: url('./assets/images/heading_bg.png'); text-align: center; background-size: 100%; background-repeat: no-repeat; background-position: center; width: 100%; height: 100%;" color="secondary">
+                <p color="secondary" class="uppercase">Order History</p>
+            </div>
+        </ion-item-divider>
+    </div>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="!(hideActivityLoader)" class="spinner-div">
+  <div *ngIf="(hideActivityLoader)" class="spinner-div">
   <ion-spinner></ion-spinner>
   </div>
 
   <div *ngIf="!(response?.data)" style="font-size: 150%;">
     <ion-item-divider class="fill-bg center" padding>
-        <!--<div *ngIf="response?.data">
-          History <br>
-          {{ response?.data }}
-        </div>-->
           <h2 style="overflow-wrap: break-word;">
             You have not placed any orders.
           </h2>
@@ -33,4 +35,41 @@
     </ion-item-divider>
         <!--<h1 *ngSwitchDefault class="center">Loading...</h1>-->
   </div>
+  <div *ngIf="response?.data">
+    <ion-list color="secondary" style="border-bottom:0;">
+            <ion-item-divider color="secondary">
+                <ion-row>
+                    <ion-col width-40><div class="center col-heading">Order ID</div></ion-col>                    
+                    <ion-col width-30><div class="center col-heading" block disabled>Status</div></ion-col>
+                    <ion-col width-30><div block class="center col-heading uppercase">Eta</div></ion-col>
+                </ion-row>
+            </ion-item-divider>
+            <ion-item-divider color="secondary" *ngFor="let item of response?.data">
+                <ion-row>
+                    <ion-col width-40 class="center">
+                        <p ion-text class="id-hyperlink" color="primary" (click)="showOrderSummary(item._id)">
+                          {{ item._id.slice(item._id.length-5, item._id.length) }}</p>
+                    </ion-col >
+                    <ion-col width-30 class="center">
+                        <!--{{ item.status }}-->
+                        {{ this.statusHtml }}
+                    </ion-col>
+                    <ion-col class="center" width-30>
+                        {{ item.expectedDeliveryDate | date:longDate }}
+                    </ion-col>
+                </ion-row>
+            </ion-item-divider>
+        </ion-list>
+  </div>
 </ion-content>
+<ion-footer *ngIf="response?.data" style="padding: 10px;" >
+  <button 
+    full
+    ion-button
+    style="height: 50px" 
+    (click)="placeOrder();"
+    color="primary"
+    class="center uppercase">
+       <p style="font-size: 20px;" color="secondary">Place a new Order</p>
+  </button>
+</ion-footer>

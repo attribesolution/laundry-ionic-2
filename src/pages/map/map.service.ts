@@ -20,7 +20,7 @@ export class MapService{
     
     getJSON = (place: string) => {
         let stringQuery: string; //= place +  " in UAE";
-        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  " in UAE";
+        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\%20in\%20in UAE";
         let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
         console.log(googleLocationApi);
 
@@ -30,7 +30,9 @@ export class MapService{
      } 
 
 
-    patchAddress = (URL: string, data: any, options?:any) =>{
+    patchAddress = (URL: string, data: any, token?:any) =>{
+        let headers = new Headers({'x-access-token': token});
+        let options = new RequestOptions({ headers: headers });
         console.log("Hitting", URL);
         return this.http.patch(URL, data, options);
     }
