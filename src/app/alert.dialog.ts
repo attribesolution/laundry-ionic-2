@@ -16,12 +16,7 @@ export class AlertDialogFactory {
         let alert = this.alertCtrl.create({
             title: title,
             message: msg,
-            buttons: ['Ok'],
-            inputs: [{
-                name: 'Additional Information',
-                placeholder: 'Press Enter to submit',
-                type: 'textarea'
-            }],
+            buttons: ['Ok']
         });
         alert.present();
     }
