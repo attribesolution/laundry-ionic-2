@@ -7,10 +7,11 @@ import { LaundryItemsService } from './laundryitems.service';
 import { LaundryItemModel } from '../../models/laundryitem.model';
 import { globalVars } from '../../app/globalvariables';
 import { PreGenModel } from '../../models/preGen.model';
+import { AuthService } from "../../auth/auth.service";
 @Component ({
     selector: 'laundry_items',
     templateUrl: 'laundryitems.html',
-    providers:[LaundryItemsService, JwtHelper] 
+    providers:[AuthService, LaundryItemsService, JwtHelper] 
 })
 
 export class LaundryItems implements OnInit{
@@ -29,7 +30,8 @@ export class LaundryItems implements OnInit{
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private items_Service: LaundryItemsService, 
-              private storage: Storage) {
+              private storage: Storage,
+              private authService: AuthService) {
     this.selectedItem = navParams.get('item');
     this.preGenData = navParams.get('preGenData');
     this.token = localStorage.getItem('x-access-token');
@@ -46,11 +48,13 @@ export class LaundryItems implements OnInit{
 
   getLaundryItems = () => {
     console.log(this.selectedItem);
-    
-    var response$      =  this.items_Service.getItems(this.token)
+    let URL = globalVars.getLaundryitemsApiURL();
+    this.authService.getCall(URL)
     .subscribe(res => {
       if(res.status == 200) {
-        let response = JSON.parse(res['_body']) 
+        let response = JSON.parse(res['_body']);
+        console.log(response);
+         
           this.laundryitems = {
             href : response["href"],
             data : response["data"]
@@ -192,26 +196,22 @@ calculateTotalAmount(item){
     
         let laundryData = {laundryItems : jsonArray,};
 
-      console.log("laundry data = ",laundryData);
-      let items = JSON.stringify(laundryData.laundryItems);
-      localStorage.setItem('Laundry Items', items);
-      let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
-      console.log(URL)
-      this.items_Service.patchService(URL,laundryData, this.token)
-      .subscribe(res => {
-            if(res.status == 200) {
-              let response = JSON.parse(res['_body']) 
+        console.log("laundry data = ",laundryData);
+        let items = JSON.stringify(laundryData.laundryItems);
+        localStorage.setItem('Laundry Items', items);
+        let URL =  globalVars.patchLaundryitemsApiURL((this.preGenData.data as any)._id);
+        console.log(URL)
+        this.authService.patchCall(URL,laundryData)
+        .subscribe(res => {
+              if(res.status == 200) {
+                let response = JSON.parse(res['_body']) 
                 
-                console.log('final response = ', response)
+                console.log('final response = ', response);
+                this.navCtrl.push(ServicesPage, {
+                  preGenData: this.preGenData
+                });
               }
           })
-      
-    
-    
-
-      this.navCtrl.push(ServicesPage, {
-        preGenData: this.preGenData
-      });
       console.log("Next clicked!");
   }
 }

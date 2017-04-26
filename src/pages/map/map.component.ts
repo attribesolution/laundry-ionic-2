@@ -12,11 +12,14 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
+
+import { AuthService } from "../../auth/auth.service";
 import { AlertDialogFactory } from '../../app/alert.dialog'
 import { LaundryItems } from '../laundryitems/laundryitems';
 import { AdditionalNote } from '../modals/additional-note/additional-note';
 import { SavedLocations } from '../modals/saved-locations/saved-locations';
 import { SavedLocationService } from "../modals/saved-locations/saved-location.service";
+
 declare var google;
 import { PreGenModel } from "../../models/preGen.model";
 
@@ -25,7 +28,7 @@ import { globalVars } from "../../app/globalvariables";
 @Component({
   selector: 'laundry-map',
   templateUrl: 'map.template.html',
-  providers: [MapService, AlertDialogFactory, SavedLocationService]
+  providers: [AuthService, MapService, AlertDialogFactory, SavedLocationService]
 })
 
 
@@ -57,7 +60,8 @@ export class LaundryMap implements AfterViewInit{
                 private storage: Storage,
                 private alertCntrl: AlertDialogFactory,
                 private alertCtrl: AlertController,
-                private savedLocationsService: SavedLocationService){
+                private savedLocationsService: SavedLocationService,
+                private authService: AuthService){
       
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
@@ -247,7 +251,7 @@ export class LaundryMap implements AfterViewInit{
     // this.openSavedLocationModal(myEvent);
     let inputs;
     let URL = globalVars.getUsersAddress(this.userID);
-    this.savedLocationsService.getAddressOfSavedLocations(URL, this.token).
+    this.authService.getCall(URL).
       subscribe(res => {
         console.log(JSON.parse(res["_body"]));
         inputs = JSON.parse(res["_body"])["data"]["contact"]["address"];
@@ -270,7 +274,7 @@ export class LaundryMap implements AfterViewInit{
 
         inputs.forEach(input => {
             alert.addInput({
-                type: 'checkbox',
+                type: 'radio',
                 label: input.alias,
                 value: input,
                 checked: false
@@ -288,9 +292,8 @@ export class LaundryMap implements AfterViewInit{
         alert.present();
         alert.onDidDismiss((data) => {
           console.log(data);
-          
             data ? 
-        this.locationClicked(data[0]) : '';
+              this.locationClicked(data[0]) : '';
         });
 
     }
@@ -318,7 +321,7 @@ export class LaundryMap implements AfterViewInit{
       lat: this.lat,
       long: this.lng
     }
-    this.mapService.patchAddress(URL, data, this.token)
+    this.authService.patchCall(URL, data)
       .subscribe(res => {
         if (res.status == 200) {
           console.log(res['_body']);
@@ -345,14 +348,16 @@ export class LaundryMap implements AfterViewInit{
     console.log("You have clicked on: ", location);
     
     this.available_locations = undefined;
-    if(!!location.formatted_address){
-      this.inputFieldValue = location.formatted_address;
-      localStorage.setItem("Location", JSON.stringify(location));
-      this.lat = location.geometry.location.lat;
-      this.lng = location.geometry.location.lng;
+    if(!!location){
+      if(!!location.formatted_address){
+        this.inputFieldValue = location.formatted_address;
+        localStorage.setItem("Location", JSON.stringify(location));
+        this.lat = location.geometry.location.lat;
+        this.lng = location.geometry.location.lng;
 
-      this.address = location.formatted_address;
-      this.locationAlias = location.name;
+        this.address = location.formatted_address;
+        this.locationAlias = location.name;
+      }      
     }else{
       this.inputFieldValue = location.address;
       localStorage.setItem("Location", JSON.stringify(location));

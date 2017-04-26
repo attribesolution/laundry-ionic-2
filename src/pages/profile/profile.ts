@@ -5,10 +5,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { emailValidator } from '../../shared/email-validation.directive';
 import { ProfileService } from './profile.service';
 import { globalVars } from '../../app/globalvariables';
+import { AuthService } from "../../auth/auth.service";
 @Component ({
     templateUrl: 'profile.html',
     selector: 'profile',
     providers: [
+      AuthService,
       ProfileService
     ]
 })
@@ -171,7 +173,8 @@ export class ProfileComponent implements OnInit{
   }
     constructor(private navCtrl: NavController,
                 private formBuilder: FormBuilder,
-                private profileService: ProfileService){
+                private profileService: ProfileService,
+                private authService: AuthService){
                   console.log('constructor');
                   
         
@@ -200,7 +203,7 @@ export class ProfileComponent implements OnInit{
           }
           console.log(data);
           
-          this.profileService.putProfile(this.URL, data, this.token)
+          this.authService.putCall(this.URL, data)
             .subscribe(
               res => {
                 if(res.status == 200){

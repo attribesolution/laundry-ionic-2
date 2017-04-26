@@ -116,13 +116,17 @@ export class SignInPage implements OnInit {
       }
     }
     
-    console.log(user,passwd);
+    console.log(data);
+
+    this.storage.set('userDetails', data);
     
     let URL = globalVars.PostSignInApi();
-    this.signInService.signInUser(URL, data).subscribe(res => {
+    this.signInService.signInUser(URL, data).subscribe(
+      res => {
+          
           if(res.status == 200){
-            console.log(res['_body']);
-            
+              console.log(res['_body']);
+              console.log(res['_body']);              
               this.token = JSON.parse(res['_body'])['token'];
               let userID = this.jwtHelper.decodeToken(this.token);
               localStorage.setItem('x-access-token',this.token);   
@@ -132,7 +136,7 @@ export class SignInPage implements OnInit {
               localStorage.setItem('userID', userID._id);
               this.user.saveUserAccessToken(this.token);
               console.log(userID._id);
-              this.user.scheduleRefresh(this.token);
+              // this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
       });

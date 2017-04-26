@@ -40,7 +40,7 @@ export class SignUpPage implements OnInit{
       ]],
       firstname: ['', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(3),
         Validators.maxLength(50)]],
       lastname: ['',[
         Validators.required,
@@ -144,7 +144,7 @@ export class SignUpPage implements OnInit{
     URL = globalVars.PostNewUser();
     data = {
       
-      "firstname": this.signUpForm.value.firsname || null,
+      "firstname": this.signUpForm.value.firtsname || null,
       "lastname": this.signUpForm.value.lastname || null,
       "password": this.signUpForm.value.password || null,
       "contact": {
@@ -159,7 +159,7 @@ export class SignUpPage implements OnInit{
     this.signUpService.PostNewUser(URL, data)
       .subscribe(res => {
 
-                  if(res.status = 200){
+                  if(res.status == 200){
                       console.log(JSON.parse(res['_body']));
                       let body  = JSON.parse(res['_body']);
                       response = {
@@ -167,15 +167,16 @@ export class SignUpPage implements OnInit{
                         data: body["data"]
                       }
                       console.log("response data = ",response.data);
-                      localStorage.setItem("userID", response.data._id);
-                      //this.user.saveUserAccessToken(response.data.);
+                      // localStorage.setItem("userID", response.data._id);
+                      // this.user.saveUserAccessToken(response.data);
                       this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                      let signInData = {
+                        username: data.contact.email1,
+                        password: data.password
+                      };
+                      this.requestSignIn(signInData);
                   }
-                  let signInData = {
-                    username: data.contact.email1,
-                    password: data.password
-                  };
-                  this.requestSignIn(signInData);
+                  
               });
   }
   requestSignIn(data){
@@ -197,7 +198,7 @@ export class SignUpPage implements OnInit{
         this.user.saveUserId(userID);
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);
-        this.user.scheduleRefresh(this.token);
+        // this.user.scheduleRefresh(this.token);
         this.navCtrl.setRoot(OrdersHistoryPage);
         console.log(JSON.stringify(res['_body']['data']));
         

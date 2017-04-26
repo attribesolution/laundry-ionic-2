@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper, AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http } from "@angular/http";
 import { LaundryMap } from '../pages/map/map.component';
 import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
@@ -16,9 +17,24 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 import { User } from './user';
 
+let storage = new Storage();
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: "x-access-token",
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('token')),
+  }), http);
+}
+
+
 @Component({
   templateUrl: 'app.html',
-  providers: [Storage, JwtHelper,User]
+  providers: [Storage, 
+              JwtHelper,
+              User
+              ]
 
 })
 export class MyApp {
@@ -70,7 +86,7 @@ export class MyApp {
 
             // console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
-            this.user.scheduleRefresh(token);
+            // this.user.scheduleRefresh(token);
           }else{
             this.rootPage = SignInPage;
             console.log('Could not find X-Access-Token. Please login or signup');

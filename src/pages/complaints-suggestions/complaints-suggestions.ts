@@ -9,18 +9,23 @@ import { ComplaintsSuggestionsService } from './complatins-suggestions.service';
 
 import { globalVars } from '../../app/globalvariables';
 
+import { AuthService } from "../../auth/auth.service";
 //import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
 @Component ({
     selector: 'complaints-suggestions',
     templateUrl: 'complaints-suggestions.html',
-    providers: [ComplaintsSuggestionsService]
+    providers: [AuthService, ComplaintsSuggestionsService]
 })
 
 export class ComplaintsSuggestionsPage{suggestions
      preGenData: PreGenModel;
      complaints1: any = '';
-     constructor(private navCtrl:NavController, public navParams: NavParams, private complaintsSuggestionsService: ComplaintsSuggestionsService, private toastCtrl: ToastController){
+     constructor(private navCtrl:NavController, 
+                 public navParams: NavParams, 
+                 private complaintsSuggestionsService: ComplaintsSuggestionsService, 
+                 private toastCtrl: ToastController,
+                 private authService: AuthService){
         // this.preGenData = this.navParams.get('preGenData')
         this.getHistory();
      }
@@ -31,7 +36,7 @@ export class ComplaintsSuggestionsPage{suggestions
       //this.spinnerDialog.show();
       let userID = localStorage.getItem("userID");
       let URL = globalVars.getComplainsURL(userID);
-      this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL)
+      this.authService.getCall(URL)
         .subscribe(res =>{
           if (res.status == 200){
             this.complaints1= [];
@@ -64,7 +69,7 @@ export class ComplaintsSuggestionsPage{suggestions
       let complaintsAndSuggestions = {complaints: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
       console.log(complaintsAndSuggestions);
       //this.spinnerDialog.show();
-      this.complaintsSuggestionsService.hitComplaintsSuggestionsPatchURL(URL, complaintsAndSuggestions)
+      this.authService.patchCall(URL, complaintsAndSuggestions)
         .subscribe(res => {
           if(res.status == 200){
             //this.spinnerDialog.hide();
