@@ -136,7 +136,7 @@ export class SignInPage implements OnInit {
               localStorage.setItem('userID', userID._id);
               this.user.saveUserAccessToken(this.token);
               console.log(userID._id);
-              this.user.scheduleRefresh(this.token);
+              // this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
       });

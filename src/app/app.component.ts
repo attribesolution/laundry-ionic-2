@@ -33,7 +33,7 @@ export function getAuthHttp(http) {
   templateUrl: 'app.html',
   providers: [Storage, 
               JwtHelper,
-              User,
+              User
               ]
 
 })
@@ -86,7 +86,7 @@ export class MyApp {
 
             // console.log('Got token.', token);
             this.rootPage = OrdersHistoryPage;  
-            this.user.scheduleRefresh(token);
+            // this.user.scheduleRefresh(token);
           }else{
             this.rootPage = SignInPage;
             console.log('Could not find X-Access-Token. Please login or signup');

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage'
 import {JwtHelper} from 'angular2-jwt'
-import { SignInService } from '../pages/sign-in/sign-in.service';
+// import { SignInService } from '../pages/sign-in/sign-in.service';
 /**
  * Author: Muhammad Shahab
  * Date: 7 Apr 2017
@@ -11,7 +11,7 @@ import { SignInService } from '../pages/sign-in/sign-in.service';
 export class User {
 
   intervalHandler : any
-  constructor(private storage: Storage , private jwt: JwtHelper,private SignInService: SignInService){}  
+  constructor(private storage: Storage , private jwt: JwtHelper){}  
 
   getUserId()
   {
@@ -106,53 +106,53 @@ export class User {
   /**
    * set an interval for refresh x-access-token
    */
-  scheduleRefresh(token:string){
+  // scheduleRefresh(token:string){
 
-      //let time  = this.jwt.getTokenExpirationDate(token).getSeconds()-10;// refresh token 1 hour before expiring
-      let now: number = new Date().valueOf();
-      let jwtExp = this.jwt.decodeToken(token).exp;
-      let exp = new Date(0);
-      exp.setUTCSeconds(jwtExp);
-      let delay = exp.valueOf() - now;
-       console.log("expiration time in seconds = ",delay/1000);
-        if(delay > 0)
-             this.intervalHandler = setInterval(this.refreshToken(),delay/1000);
-        else
-          this.refreshToken();
+  //     //let time  = this.jwt.getTokenExpirationDate(token).getSeconds()-10;// refresh token 1 hour before expiring
+  //     let now: number = new Date().valueOf();
+  //     let jwtExp = this.jwt.decodeToken(token).exp;
+  //     let exp = new Date(0);
+  //     exp.setUTCSeconds(jwtExp);
+  //     let delay = exp.valueOf() - now;
+  //      console.log("expiration time in seconds = ",delay/1000);
+  //       if(delay > 0)
+  //            this.intervalHandler = setInterval(this.refreshToken(),delay/1000);
+  //       else
+  //         this.refreshToken();
 
-  }
-  /**
-   * 
-   * 
-   */
-  refreshToken(){
+  // }
+  // /**
+  //  * 
+  //  * 
+  //  */
+  // refreshToken(){
     
-    console.log("refresh token called");
-    this.SignInService.signInUser(URL, {
-      "username": this.signInForm.value.email,
-      "password": this.signInForm.value.password
-    }).subscribe(res => {
-          if(res.status == 200){
-              this.token = JSON.parse(res['_body'])['token'];
-              let userID = this.jwt.decodeToken(this.token);
-              localStorage.setItem('x-access-token',this.token);   
-              localStorage.setItem('userID',this.jwt.decodeToken(this.token)['_id']);
-              this.user.saveUserId(userID);
-              this.user.saveUserAccessToken(this.token);
-              console.log(userID._id);
-              this.user.scheduleRefresh(this.token);
-              this.navCtrl.setRoot(OrdersHistoryPage);
-          }
-      });
-  }
-  /**
-   * clear all set intervals 
-   * call when signing out the user
-   */
-  clearsetInterval(){
+  //   console.log("refresh token called");
+  //   this.SignInService.signInUser(URL, {
+  //     "username": this.signInForm.value.email,
+  //     "password": this.signInForm.value.password
+  //   }).subscribe(res => {
+  //         if(res.status == 200){
+  //             this.token = JSON.parse(res['_body'])['token'];
+  //             let userID = this.jwt.decodeToken(this.token);
+  //             localStorage.setItem('x-access-token',this.token);   
+  //             localStorage.setItem('userID',this.jwt.decodeToken(this.token)['_id']);
+  //             this.user.saveUserId(userID);
+  //             this.user.saveUserAccessToken(this.token);
+  //             console.log(userID._id);
+  //             this.user.scheduleRefresh(this.token);
+  //             this.navCtrl.setRoot(OrdersHistoryPage);
+  //         }
+  //     });
+  // }
+  // /**
+  //  * clear all set intervals 
+  //  * call when signing out the user
+  //  */
+  // clearsetInterval(){
 
-    clearInterval(this.intervalHandler);
-  }
+  //   clearInterval(this.intervalHandler);
+  // }
   saveSocialData(SocialData){
     this.storage.ready()
       .then(
