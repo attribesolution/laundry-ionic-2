@@ -49,10 +49,12 @@ export class LaundryItems implements OnInit{
   getLaundryItems = () => {
     console.log(this.selectedItem);
     let URL = globalVars.getLaundryitemsApiURL();
-    var response$      =  this.authService.getCall(URL)
+    this.authService.getCall(URL)
     .subscribe(res => {
       if(res.status == 200) {
-        let response = JSON.parse(res['_body']) 
+        let response = JSON.parse(res['_body']);
+        console.log(response);
+         
           this.laundryitems = {
             href : response["href"],
             data : response["data"]

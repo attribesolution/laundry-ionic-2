@@ -144,7 +144,7 @@ export class SignUpPage implements OnInit{
     URL = globalVars.PostNewUser();
     data = {
       
-      "firstname": this.signUpForm.value.firsname || null,
+      "firstname": this.signUpForm.value.firtsname || null,
       "lastname": this.signUpForm.value.lastname || null,
       "password": this.signUpForm.value.password || null,
       "contact": {
