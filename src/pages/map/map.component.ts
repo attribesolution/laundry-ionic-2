@@ -90,13 +90,7 @@ export class LaundryMap implements AfterViewInit{
   }
   ionViewDidLoad() {
     this.getCurrentPosition();
-    let self = this;
-    self.loadMap();
-    // setTimeout(function(){
-      
-    // }, 1);
-    
-    
+    this.loadMap();
   }
 
   
