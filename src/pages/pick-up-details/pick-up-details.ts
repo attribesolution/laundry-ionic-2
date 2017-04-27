@@ -56,7 +56,7 @@ export class PickUpDetails{
          this.preGenData = navParams.get('preGenData');
          console.log(this.preGenData);
          this.loc = JSON.parse(localStorage.getItem("Location"));
-         console.clear();
+        //  console.clear();
          console.log(navParams.get('preGenData'));
          console.log('Location: ', this.loc);
          this.token = localStorage.getItem('x-access-token');
