@@ -1,5 +1,15 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { NavController, NavParams, PopoverController, Popover, AlertController } from 'ionic-angular';
+import { Component, 
+         ElementRef, 
+         ViewChild, 
+         AfterViewInit 
+        } from '@angular/core';
+import { NavController, 
+         NavParams, 
+         PopoverController, 
+         Popover, 
+         AlertController,
+        ToastController
+       } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { MapService } from './map.service';
@@ -53,11 +63,13 @@ export class LaundryMap implements AfterViewInit{
     addressResponse: any;
     userID: string;
     token: string;
+    mapLoadErr: any;
     constructor(private navCtrl: NavController,
                 private navParams: NavParams, 
                 private mapService: MapService, 
                 public popoverCtrl: PopoverController,
                 private storage: Storage,
+                private toastController: ToastController,
                 private alertCntrl: AlertDialogFactory,
                 private alertCtrl: AlertController,
                 private savedLocationsService: SavedLocationService,
@@ -72,12 +84,19 @@ export class LaundryMap implements AfterViewInit{
   ngAfterViewInit() {
 
     this.listenToSearchInput();
-    // this.loadMap();
     this.getMapLocation(location);
   }
   ionViewDidLoad() {
-    this.loadMap();
+    this.getCurrentPosition();
+    let self = this;
+    setTimeout(function(){
+      self.loadMap();
+    }, 4000);
+    
+    
   }
+
+  
   
   listenToSearchInput() {
     let location: string;
@@ -102,15 +121,33 @@ export class LaundryMap implements AfterViewInit{
     }
   }
 
+  getCurrentPosition(){
+    Geolocation.getCurrentPosition()
+      .then(
+        position => {
+          console.log('No error');
+          
+          this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          this.addMarker();
+        },
+        err => {
+          console.log("Error", err);
+          if(err.code == 1){
+            this.alertCntrl.openAlertDialog("Location Error?","Please turn on location from settings.");
+          }
+        }
+      )
+  }
+
   loadMap() {
 
-
     console.log("load map called");
-  	Geolocation.getCurrentPosition().then((position) => {
-	    this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+  	// Geolocation.getCurrentPosition().then((position) => {
+	  //   this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    //   console.log(this.postion);
+      
       let mapOptions = {
-        center: this.postion,
+        center: new google.maps.LatLng(25.276987, 55.296249),
         zoom: 15,
         styles: [
           { elementType: 'geometry', stylers: [{ color: '#15151b' }] },
@@ -198,15 +235,20 @@ export class LaundryMap implements AfterViewInit{
         backgroundColor: 'none'
       }
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-
-         this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
-         this.addMarker();
+      // this.map: GoogleMap = this.googleMaps.create(this.mapElement);
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions) ;
+      console.log(this.map);
+      
+      this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
+        //  this.addMarker();
           console.log("map loaded");
-  	}, (err) => {
-  		console.log("error = ",err);
-  	});
+  	// }, (err) => {
+  		// console.log("error = ",err);
+      // if(err.code == 1){
+        // this.presentToast();
+        
+      // }
+  	// });
 
   }
 

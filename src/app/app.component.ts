@@ -17,17 +17,6 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 import { User } from './user';
 
-let storage = new Storage();
-
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    headerPrefix: "x-access-token",
-    noJwtError: true,
-    globalHeaders: [{'Accept': 'application/json'}],
-    tokenGetter: (() => storage.get('token')),
-  }), http);
-}
-
 
 @Component({
   templateUrl: 'app.html',

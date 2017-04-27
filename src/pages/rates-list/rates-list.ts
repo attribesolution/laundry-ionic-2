@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LaundryItemsService } from '../laundryitems/laundryitems.service';
-import { KeysPipe } from '../../pipes/ObjectPipe';
 @Component({
     templateUrl: 'rates-list.html',
     selector: 'rates-list',
-    providers: [LaundryItemsService, KeysPipe]
+    providers: [LaundryItemsService]
 })
 export class RatesListComponent{
     laundryItems: any;
