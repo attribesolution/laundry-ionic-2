@@ -14,9 +14,9 @@ export class AdditionalNote
     this.viewCtrl.dismiss();
   }
 
-  done()
+  done(text)
   {
     /*Todo save the text of edittext*/
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(text);
   }
 }

@@ -17,17 +17,21 @@ import { AuthService } from "../../auth/auth.service";
 export class CareInstructions{
      preGenData: PreGenModel;
      token: string;
+     additionalInfoText: string;
      constructor(private navCtrl:NavController, 
                  public navParams: NavParams, 
                  private careInstructionsService: CareInstructionsService,
                  private authService: AuthService){
         this.preGenData = this.navParams.get('preGenData');
         this.token = localStorage.getItem('x-access-token');
+        this.additionalInfoText = localStorage.getItem('additionalInfoText');
      }
 
 startNextScreen(shirtsIns, dryCleanIns){
      //this.spinnerDialog.show();
+      shirtsIns += this.additionalInfoText;
       console.log(shirtsIns, dryCleanIns);
+      
       let URL = globalVars.patchCareInstructionsURL((this.preGenData.data as any)._id);
       let instructions = {laundryInstruction: shirtsIns, drycleanInstruction: dryCleanIns};
       this.authService.patchCall(URL, {instructions: instructions})
