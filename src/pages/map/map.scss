@@ -1,11 +1,12 @@
     .searchbar{
-    padding: 0;
-    background-color: #2d2d2d ;
-    opacity: 0.75;
-    margin: 10px 5% 0;
-    width: 90%;
-    position: absolute;
-    z-index: 2;
+        padding: 0;
+        background-color: #2d2d2d ;
+        opacity: 0.75;
+        margin: 10px 5% 0;
+        width: 90%;
+        position: absolute;
+        z-index: 2;
+
         .search-input{
             padding: 10px 25px;
             width: 90%;
@@ -20,51 +21,55 @@
             font-size: 22px;
         }
     }
-    .scroll {
-        height: 100%;
-    }
-    
-    #mapParent {
-        color: color($colors, secondary);
-        background-color: color($colors, secondary);
-        position: relative;
-        z-index: 1;
-        display: inline;
-    }
-    #map{
-        height: 77vh;
-    }
-    .gmnoprint, .gm-fullscreen-control{
-        display: none!important;
-    }
-    .bottom-options{
-    
-        z-index: 10;
-        background-color: transparent ;
-        opacity: 1.0;
-        display: table;
-        margin: 0 auto;
-        }
+.scroll {
+    height: 100%;
+}
 
-        .horizontal-orientation{
-            display: inline-block;
-            
-        }
-        .buttons-icon-size{
-        
-            width: 60px;
-            height: 60px;
-        }
-        img[src = "http://maps.gstatic.com/mapfiles/api-3/images/google_white5_hdpi.png"]{
-            position: fixed !important;
-        z-index: -10000000;
-        }
-        .auto-complete-text{
-            color: #fff; 
-            margin: 0;
-            border-bottom: 1px solid #131A17;
-        }
+#mapParent {
+    color: color($colors, secondary);
+    background-color: color($colors, secondary);
+    position: relative;
+    z-index: 1;
+    display: inline;
+}
+#map{
+    height: 77vh;
+}
+.gmnoprint, .gm-fullscreen-control{
+    display: none!important;
+}
+.bottom-options{
 
-        ion-popover{
-            background: rgba(0,0,0,0.7);
-        }
+    z-index: 10;
+    background-color: transparent ;
+    opacity: 1.0;
+    display: table;
+    margin: 0 auto;
+    }
+
+.horizontal-orientation{
+    display: inline-block;
+    
+}
+.buttons-icon-size{
+
+    width: 60px;
+    height: 60px;
+}
+img[src = "http://maps.gstatic.com/mapfiles/api-3/images/google_white5_hdpi.png"]{
+    position: fixed !important;
+z-index: -10000000;
+}
+.auto-complete-text{
+    color: #fff; 
+    margin: 0;
+    border-bottom: 1px solid #131A17;
+}
+
+ion-popover{
+    background: rgba(0,0,0,0.7);
+}
+.popover-content{
+    width: 80%!important;
+    left: 35px;
+}

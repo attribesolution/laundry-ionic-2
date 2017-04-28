@@ -64,6 +64,8 @@ export class LaundryMap implements AfterViewInit{
     userID: string;
     token: string;
     mapLoadErr: any;
+    additionalInfoText: string;
+    marker;
     constructor(private navCtrl: NavController,
                 private navParams: NavParams, 
                 private mapService: MapService, 
@@ -74,7 +76,7 @@ export class LaundryMap implements AfterViewInit{
                 private alertCtrl: AlertController,
                 private savedLocationsService: SavedLocationService,
                 private authService: AuthService){
-      
+      this.marker = new google.maps.Marker(null);
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
       this.preGenData = navParams.get('preGenData');
@@ -88,12 +90,7 @@ export class LaundryMap implements AfterViewInit{
   }
   ionViewDidLoad() {
     this.getCurrentPosition();
-    let self = this;
-    setTimeout(function(){
-      self.loadMap();
-    }, 4000);
-    
-    
+    this.loadMap();
   }
 
   
@@ -251,10 +248,10 @@ export class LaundryMap implements AfterViewInit{
   	// });
 
   }
-
+  
   addMarker() {
-
-    let marker = new google.maps.Marker({
+    this.marker.setMap(null)
+    this.marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.drop,
       // position: this.map.getCenter(),
@@ -268,7 +265,7 @@ export class LaundryMap implements AfterViewInit{
 
     let content = "<h4>Information!</h4>";
 
-    this.addInfoWindow(marker, content);
+    this.addInfoWindow(this.marker, content);
 
   }
 
@@ -378,6 +375,13 @@ export class LaundryMap implements AfterViewInit{
     popover.present({
       ev: myEvent
     });
+    popover.onDidDismiss(data => {
+      if(data){
+        console.log(data);
+        this.additionalInfoText = data + "\n";
+        localStorage.setItem("additionalInfoText", this.additionalInfoText);
+      }
+    })
   }
 
   additionButtonClicked(myEvent) {
