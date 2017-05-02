@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { emailValidator } from '../../shared/email-validation.directive';
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit{
                 let response = JSON.parse(res['_body'])['data'][0];
                 this.userProfile = {
                   phone1: response.contact.phone1,
-                  phone2: response.contact.phone1,
+                  phone2: response.contact.phone2,
                   email1: response.contact.email1,
                   firstname: response.firstName,
                   lastname: response.lastName,
@@ -174,6 +174,7 @@ export class ProfileComponent implements OnInit{
     constructor(private navCtrl: NavController,
                 private formBuilder: FormBuilder,
                 private profileService: ProfileService,
+                private toastCtrl: ToastController,
                 private authService: AuthService){
                   console.log('constructor');
                   
@@ -208,6 +209,7 @@ export class ProfileComponent implements OnInit{
               res => {
                 if(res.status == 200){
                   console.log(JSON.parse(res['_body']));
+                  this.presentToast();
                 }
                 
                 
@@ -217,4 +219,21 @@ export class ProfileComponent implements OnInit{
         // this.profileService.putProfile(this.URL, data, this.token)
         console.log("save clicked");
     }
+
+    presentToast(){
+    
+    console.log('Inside toast');
+    
+    let toast = this.toastCtrl.create({
+      message: 'Profile Updated',
+      position: 'bottom',
+      closeButtonText: 'OK',
+      showCloseButton: true
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+
+  } 
 }

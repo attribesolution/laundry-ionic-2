@@ -160,6 +160,7 @@ export class SignUpPage implements OnInit{
       .subscribe(res => {
 
                   if(res.status == 200){
+                      
                       console.log(JSON.parse(res['_body']));
                       let body  = JSON.parse(res['_body']);
                       response = {
@@ -167,14 +168,19 @@ export class SignUpPage implements OnInit{
                         data: body["data"]
                       }
                       console.log("response data = ",response.data);
+                      if(response.data === null){
+                        this.presentToast(body.error);
+                      }else{
+                        // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                        let signInData = {
+                          username: data.contact.email1,
+                          password: data.password
+                        };
+                        this.requestSignIn(signInData);
+                      }
                       // localStorage.setItem("userID", response.data._id);
                       // this.user.saveUserAccessToken(response.data);
-                      this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
-                      let signInData = {
-                        username: data.contact.email1,
-                        password: data.password
-                      };
-                      this.requestSignIn(signInData);
+                      
                   }
                   
               });
@@ -187,7 +193,7 @@ export class SignUpPage implements OnInit{
     this.URL = globalVars.PostSignInApi();
     console.log(this.URL);
     
-    this.signInService.signInUser(URL, data)
+    this.signInService.signInUser(this.URL, data)
       .subscribe(res => {
         this.token = JSON.parse(res['_body'])['token'];
         let userID = this.jwtHelper.decodeToken(this.token);
@@ -307,30 +313,33 @@ socialSignup(URL, data, fbUserID){
                       console.log("response data = ",JSON.stringify(response.data));
                       if(!!response.data && !response.error){
                         localStorage.setItem("userID", response.data._id);
+                        let signInData = {
+                          username: fbUserID,
+                          password: fbUserID + "facebook"
+                        };
+                        this.requestSignIn(signInData);
 
+                        this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
 
+                        
                       }else{
                         console.log('You are already signed up. Please sign in.');
-                        this.presentToast();
+                        this.presentToast(body.error);
                       }
                       
                       // //this.user.saveUserAccessToken(response.data.);
-                      // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                      
                   }
-                  let signInData = {
-                    username: fbUserID,
-                    password: fbUserID + "facebook"
-                  };
-                  // this.requestSignIn(signInData);
               });
       }
-    presentToast(){
+    presentToast(message){
       console.log('Inside toast');
       
       let toast = this.toastCtrl.create({
-        message: 'You are already signed up. Please sign in using facebook.',
-        duration: 3000,
-        position: 'bottom'
+        message: message,
+        position: 'bottom',
+        closeButtonText: 'OK',
+        showCloseButton: true
       });
       toast.onDidDismiss(() => {
         console.log('Dismissed toast');

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { NativeStorage } from 'ionic-native';
@@ -87,6 +87,7 @@ export class SignInPage implements OnInit {
               private signInService: SignInService, 
               private storage: Storage, 
               private jwtHelper: JwtHelper,
+              private toastCtrl: ToastController,
               private user: User,
               private fb: Facebook,
               private googlePlus: GooglePlus,
@@ -139,6 +140,11 @@ export class SignInPage implements OnInit {
               // this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
+      }, err => {
+        console.log(err);
+        if(err.status == 401){
+          this.presentToast(JSON.parse(err['_body'])['message'])
+        }
       });
   }
  
@@ -218,5 +224,22 @@ export class SignInPage implements OnInit {
   forgot(){
     this.navCtrl.push(ForgotPasswordPage);
   }
+  
+  presentToast(message){
+    
+    console.log('Inside toast');
+    
+    let toast = this.toastCtrl.create({
+      message: message,
+      position: 'bottom',
+      closeButtonText: 'OK',
+      showCloseButton: true
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+
+  } 
 
 }

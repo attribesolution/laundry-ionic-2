@@ -332,7 +332,7 @@ export class LaundryMap implements AfterViewInit{
         alert.onDidDismiss((data) => {
           console.log(data);
             data ? 
-              this.locationClicked(data[0]) : '';
+              this.locationClicked(data[0]) : null;
         });
 
     }
