@@ -13,7 +13,7 @@ import { PreGenModel } from '../../models/preGen.model';
 import { LaundryMap } from '../map/map.component';
 import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
-
+import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
 @Component({
   selector: 'page-orders-history',
@@ -23,7 +23,7 @@ import { AuthService } from "../../auth/auth.service";
 export class OrdersHistoryPage{
   
   userID: string;
-  response: any;
+  response: OrderModel;
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
@@ -147,13 +147,15 @@ export class OrdersHistoryPage{
             if(res.status == 200) {
               console.log(res);
               console.log(JSON.parse(res['_body']));
-              this.response = JSON.parse(res['_body']);
-              // this.hideActivityLoaders();
+              this.response = JSON.parse(res['_body']);              
+              console.log(this.response);
+              
             }
           },error=>{
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
           },()=>{
+            this.mapResponse();
             this.hideActivityLoaders();
           })
     // this.hideActivityLoaders();
@@ -164,6 +166,15 @@ export class OrdersHistoryPage{
       // check if refreshController is'nt undefined
       if(this.refreshController)
       this.refreshController.complete();
+}
+mapResponse(){
+  this.response.data.forEach(element => {
+    element['status'] = {
+              "_id": "58bfbb19685648cd0392995a",
+              "name": "Order Complete",
+              "code": "ORC"
+            }
+  });
 }
   placeOrder(){
     this.storage.get("x-access-token")
