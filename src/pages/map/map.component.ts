@@ -393,7 +393,6 @@ export class LaundryMap implements AfterViewInit{
   locationClicked(location) {
     console.log("You have clicked on: ", location);
     
-    this.available_locations = undefined;
     if(!!location){
       if(!!location.formatted_address){
         this.inputFieldValue = location.formatted_address;

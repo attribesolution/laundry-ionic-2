@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit{
     userID: any;
     URL: string;
     userProfile: Object;
+    error: boolean = true;
     ngOnInit(){
       console.log('ngOnInit');
         this.token = localStorage.getItem('x-access-token');
@@ -54,8 +55,7 @@ export class ProfileComponent implements OnInit{
                       this.profileForm.controls[item].patchValue(this.userProfile[item]);
                   }
                 }
-              }
-              
+              } 
             }
           );
         this.buildForm();
@@ -110,22 +110,22 @@ export class ProfileComponent implements OnInit{
     
     for(const field in this.formsError){
       const control = form.get(field);      
+      this.error = true;
       if(control){
         this.formsError[field] = '';
-        this.error = false;
+        // this.error = false;
         const messages = this.validationMessages[field];
         for (const key in control.errors){  
+          this.error = false;
           console.log(control.errors, field);
           console.log(control);          
           this.formsError[field] = messages[key];
-          
-            this.error = true;
-          
+          console.log(this.error);
         }
       }
     }
+    return this.error ? true: false;
   }
-  error: boolean = false;
   formsError = {
     firstname: '',
     lastname: '',
@@ -164,7 +164,8 @@ export class ProfileComponent implements OnInit{
 
     },
     email1: {
-      'invalidEmail': 'Invalid Email address.'
+      'invalidEmail': 'Invalid Email address.',
+      'required': 'Email is required.'
     },
   }    
   ionViewDidLoad(){
@@ -176,17 +177,18 @@ export class ProfileComponent implements OnInit{
                 private profileService: ProfileService,
                 private toastCtrl: ToastController,
                 private authService: AuthService){
-                  console.log('constructor');
-                  
-        
+                  // console.log('constructor');
     }
 
     save(){      
-        this.validateForm(this.profileForm.value);
-        if(this.error){
+        let error = this.validateForm(this.profileForm.value);
+        console.log(error);
+        
+        if(!this.error){
           console.log('Error');
+          this.error = !this.error; 
         }else{
-          // console.log('No error');
+          console.log('No error');
           let form = this.profileForm.value;
           console.log(form);
           
