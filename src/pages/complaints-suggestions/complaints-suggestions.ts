@@ -66,7 +66,7 @@ export class ComplaintsSuggestionsPage{suggestions
       let userID = localStorage.getItem("userID");
       let URL = globalVars.PatchComplainURL(userID);
       
-      let complaintsAndSuggestions = {complaints: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
+      let complaintsAndSuggestions = {complain: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
       console.log(complaintsAndSuggestions);
       //this.spinnerDialog.show();
       this.authService.patchCall(URL, complaintsAndSuggestions)
