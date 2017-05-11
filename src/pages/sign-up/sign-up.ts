@@ -144,8 +144,8 @@ export class SignUpPage implements OnInit{
     URL = globalVars.PostNewUser();
     data = {
       
-      "firstname": this.signUpForm.value.firtsname || null,
-      "lastname": this.signUpForm.value.lastname || null,
+      "firstName": this.signUpForm.value.firstname || null,
+      "lastName": this.signUpForm.value.lastname || null,
       "password": this.signUpForm.value.password || null,
       "contact": {
         "phone1": this.signUpForm.value.phone || null,
@@ -176,7 +176,10 @@ export class SignUpPage implements OnInit{
                           username: data.contact.email1,
                           password: data.password
                         };
-                        this.requestSignIn(signInData);
+                        // this.requestSignIn(signInData);
+                        this.navCtrl.setRoot(SignInPage, {
+                          signupSucess: true
+                        });
                       }
                       // localStorage.setItem("userID", response.data._id);
                       // this.user.saveUserAccessToken(response.data);
@@ -205,7 +208,7 @@ export class SignUpPage implements OnInit{
         console.log(userID._id);
         this.user.saveUserAccessToken(this.token);
         // this.user.scheduleRefresh(this.token);
-        this.navCtrl.setRoot(OrdersHistoryPage);
+        
         console.log(JSON.stringify(res['_body']['data']));
         
       }, err => {

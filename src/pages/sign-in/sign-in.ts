@@ -93,6 +93,9 @@ export class SignInPage implements OnInit {
               private googlePlus: GooglePlus,
               private formBuilder: FormBuilder) {
     this.menuController.swipeEnable(false);
+    if(this.navParams.get("signupSucess")){
+      this.presentToast('Sign Up Sucessful. You can now login.', "top")
+    }
   }
 
   
@@ -143,7 +146,7 @@ export class SignInPage implements OnInit {
       }, err => {
         console.log(err);
         if(err.status == 401){
-          this.presentToast(JSON.parse(err['_body'])['message'])
+          this.presentToast(JSON.parse(err['_body'])['message'], "bottom")
         }
       });
   }
@@ -225,13 +228,13 @@ export class SignInPage implements OnInit {
     this.navCtrl.push(ForgotPasswordPage);
   }
   
-  presentToast(message){
+  presentToast(message, position){
     
     console.log('Inside toast');
     
     let toast = this.toastCtrl.create({
       message: message,
-      position: 'bottom',
+      position: position,
       closeButtonText: 'OK',
       showCloseButton: true
     });

@@ -102,7 +102,8 @@
         required 
         id="dob" 
         name="dob" 
-        type="text" 
+        type="text"
+        max="2005-1-1"
         onfocus="(this.type='date')" 
         onblur="if(this.value)this.placeholder=''"
         autocomplete="off" 
@@ -128,7 +129,7 @@
       </div>
     </form>
     <div class="center">
-      <img class="fb-logo" (click)="fbSignup();" src="./assets/images/fb_icon.png" alt="">
+      <img class="fb-logo" (click)="fbSignup();" src="./assets/images/fb_signup.png" alt="">
       <img *ngIf="null" class="google-logo" src="./assets/images/googlePlus_icon.png" alt="">
     </div>
 </ion-content>
