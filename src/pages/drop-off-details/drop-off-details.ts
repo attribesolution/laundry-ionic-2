@@ -22,7 +22,11 @@ export class DropOffDetails{
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
-     hours: number[] = Array.from(new Array(12),(val,index)=>index+1);
+     hours: number[] = Array.from(
+         new Array(13),
+         (val,index):number => {
+            return index + 9 <= 12 ? index + 9: index - 3;
+         });
      minutes: number[] = Array.from(new Array(60),(val,index)=>index)
      dates = [];
      amPm: String[] = ['AM', 'PM'];

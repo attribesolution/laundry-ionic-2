@@ -23,11 +23,15 @@ export class PickUpDetails{
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
-     hours: number[] = Array.from(new Array(12),(val,index)=>index+1);
+     hours: number[] = Array.from(
+         new Array(13),
+         (val,index):number => {
+            return index + 9 <= 12 ? index + 9: index - 3;
+         });
      minutes: number[] = Array.from(new Array(60),(val,index)=>index)
      dates = [];
      amPm: String[] = ['AM', 'PM'];
-     highlightedDay: number;
+     highlightedDay = new Date().getDate();
      highlightedHour: number;
      highlightedMinute : number;
      highlightedAmPm: number;
@@ -61,7 +65,7 @@ export class PickUpDetails{
          console.log('Location: ', this.loc);
          this.token = localStorage.getItem('x-access-token');
      }
-
+    
      toggleHighlight(Elementid: any, segment: string){
         console.clear();
         console.log(Elementid);
