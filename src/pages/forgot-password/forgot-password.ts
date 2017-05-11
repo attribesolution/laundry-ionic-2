@@ -18,7 +18,7 @@ export class ForgotPasswordPage {
   }
   forgot(email){
     console.log(email);
-    let URL = globalVars.getForgotPasswordAPIURL(email);
+    let URL = globalVars.getForgotPasswordAPIURL();
     let body = {
       "emailID":email
     };
