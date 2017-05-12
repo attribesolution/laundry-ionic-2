@@ -37,11 +37,11 @@
           color="secondary" 
           *ngFor="let date of dates"
           class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDay === date, 
-                      'drop-off-details-date-item-divider':  highlightedDay !== date }"
+          [ngClass]="{ 'current': highlightedDay === date || dates.indexOf(date) == 1,
+                       'drop-off-details-date-item-divider':  highlightedDay !== date }"
           #$date
           (click)="toggleHighlight(date, 'day')"
-          >
+          > {{ dates.indexOf(date)}}
             <span class="drop-off-details-date-col">
               {{ date.toLocaleString(locale, { month: "short" }) | uppercase  }} {{ date.getDate() }}
               <sup *ngIf="date.getDate()%10 == 1 && !(date.getDate() == 11)">ST</sup>

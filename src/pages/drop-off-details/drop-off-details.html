@@ -37,7 +37,7 @@
           color="secondary" 
           *ngFor="let date of dates"
           class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDay === date, 
+          [ngClass]="{ 'current': highlightedDay === date || dates.indexOf(date) == 3, 
                       'drop-off-details-date-item-divider':  highlightedDay !== date }"
           #$date
           (click)="toggleHighlight(date, 'day')"
