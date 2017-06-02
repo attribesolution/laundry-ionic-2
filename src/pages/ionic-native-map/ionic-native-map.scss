@@ -1,0 +1,58 @@
+page-ionic-native-map {
+    #map{
+        margin: -10px;
+        margin-left: -18px; 
+        margin-top: -18px;
+        padding: 0;
+        height: 105%;
+        width: 120%;
+    }
+    .searchbar{
+        padding: 0;
+        background-color: #2d2d2d ;
+        opacity: 0.75;
+        margin: 10px 5% 0;
+        width: 90%;
+        position: absolute;
+        z-index: 2;
+
+        .search-input{
+            padding: 10px 25px;
+            width: 90%;
+            background: #2d2d2d;
+            border: none;
+            color: white;
+            font-size: 20px;
+        }
+
+        .search-icon{
+            color: white;
+            font-size: 22px;
+        }
+    }
+    .scroll {
+        height: 100%;
+    }
+    .button-bottom{
+        position: absolute;
+        bottom: -1px;
+    }
+    .bottom-options{
+
+        z-index: 10;
+        background-color: transparent ;
+        opacity: 1.0;
+        display: table;
+        margin: 0 auto;
+    }
+
+    .horizontal-orientation{
+        display: inline-block;
+        
+    }
+    .buttons-icon-size{
+
+        width: 60px;
+        height: 60px;
+    }
+}
