@@ -184,7 +184,7 @@ export class ProfileComponent implements OnInit{
         let error = this.validateForm(this.profileForm.value);
         console.log(error);
         
-        if(!this.error){
+        if(this.error){
           console.log('Error');
           this.error = !this.error; 
         }else{

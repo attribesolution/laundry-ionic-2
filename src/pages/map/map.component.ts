@@ -8,13 +8,27 @@ import { NavController,
          PopoverController, 
          Popover, 
          AlertController,
-        ToastController
+         ToastController,
+         Platform
        } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { 
+         Http, 
+         Headers, 
+         RequestOptions
+       } from '@angular/http'; 
+import { GoogleMaps, 
+         GoogleMap, 
+         GoogleMapsEvent,
+         LatLng,
+         CameraPosition,
+         MarkerOptions,
+         Marker   
+        } from "@ionic-native/google-maps";             
+// import { Geolocation } from 'ionic-native';
 import { MapService } from './map.service';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
+import { AndroidPermissions } from "@ionic-native/android-permissions";
 
 
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -30,22 +44,31 @@ import { AdditionalNote } from '../modals/additional-note/additional-note';
 import { SavedLocations } from '../modals/saved-locations/saved-locations';
 import { SavedLocationService } from "../modals/saved-locations/saved-location.service";
 
-declare var google;
 import { PreGenModel } from "../../models/preGen.model";
 
 import { globalVars } from "../../app/globalvariables";
 
+// declare var google;
+
 @Component({
   selector: 'laundry-map',
   templateUrl: 'map.template.html',
-  providers: [AuthService, MapService, AlertDialogFactory, SavedLocationService]
+  providers: [
+    MapService, 
+    GoogleMaps,
+    // Geolocation,
+    AuthService, 
+    AndroidPermissions,
+    AlertDialogFactory, 
+    SavedLocationService]
 })
 
 
 export class LaundryMap implements AfterViewInit{
     @ViewChild('search') button: ElementRef;
-    @ViewChild('map') mapElement: ElementRef;
-    map: any;
+    // @ViewChild('map') mapElement: ElementRef;
+    mapElement: HTMLElement = ViewChild('map');
+    
     zoom: number = 10;
     saved :boolean;
     addition : boolean;
@@ -58,6 +81,7 @@ export class LaundryMap implements AfterViewInit{
     address: string; 
     lat: number; 
     lng: number;
+    
     locationAlias: string;
     inputFieldValue: string = '';
     addressResponse: any;
@@ -66,30 +90,41 @@ export class LaundryMap implements AfterViewInit{
     mapLoadErr: any;
     additionalInfoText: string;
     marker;
-    constructor(private navCtrl: NavController,
-                private navParams: NavParams, 
-                private mapService: MapService, 
-                public popoverCtrl: PopoverController,
-                private storage: Storage,
-                private toastController: ToastController,
-                private alertCntrl: AlertDialogFactory,
+
+    map: GoogleMap;
+    LatLong: LatLng = new LatLng(43.0741904,-89.3809802);
+    constructor(private storage: Storage,
+                private platform: Platform,
+                private navParams: NavParams,
+                private googleMaps: GoogleMaps, 
+                private navCtrl: NavController,
+                private mapService: MapService,
+                // private geolocation: Geolocation,
+                private authService: AuthService,
                 private alertCtrl: AlertController,
+                private popoverCtrl: PopoverController,
+                private alertCntrl: AlertDialogFactory,
+                private toastController: ToastController,
+                private adroidPermissions: AndroidPermissions,
                 private savedLocationsService: SavedLocationService,
-                private authService: AuthService){
-      this.marker = new google.maps.Marker(null);
+                ){
+      // this.marker = new google.maps.Marker(null);
       this.token = localStorage.getItem('x-access-token');
       this.userID = localStorage.getItem('userID');
       this.preGenData = navParams.get('preGenData');
       // this.createPreGen(this.preGenApiURL, this.token);
-
   }
   ngAfterViewInit() {
-
+    console.log("ngAfterViewInit", this.LatLong);
+    
+    this.platform.ready().then(() => {
+      this.loadMap();
+    });
     this.listenToSearchInput();
     this.getMapLocation(location);
   }
   ionViewDidLoad() {
-    this.getCurrentPosition();
+    // this.getCurrentPosition();
     this.loadMap();
   }
 
@@ -118,156 +153,170 @@ export class LaundryMap implements AfterViewInit{
     }
   }
 
-  getCurrentPosition(){
-    Geolocation.getCurrentPosition()
-      .then(
-        position => {
-          console.log('No error');
+  // getCurrentPosition(){
+  //   Geolocation.getCurrentPosition()
+  //     .then(
+  //       position => {
+  //         console.log('No error');
           
-          this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          this.addMarker();
-        },
-        err => {
-          console.log("Error", err);
-          if(err.code == 1){
-            this.alertCntrl.openAlertDialog("Location Error?","Please turn on location from settings.");
-          }
-        }
-      )
-  }
+  //         this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  //         // this.addMarker();
+  //       },
+  //       err => {
+  //         console.log("Error", err);
+  //         if(err.code == 1){
+  //           this.alertCntrl.openAlertDialog("Location Error?","Please turn on location from settings.");
+  //         }
+  //       }
+  //     )
+  // }
 
   loadMap() {
-
+    let element:  HTMLElement = ViewChild('map');
     console.log("load map called");
   	// Geolocation.getCurrentPosition().then((position) => {
 	  //   this.postion = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     //   console.log(this.postion);
       
       let mapOptions = {
-        center: new google.maps.LatLng(25.276987, 55.296249),
-        zoom: 15,
-        styles: [
-          { elementType: 'geometry', stylers: [{ color: '#15151b' }] },
-          { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-          { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-          {
-            featureType: 'administrative',
-            elementType: 'labels',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'poi',
-            elementType: 'labels',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'geometry',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'poi.park',
-            elementType: 'labels.text.fill',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'road',
-            elementType: 'geometry',
-            stylers: [{ color: '#000000' }]
-          }
-          // #38414e
-          ,
-          {
-            featureType: 'road',
-            elementType: 'geometry.stroke',
-            stylers: [{ color: '#000000' }]//212a37
-          },
-          {
-            featureType: 'road',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#ffffff' }]//9ca5b3
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'geometry',
-            stylers: [{ color: '#000000' }]//746855
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [{ color: '#1f2835' }]
-          },
-          {
-            featureType: 'road.highway',
-            elementType: 'labels.text.fill',
-            stylers: [{ color: '#f3d19c' }]
-          },
-          {
-            featureType: 'transit',
-            elementType: 'all',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'transit.station',
-            elementType: 'labels.text.fill',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'water',
-            elementType: 'geometry',
-            stylers: [{ color: '#17263c' }]
-          },
-          {
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [{ visibility: 'off' }]
-          },
-          {
-            featureType: 'water',
-            elementType: 'labels.text.stroke',
-            stylers: [{ visibility: 'off' }]
-          }
-        ],
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        backgroundColor: 'none'
-      }
+          center: this.LatLong,
+          zoom: 15,
+          styles: [
+            { elementType: 'geometry', stylers: [{ color: '#15151b' }] },
+            { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+            { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+            {
+              featureType: 'administrative',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{ color: '#000000' }]
+            }
+            // #38414e
+            ,
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{ color: '#000000' }]//212a37
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#ffffff' }]//9ca5b3
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{ color: '#000000' }]//746855
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{ color: '#1f2835' }]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{ color: '#f3d19c' }]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'all',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{ color: '#17263c' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{ visibility: 'off' }]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{ visibility: 'off' }]
+            }
+          ],
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          backgroundColor: 'black',
+          gestureHandling: 'cooperative'
+        }
 
-      // this.map: GoogleMap = this.googleMaps.create(this.mapElement);
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions) ;
-      console.log(this.map);
-      
-      this.map.controls[google.maps.ControlPosition.TOP_LEFT].push = 'none';
-        //  this.addMarker();
-          console.log("map loaded");
-  	// }, (err) => {
-  		// console.log("error = ",err);
-      // if(err.code == 1){
-        // this.presentToast();
+      this.map = this.googleMaps.create(element);
+      // this.map = this.googleMaps.create(this.mapElement, mapOptions);
+      console.log(JSON.stringify(this.map));
+      // listen to MAP_READY event
+    // You must wait for this event to fire before adding something to the map or modifying it in anyway
+      this.map.one(GoogleMapsEvent.MAP_READY).catch(
+        () => {
+          console.log('Map is ready');
+          // Now you can add elements to the map like the marker
+      });
+
+      this.map.getMyLocation().then(
+      location => {
+        console.log(JSON.stringify(location));
         
-      // }
-  	// });
+        this.map.moveCamera(location.latLng);
+        let markerOptions: MarkerOptions = {
+          position: this.LatLong,
+          title: ''
+        };
 
+        const marker = this.map.addMarker(markerOptions).then(() => {
+
+        })
+      }).catch(
+          err => {
+            console.log(JSON.stringify(err), 'Error occurred.');
+          });
   }
   
-  addMarker() {
-    this.marker.setMap(null)
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.drop,
-      // position: this.map.getCenter(),
-      draggable: false,
-      optimized: false, // <-- required for animated gif
-      position: this.postion,
+  // addMarker() {
+  //   this.marker.setMap(null)
+  //   this.marker = new google.maps.Marker({
+  //     map: this.map,
+  //     animation: google.maps.Animation.drop,
+  //     // position: this.map.getCenter(),
+  //     draggable: false,
+  //     optimized: false, // <-- required for animated gif
+  //     position: this.postion,
 
-      icon: "./assets/gifs/ripple_marker_Orange.gif"
-		});
+  //     icon: "./assets/gifs/ripple_marker_Orange.gif"
+	// 	});
 
 
-    let content = "<h4>Information!</h4>";
+  //   let content = "<h4>Information!</h4>";
 
-    this.addInfoWindow(this.marker, content);
+  //   this.addInfoWindow(this.marker, content);
 
-  }
+  // }
 
   addInfoWindow(marker, content) {
 
@@ -276,7 +325,7 @@ export class LaundryMap implements AfterViewInit{
     });
 
     google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
+      // infoWindow.open(this.map, marker);
       console.log("Pin drop");
     });
 
@@ -415,7 +464,7 @@ export class LaundryMap implements AfterViewInit{
     //gMap = new google.maps.Map(document.getElementById('map')); 
     this.postion =  new google.maps.LatLng(this.lat, this.lng);
     this.map.setCenter(this.postion);
-    this.addMarker();
+    // this.addMarker();
     // this.map.center = new google.maps.LatLng(this.lat, this.lng);
   }
 
@@ -445,6 +494,22 @@ export class LaundryMap implements AfterViewInit{
     }
     else
       this.alertCntrl.openAlertDialog("What's missing?","No location selected.");
+    
+      // Temporary hack Delete it
+      console.log(this.preGenData);
+      this.navCtrl.push(LaundryItems, {
+        preGenData: this.preGenData,
+        pickupDetails: {
+          location: {
+            lat: this.lat,
+            lng: this.lng,
+            address: this.address
+          }
+        },
+
+      });
+  }
+  presentToast(){
     
   }
 }

@@ -10,12 +10,15 @@ import { ComplaintsSuggestionsService } from './complatins-suggestions.service';
 import { globalVars } from '../../app/globalvariables';
 
 import { AuthService } from "../../auth/auth.service";
-//import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+
+import { AlertDialogFactory } from "../../app/alert.dialog";
 
 @Component ({
     selector: 'complaints-suggestions',
     templateUrl: 'complaints-suggestions.html',
-    providers: [AuthService, ComplaintsSuggestionsService]
+    providers: [AuthService,
+                ComplaintsSuggestionsService,
+                AlertDialogFactory]
 })
 
 export class ComplaintsSuggestionsPage{suggestions
@@ -25,7 +28,8 @@ export class ComplaintsSuggestionsPage{suggestions
                  public navParams: NavParams, 
                  private complaintsSuggestionsService: ComplaintsSuggestionsService, 
                  private toastCtrl: ToastController,
-                 private authService: AuthService){
+                 private authService: AuthService,
+                 private alertCntrl: AlertDialogFactory){
         // this.preGenData = this.navParams.get('preGenData')
         this.getHistory();
      }
@@ -63,32 +67,37 @@ export class ComplaintsSuggestionsPage{suggestions
 
    startNextScreen(complaints){
       console.log(complaints);
-      let userID = localStorage.getItem("userID");
-      let URL = globalVars.PatchComplainURL(userID);
+      if(!!complaints){
+        let userID = localStorage.getItem("userID");
+        let URL = globalVars.PatchComplainURL(userID);
+        
+        let complaintsAndSuggestions = {complain: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
+        console.log(complaintsAndSuggestions);
+        //this.spinnerDialog.show();
+        this.authService.patchCall(URL, complaintsAndSuggestions)
+          .subscribe(res => {
+            if(res.status == 200){
+              //this.spinnerDialog.hide();
+              console.log(res['_body']);
+              this.presentToast()
+              
+              this.getHistory();
+              // let URL2 = globalVars.getComplainsURL(userID);
+              // this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
+              //   .subscribe(response => {
+              //     this.spinnerDialog.hide();
+              //     if (response.status == 200){
+              //       console.log(response['body']);
+                    
+                    
+              //     }
+              //   })
+            }
+          });
+      }else{
+        this.alertCntrl.openAlertDialog("What's missing?", "Please enter a suggestion or complaint");
+      }
       
-      let complaintsAndSuggestions = {complain: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
-      console.log(complaintsAndSuggestions);
-      //this.spinnerDialog.show();
-      this.authService.patchCall(URL, complaintsAndSuggestions)
-        .subscribe(res => {
-          if(res.status == 200){
-            //this.spinnerDialog.hide();
-            console.log(res['_body']);
-            this.presentToast()
-            
-            this.getHistory();
-            // let URL2 = globalVars.getComplainsURL(userID);
-            // this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
-            //   .subscribe(response => {
-            //     this.spinnerDialog.hide();
-            //     if (response.status == 200){
-            //       console.log(response['body']);
-                  
-                  
-            //     }
-            //   })
-          }
-        });
       
       //   preGenData: this.preGenData
       // });

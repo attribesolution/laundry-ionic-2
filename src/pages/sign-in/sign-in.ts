@@ -32,11 +32,11 @@ export class SignInPage implements OnInit {
   buildForm(): void{
     let emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.signInForm = this.formBuilder.group({
-      email: ['', [
+      email: [this.navParams.get('username') ? this.navParams.get('username'): '', [
         Validators.required,
         emailValidator(emailReg)
         ]],
-      password: ['',[
+      password: [this.navParams.get('password') ? this.navParams.get('password'): '',[
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(36)

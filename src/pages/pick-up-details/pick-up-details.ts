@@ -12,10 +12,14 @@ import { PreGenModel } from '../../models/preGen.model';
 
 import { AuthService } from "../../auth/auth.service";
 
+import { AlertDialogFactory } from "../../app/alert.dialog";
+
 @Component ({
     selector: 'pick-up-details',
     templateUrl: 'pick-up-details.html',
-    providers: [AuthService, PickupService]
+    providers: [AuthService, 
+                PickupService,
+                AlertDialogFactory]
 })
 
 export class PickUpDetails{
@@ -52,7 +56,8 @@ export class PickUpDetails{
      constructor(public navCtrl: NavController, 
                  public navParams: NavParams, 
                  public pickupService: PickupService,
-                 private authservice: AuthService){
+                 private authservice: AuthService,
+                 private alertCntrl: AlertDialogFactory){
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
@@ -74,13 +79,13 @@ export class PickUpDetails{
         
         
         segment === 'day' ? 
-            this.highlightedDay === Elementid ? this.highlightedDay = 0 : this.highlightedDay = Elementid :
+            this.highlightedDay = this.highlightedDay === Elementid ? 0 : Elementid :
         segment === 'hour' ? 
-            this.highlightedHour === Elementid ? this.highlightedHour = 0 : this.highlightedHour = Elementid :
+            this.highlightedHour = this.highlightedHour === Elementid ? 0 : Elementid :
         segment === 'minute' ? 
-            this.highlightedMinute === Elementid ? this.highlightedMinute = 0 : this.highlightedMinute = Elementid :
+            this.highlightedMinute = this.highlightedMinute === Elementid ? 0 : Elementid :
         segment === 'amPm' ? 
-            this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
+            this.highlightedAmPm = this.highlightedAmPm === Elementid ? 0 : Elementid : null
     }
      startNextScreen(textareaValue){
             console.log(textareaValue);
@@ -91,15 +96,19 @@ export class PickUpDetails{
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
                                  this.selectedDate.amPm;
-            let when = new Date(newDate)
+            let when = new Date(newDate);
             console.log('when: ', when);
             console.log('location: ', this.loc);
             // console.log(this.pickupInstructions);
-            this.patchPickUpDetails(when, textareaValue);
-            this.navCtrl.push(DropOffDetails, {
-                preGenData: this.preGenData
-            });
             
+            if(!!textareaValue){
+                this.patchPickUpDetails(when, textareaValue);
+                this.navCtrl.push(DropOffDetails, {
+                    preGenData: this.preGenData
+                });
+            }else{
+                this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details.");
+            }
     }
     patchPickUpDetails(whenDate, textareaValue){
         console.log((this.loc as any).geometry.location.lat);
@@ -107,9 +116,9 @@ export class PickUpDetails{
         let data = {
             pickupDetails: {
                 location: {
-                    lat: (this.loc as any).geometry.location.lat,
-                    lng: (this.loc as any).geometry.location.lng,
-                    address: (this.loc as any).formatted_address
+                    lat: 0.01,// || (this.loc as any).geometry.location.lat || 0.0,
+                    lng: 0.01,// || (this.loc as any).geometry.location.lng || 0.0,
+                    address: 'ABC',// || (this.loc as any).formatted_address || 'ABC'
                 },
                 when: whenDate,
                 instruction: textareaValue

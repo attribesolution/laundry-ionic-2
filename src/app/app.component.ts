@@ -4,7 +4,10 @@ import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { JwtHelper, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http } from "@angular/http";
-import { LaundryMap } from '../pages/map/map.component';
+import { BackgroundGeolocation, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
+
+
+// import { LaundryMap } from '../pages/map/map.component';
 import { ProfileComponent } from '../pages/profile/profile';
 import { NotificationComponent } from '../pages/notifications/notifications';
 import { RatesListComponent } from '../pages/rates-list/rates-list'
@@ -13,8 +16,8 @@ import { OrdersHistoryPage } from '../pages/orders-history/orders-history';
 import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/complaints-suggestions';
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
-//import { SpinnerDialog } from '@ionic-native/spinner-dialog';
-
+// import { SpinnerDialog } from '@ionic-native/spinner-dialog';
+import { IonicNativeMapPage } from "../pages/ionic-native-map/ionic-native-map";
 import { User } from './user';
 
 
@@ -22,7 +25,8 @@ import { User } from './user';
   templateUrl: 'app.html',
   providers: [Storage, 
               JwtHelper,
-              User
+              User,
+              BackgroundGeolocation
               ]
 
 })
@@ -34,6 +38,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   constructor(public platform: Platform, 
               private storage: Storage,
+              private backgroundGeolocation: BackgroundGeolocation,
               private jwtHelper: JwtHelper,
               private user : User
               ) {
@@ -49,7 +54,7 @@ export class MyApp {
       //{ title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
       // { title: 'ForgotPassword', component: ForgotPasswordPage},
-      // { title: 'Notifications', component: NotificationComponent },
+      // { title: 'Map', component: IonicNativeMapPage },
       
       { title: 'Sign Out', component: SignInPage }
       
@@ -64,25 +69,23 @@ export class MyApp {
       this.storage.get('x-access-token').then(
         
         token =>{
-          //this.spinnerDialog.hide();
-          // console.log(token);
           if(!!token){
-            localStorage.setItem('x-access-token', token);
-            localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
-            // console.log(localStorage.getItem('userID'), 'at App component \n',
-            //             localStorage.getItem('x-access-token')
-            //             );
 
-            // console.log('Got token.', token);
+            // Token exists
+            
+            localStorage.setItem('x-access-token', token);
+            // localStorage.setItem('userID', this.jwtHelper.decodeToken(token)['_id']);
             this.rootPage = OrdersHistoryPage;  
-            // this.user.scheduleRefresh(token);
-          }else{
+          }else{       
+            
+            // Token does not exist
+            
             this.rootPage = SignInPage;
             console.log('Could not find X-Access-Token. Please login or signup');
           }
         },
         error => {
-          //this.spinnerDialog.hide();
+          // Other error
           console.log(error);
         }
       );

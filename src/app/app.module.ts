@@ -26,6 +26,7 @@ import { ComplaintsSuggestionsPage } from '../pages/complaints-suggestions/compl
 import { PaymentMethodsPage } from '../pages/payment-methods/payment-methods';
 import { OrderSummaryPage } from '../pages/order-summary/order-summary';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { IonicNativeMapPage } from "../pages/ionic-native-map/ionic-native-map";
 let storage: Storage;
 
 export function getAuthHttp(http){
@@ -59,11 +60,12 @@ export function getAuthHttp(http){
     ComplaintsSuggestionsPage,
     PaymentMethodsPage,
     OrderSummaryPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    IonicNativeMapPage
   ],
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyClwzFHgEdw9cmOYtKmGcvyTEN3nK4gXiY'
+      apiKey: 'AIzaSyCeanFeoGtLUru6egPz-4sK3NPHqe07VNs'
     }),
     IonicModule.forRoot(MyApp),
     FormsModule,
@@ -91,7 +93,8 @@ export function getAuthHttp(http){
     ComplaintsSuggestionsPage,
     PaymentMethodsPage,
     OrderSummaryPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    IonicNativeMapPage
   ],
   providers: [{
     provide: ErrorHandler, 
