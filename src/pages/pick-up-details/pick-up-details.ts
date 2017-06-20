@@ -1,17 +1,11 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
 
 import { DropOffDetails } from '../drop-off-details/drop-off-details';
-
 import { globalVars } from '../../app/globalvariables';
-
 import { PickupService } from './pick-up.service';
-
 import { PreGenModel } from '../../models/preGen.model';
-
 import { AuthService } from "../../auth/auth.service";
-
 import { AlertDialogFactory } from "../../app/alert.dialog";
 
 @Component ({
@@ -23,28 +17,29 @@ import { AlertDialogFactory } from "../../app/alert.dialog";
 })
 
 export class PickUpDetails{
-     @ViewChild('textarea') textarea: ElementRef;
-     today: Date = new Date();
-     newDate: Date = new Date;
-     locale: String = 'en-us';
-     hours: number[] = Array.from(
-         new Array(13),
-         (val,index):number => {
+    @ViewChild('textarea') textarea: ElementRef; 
+    today: Date = new Date(); 
+    newDate: Date = new Date; 
+    locale: String = 'en-us'; 
+    hours: number[] = Array.from( 
+        new Array(13), 
+        (val,index):number => { 
             return index + 9 <= 12 ? index + 9: index - 3;
-         });
-     minutes: number[] = Array.from(new Array(60),(val,index)=>index)
-     dates = [];
-     amPm: String[] = ['AM', 'PM'];
-     highlightedDay = new Date().getDate();
-     highlightedHour: number;
-     highlightedMinute : number;
-     highlightedAmPm: number;
-     selectedDate = {
+         }); 
+    minutes: number[] = Array.from(new Array(60),(val,index)=>index) 
+    dates = []; 
+    amPm: String[] = ['AM', 'PM']; 
+    highlightedDay = new Date(Date.now()); 
+    highlightedHour: number; 
+    highlightedMinute : number; 
+    highlightedAmPm: number; 
+    selectedDate = { 
         day: new Date(),
         hour: 0,
-        minute: 0,
+        minute: null,
         amPm: 'AM'
      };
+    lat; lng; address;      
     loc: Object;
     token: string;
     preGenData: PreGenModel;
@@ -61,7 +56,8 @@ export class PickUpDetails{
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
-         
+         console.log(this.highlightedDay); 
+
          this.preGenData = navParams.get('preGenData');
          console.log(this.preGenData);
          this.loc = JSON.parse(localStorage.getItem("Location"));
@@ -90,35 +86,49 @@ export class PickUpDetails{
      startNextScreen(textareaValue){
             console.log(textareaValue);
             console.log("Next clicked!");
-            let newDate = this.selectedDate.day.getFullYear() + ' ' + 
+            let when, newDate; 
+            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
+                newDate = this.selectedDate.day.getFullYear() + ' ' +  
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
                                  this.selectedDate.amPm;
-            let when = new Date(newDate);
-            console.log('when: ', when);
-            console.log('location: ', this.loc);
-            // console.log(this.pickupInstructions);
-            
-            if(!!textareaValue){
-                this.patchPickUpDetails(when, textareaValue);
-                this.navCtrl.push(DropOffDetails, {
-                    preGenData: this.preGenData
-                });
+            when = new Date(newDate); 
+                console.log('when: ', when); 
+                console.log('location: ', this.loc); 
+                // console.log(this.pickupInstructions); 
+                if(!!textareaValue){ 
+                    this.patchPickUpDetails(when, textareaValue); 
+                    this.navCtrl.push(DropOffDetails, { 
+                        preGenData: this.preGenData 
+                    }); 
+                }else{ 
+                    this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details."); 
+                } 
             }else{
-                this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details.");
+                console.log(this.selectedDate) 
+                this.alertCntrl.openAlertDialog("What's missing?", "Please select time.");   
             }
     }
     patchPickUpDetails(whenDate, textareaValue){
-        console.log((this.loc as any).geometry.location.lat);
+        console.log((this.loc as any)); 
+        if(this.loc['geometry']){ 
+            this.lat = this.loc['geometry']['location']['lat']; 
+            this.lng = this.loc['geometry']['location']['lat']; 
+            this.address = this.loc['geometry']['location']['lat']; 
+        }else{ 
+            this.lat = this.loc['lat']; 
+            this.lng = this.loc['lat']; 
+            this.address = this.loc['lat']; 
+        }
         
         let data = {
             pickupDetails: {
                 location: {
-                    lat: 0.01,// || (this.loc as any).geometry.location.lat || 0.0,
-                    lng: 0.01,// || (this.loc as any).geometry.location.lng || 0.0,
-                    address: 'ABC',// || (this.loc as any).formatted_address || 'ABC'
+                    lat: this.lat, 
+                    lng: this.lng, 
+                    address: this.address 
                 },
                 when: whenDate,
                 instruction: textareaValue
