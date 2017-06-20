@@ -1,7 +1,8 @@
 page-ionic-native-map {
-    ion-alert{
-        position: fixed!important;
-    }
+
+    ion-alert{ 
+        position: fixed!important; 
+    } 
     #map{
         margin: -10px;
         margin-left: -18px; 
@@ -9,8 +10,9 @@ page-ionic-native-map {
         padding: 0;
         height: 105%;
         width: 120%;
-        position: relative;
-        z-index: -10000;
+
+        position: relative; 
+        z-index: -10000; 
     }
     .searchbar{
         padding: 0;
@@ -19,7 +21,7 @@ page-ionic-native-map {
         margin: 10px 5% 0;
         width: 90%;
         position: absolute;
-        z-index: 20000;
+        z-index: 20000; 
 
         .search-input{
             padding: 10px 25px;
@@ -40,12 +42,13 @@ page-ionic-native-map {
     }
     .button-bottom{
         position: absolute;
-        bottom: 4px;
-        margin: 10px auto; 
-        height: 50px; 
-        margin-left: 3%; 
-        width: 84%;
-        font-size: 20px;
+
+        bottom: 4px; 
+        margin: 10px auto;  
+        height: 50px;  
+        margin-left: 3%;  
+        width: 84%; 
+        font-size: 20px; 
     }
     .bottom-options{
 
@@ -65,9 +68,9 @@ page-ionic-native-map {
         width: 60px;
         height: 60px;
     }
-    .auto-complete-text {
-        color: #fff;
-        margin: 0;
-        border-bottom: 1px solid #131A17;
+
+    .auto-complete-text { 
+        color: #fff; 
+        margin: 0; 
     }
 }

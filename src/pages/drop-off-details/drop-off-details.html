@@ -37,17 +37,17 @@
           color="secondary" 
           *ngFor="let date of dates"
           class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDay === date || date.getDate() == highlightedDay?.getDate() , 
+          [ngClass]="{ 'current': highlightedDay === date || date.getDate() == highlightedDay?.getDate(),  
                       'drop-off-details-date-item-divider':  highlightedDay !== date }"
           #$date
           (click)="toggleHighlight(date, 'day')"
           >
             <span class="drop-off-details-date-col">
               {{ date.toLocaleString(locale, { month: "short" }) | uppercase  }} {{ date.getDate() }}
-              <sup *ngIf="date.getDate()%10 == 1 && !(date.getDate() == 11)">ST</sup>
-              <sup *ngIf="date.getDate()%10 == 2 && !(date.getDate() == 12)">ND</sup>
-              <sup *ngIf="date.getDate()%10 == 3 && !(date.getDate() == 13)">RD</sup>
-              <sup *ngIf="date.getDate()%10 >= 4 || date.getDate()%10 == 0 || (date.getDate() > 10) && date.getDate() != 21 && date.getDate() != 31">TH</sup>
+              <sup *ngIf="date.getDate()%10 == 1 && !(date.getDate() == 11)">ST</sup> 
+              <sup *ngIf="date.getDate()%10 == 2 && !(date.getDate() == 12)">ND</sup> 
+              <sup *ngIf="date.getDate()%10 == 3 && !(date.getDate() == 13)">RD</sup> 
+              <sup *ngIf="date.getDate()%10 >= 4 || date.getDate()%10 == 0 || (date.getDate() > 10) && date.getDate() != 21 && date.getDate() != 31">TH</sup> 
             <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) | uppercase }}</span>
             </span>
         </ion-item-divider>

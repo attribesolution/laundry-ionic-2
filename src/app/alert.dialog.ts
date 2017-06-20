@@ -44,13 +44,15 @@ export class AlertDialogFactory {
                 checked: false
             });
         });
-        alert.addButton({
-            text: 'Cancel',
-            handler: () => {
-                console.log('Cancel clicked.');
-                
-            }
-        });
+
+        alert.addButton({ 
+            text: 'Cancel', 
+            handler: () => { 
+                console.log('Cancel clicked.'); 
+                 
+            } 
+        }); 
+
         alert.addButton({
             text: 'Okay',
             handler: data => {
@@ -59,11 +61,14 @@ export class AlertDialogFactory {
                 // this.testCheckboxResult = data;
             }
         });
+
         alert.present();
         alert.onDidDismiss((data) => {
-            console.log('OnDidDismiss', data);
-            dataReturned = data;
-            return data || 'null';
+
+            console.log('OnDidDismiss', data); 
+            dataReturned = data; 
+            return data || 'null'; 
+
         });
         return dataReturned;
     }

@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
 
 import {OrderPlaced} from '../order-placed/order-placed';
-
 import { globalVars } from '../../app/globalvariables';
-
 import { PreGenModel } from '../../models/preGen.model';
-
 import { DropOffService } from './drop-off-details.service';
-
 import { OrderSummaryPage } from './../order-summary/order-summary';
 import { AuthService } from "../../auth/auth.service";
-import { AlertDialogFactory } from "../../app/alert.dialog";
+
+import { AlertDialogFactory } from "./../../app/alert.dialog";
+
 @Component ({
     selector: 'drop-off-details',
     templateUrl: 'drop-off-details.html',
-    providers: [AuthService, 
-                DropOffService,
-                AlertDialogFactory]
+    providers: [AuthService,
+        DropOffService,
+        AlertDialogFactory]
 })
 
 export class DropOffDetails{
@@ -33,18 +30,19 @@ export class DropOffDetails{
      minutes: number[] = Array.from(new Array(60),(val,index)=>index)
      dates = [];
      amPm: String[] = ['AM', 'PM'];
-     highlightedDay = new Date(Date.now());
+     highlightedDay = new Date(Date.now()); 
      highlightedHour: number;
      highlightedMinute : number;
      highlightedAmPm: number;
      selectedDate = {
         day: new Date(),
         hour: 0,
-        minute: null,
+
+        minute: null, 
         amPm: 'AM'
      };
      preGenData: PreGenModel;
-     lat; lng; address;
+    lat; lng; address; 
      loc: Object;
      token: string;
      dateArrayMaker(){
@@ -56,7 +54,7 @@ export class DropOffDetails{
                  public navParams: NavParams, 
                  public dropOffService: DropOffService,
                  private authService: AuthService,
-                 private alertCntrl: AlertDialogFactory){
+                 private alertCntrl: AlertDialogFactory){ 
     
          this.dateArrayMaker();
          console.log(this.dates);
@@ -79,40 +77,40 @@ export class DropOffDetails{
         console.log(this.selectedDate);
         
         
-        segment === 'day' ? 
-            this.highlightedDay = this.highlightedDay === Elementid ? 0 : Elementid :
-        segment === 'hour' ? 
-            this.highlightedHour = this.highlightedHour === Elementid ? 0 : Elementid :
-        segment === 'minute' ? 
-            this.highlightedMinute = this.highlightedMinute === Elementid ? 0 : Elementid :
-        segment === 'amPm' ? 
-            this.highlightedAmPm = this.highlightedAmPm === Elementid ? 0 : Elementid : null
+        segment === 'day' ?  
+            this.highlightedDay = this.highlightedDay === Elementid ?  0 : this.highlightedDay = Elementid : 
+        segment === 'hour' ?  
+            this.highlightedHour === Elementid ? this.highlightedHour = 0 : this.highlightedHour = Elementid : 
+        segment === 'minute' ?  
+            this.highlightedMinute === Elementid ? this.highlightedMinute = 0 : this.highlightedMinute = Elementid : 
+        segment === 'amPm' ?  
+            this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : ''; 
     }
      startNextScreen(textareaValue){
             console.log("Next clicked!");
-            let when, newDate;
-            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){
-                newDate = this.selectedDate.day.getFullYear() + ' ' + 
-                                 Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
+            let when, newDate; 
+            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
+                newDate = this.selectedDate.day.getFullYear() + ' ' +                                   Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
-                                 this.selectedDate.amPm;
-                when = new Date(newDate);
-                console.log('when: ', when);
-                console.log('location: ', this.loc);
-                // console.log(this.pickupInstructions);
-                if(!!textareaValue){
-                    this.patchDropOffDetails(when, textareaValue);
-                    this.navCtrl.push(DropOffDetails, {
-                        preGenData: this.preGenData
-                    });
-                }else{
-                    this.alertCntrl.openAlertDialog("What's missing?", "Enter dropoff details.");
-                }
-            }else{
-                this.alertCntrl.openAlertDialog("What's missing?", "Please select time.");    
-            }
+                                 this.selectedDate.amPm; 
+                when = new Date(newDate); 
+                console.log('when: ', when); 
+                console.log('location: ', this.loc); 
+                // console.log(this.pickupInstructions); 
+                if(!!textareaValue){ 
+                    this.patchDropOffDetails(when, textareaValue); 
+                    this.navCtrl.push(DropOffDetails, { 
+                        preGenData: this.preGenData 
+                    }); 
+                }else{ 
+                    this.alertCntrl.openAlertDialog("What's missing?", "Enter dropoff details."); 
+                } 
+            }else{ 
+                this.alertCntrl.openAlertDialog("What's missing?", "Please select time.");     
+            } 
+
     }
 
     patchDropOffDetails(whenDate, textareaValue){
@@ -129,9 +127,11 @@ export class DropOffDetails{
         let data = {
             dropoffDetails: {
                 location: {
-                    lat: this.lat,
-                    lng: this.lng,
-                    address: this.address
+
+                    lat: this.lat, 
+                    lng: this.lng, 
+                    address: this.address 
+
                 },
                 when: whenDate,
                 instruction: textareaValue

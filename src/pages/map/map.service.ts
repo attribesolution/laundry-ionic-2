@@ -21,10 +21,11 @@ export class MapService{
     }
     myApiKey = 'AIzaSyBgxy7H8FVjgfVHCdCJ4RLN1nx6wjh8r3g';
     
-    getJSON = (place: string, latLng) => {
+getJSON = (place: string, latLng) => { 
+        console.log(latLng);
         // let stringQuery: string; //= place +  " in UAE";
         // place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\ in\ UAE";
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${latLng}&radius=10000&key=${this.myApiKey}`
+        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${latLng}&radius=10000&key=${this.myApiKey}`;
         console.log(googleLocationApi);
 
         return this.http.get(googleLocationApi)

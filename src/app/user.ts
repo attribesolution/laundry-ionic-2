@@ -15,14 +15,14 @@ export class User {
 
   getUserId()
   {
-    //  this.storage.ready().then(() => {
+
 
        //  to get a key/value pair of user id
        this.storage.get('user-id').then((val) => {
          console.log("user id returned = ",val["user-id"])
         return val["user-id"];
        })
-    //  });
+
   }
   saveUserId(userId:String)
   {
@@ -154,11 +154,8 @@ export class User {
   //   clearInterval(this.intervalHandler);
   // }
   saveSocialData(SocialData){
-    // this.storage.ready()
-      // .then(
-        // () =>{
+
           this.storage.set('Social', SocialData);
-        // }
-      // )
-  }
+        }
+
 }

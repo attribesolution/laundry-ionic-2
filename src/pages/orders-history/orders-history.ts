@@ -15,18 +15,32 @@ import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
 import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
+<<<<<<< HEAD
 import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map";
 import { AlertDialogFactory } from "../../app/alert.dialog";
+=======
+import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map"; 
+import { AlertDialogFactory } from "../../app/alert.dialog"; 
+>>>>>>> dev
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
   providers: [AuthService, 
+<<<<<<< HEAD
               User, 
               OrdersHistoryService, 
               NativeStorage, 
               Storage, 
               JwtHelper,
               AlertDialogFactory]
+=======
+    User, 
+    OrdersHistoryService, 
+    NativeStorage, 
+    Storage, 
+    JwtHelper,
+    AlertDialogFactory]
+>>>>>>> dev
 })
 export class OrdersHistoryPage{
   
@@ -49,8 +63,12 @@ export class OrdersHistoryPage{
               private jwtHelper: JwtHelper,
               private user: User,
               private authService: AuthService,
+<<<<<<< HEAD
               private alertCntrl: AlertDialogFactory,
               private platform: Platform) {
+=======
+              private alertCntrl: AlertDialogFactory) {
+>>>>>>> dev
               // let xAccessToken = this.user.getUserAccessToken();
                 this.platform.ready().then( device => {
                   console.log('Device Width:', this.platform.width());
@@ -154,7 +172,7 @@ export class OrdersHistoryPage{
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
         console.log(URL);
         console.log(token);
-        console.log(this.jwtHelper.isTokenExpired(token));
+        console.log(this.jwtHelper.isTokenExpired(token)); 
         this.authService.getCall(URL)
           .subscribe(res => {
             if(res.status == 200) {
@@ -162,12 +180,14 @@ export class OrdersHistoryPage{
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);              
               console.log(this.response);
-              this.hideActivityLoaders();
+              this.hideActivityLoaders(); 
             }
           },error=>{
             this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
+            this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.'); 
+
           },()=>{
             this.mapResponse();
             this.hideActivityLoaders();
@@ -205,7 +225,7 @@ mapResponse(){
   createPreGen(URL, token) {
     console.log('Create Pre Gen Called');
     console.log(URL);
-    this.hideActivityLoader = false;
+    this.hideActivityLoader = false; 
     this.authService.getCall(URL)
       .subscribe(res => {
         if (res.status == 200) {
@@ -217,15 +237,16 @@ mapResponse(){
             data: response["data"]
           }
           console.log('Response From PreGen', (this.preGenData.data as any));
-          this.navCtrl.push(IonicNativeMapPage, {
+          this.navCtrl.push(IonicNativeMapPage, { 
             preGenData: this.preGenData
           });
-          this.hideActivityLoaders();
+          this.hideActivityLoaders(); 
+
         }
       }, err => {
-        this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');
-        console.log(JSON.stringify(err));        
-        this.hideActivityLoaders();
+        this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');         
+        console.log(JSON.stringify(err));   
+        this.hideActivityLoaders();              
       });
   }
   showOrderSummary(orderID){
