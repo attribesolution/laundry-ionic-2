@@ -19,14 +19,15 @@ import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 // import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 import { IonicNativeMapPage } from "../pages/ionic-native-map/ionic-native-map";
 import { User } from './user';
-
-
+import { AuthService } from "./../auth/auth.service";
+import { globalVars } from "./globalvariables";
 @Component({
   templateUrl: 'app.html',
   providers: [Storage, 
               JwtHelper,
               User,
-              BackgroundGeolocation
+              BackgroundGeolocation,
+              AuthService
               ]
 
 })
@@ -40,7 +41,8 @@ export class MyApp {
               private storage: Storage,
               private backgroundGeolocation: BackgroundGeolocation,
               private jwtHelper: JwtHelper,
-              private user : User
+              private user : User,
+              private authService: AuthService
               ) {
     this.initializeApp();
 
@@ -62,6 +64,22 @@ export class MyApp {
 
   }
 
+  refreshToken(){ 
+        let SignInURL = globalVars.PostSignInApi(); 
+        let token: string; 
+        this.storage.get('userDetails') 
+            .then( 
+                details => { 
+                    token = this.authService.postCall(SignInURL, details) 
+                } 
+            ) 
+            if(!!token){ 
+                return token; 
+            }else{ 
+                return null; 
+            } 
+    } 
+
   initializeApp() {
     //this.spinnerDialog.show();
     this.platform.ready().then( () => {
@@ -70,6 +88,7 @@ export class MyApp {
         
         token =>{
           if(!!token){
+            this.refreshToken(); 
 
             // Token exists
             
@@ -89,7 +108,10 @@ export class MyApp {
           console.log(error);
         }
       );
-      Splashscreen.hide();
+      setTimeout(() => { 
+        Splashscreen.hide(); 
+      }, 100); 
+      // Splashscreen.hide(); 
       StatusBar.styleDefault();
     });
   }
