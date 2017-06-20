@@ -204,7 +204,8 @@ mapResponse(){
   createPreGen(URL, token) {
     console.log('Create Pre Gen Called');
     console.log(URL);
-    
+    this.hideActivityLoader = false; 
+
     this.authService.getCall(URL)
       .subscribe(res => {
         if (res.status == 200) {
@@ -216,12 +217,16 @@ mapResponse(){
             data: response["data"]
           }
           console.log('Response From PreGen', (this.preGenData.data as any));
-          this.navCtrl.push(LaundryMap, {
+          this.navCtrl.push(IonicNativeMapPage, { 
             preGenData: this.preGenData
           });
+          this.hideActivityLoaders(); 
+
         }
       }, err => {
-        console.log(JSON.stringify(err));        
+        this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');         
+        console.log(JSON.stringify(err));   
+        this.hideActivityLoaders();              
       });
   }
   showOrderSummary(orderID){
