@@ -17,25 +17,6 @@ import { AlertDialogFactory } from "../../app/alert.dialog";
 })
 
 export class PickUpDetails{
-<<<<<<< HEAD
-    @ViewChild('textarea') textarea: ElementRef;
-    today: Date = new Date();
-    newDate: Date = new Date;
-    locale: String = 'en-us';
-    hours: number[] = Array.from(
-        new Array(13),
-        (val,index):number => {
-            return index + 9 <= 12 ? index + 9: index - 3;
-        });
-    minutes: number[] = Array.from(new Array(60),(val,index)=>index)
-    dates = [];
-    amPm: String[] = ['AM', 'PM'];
-    highlightedDay = new Date(Date.now());
-    highlightedHour: number;
-    highlightedMinute : number;
-    highlightedAmPm: number;
-    selectedDate = {
-=======
     @ViewChild('textarea') textarea: ElementRef; 
     today: Date = new Date(); 
     newDate: Date = new Date; 
@@ -53,18 +34,12 @@ export class PickUpDetails{
     highlightedMinute : number; 
     highlightedAmPm: number; 
     selectedDate = { 
->>>>>>> dev
         day: new Date(),
         hour: 0,
         minute: null,
         amPm: 'AM'
-<<<<<<< HEAD
-    };
-    lat; lng; address;
-=======
      };
     lat; lng; address;      
->>>>>>> dev
     loc: Object;
     token: string;
     preGenData: PreGenModel;
@@ -81,14 +56,7 @@ export class PickUpDetails{
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
-<<<<<<< HEAD
-         console.log(this.highlightedDay);
-         
-         
-=======
          console.log(this.highlightedDay); 
-
->>>>>>> dev
          this.preGenData = navParams.get('preGenData');
          console.log(this.preGenData);
          this.loc = JSON.parse(localStorage.getItem("Location"));

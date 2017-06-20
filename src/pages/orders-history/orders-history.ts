@@ -15,32 +15,20 @@ import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
 import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
-<<<<<<< HEAD
-import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map";
-import { AlertDialogFactory } from "../../app/alert.dialog";
-=======
+
 import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map"; 
 import { AlertDialogFactory } from "../../app/alert.dialog"; 
->>>>>>> dev
+
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
   providers: [AuthService, 
-<<<<<<< HEAD
-              User, 
-              OrdersHistoryService, 
-              NativeStorage, 
-              Storage, 
-              JwtHelper,
-              AlertDialogFactory]
-=======
     User, 
     OrdersHistoryService, 
     NativeStorage, 
     Storage, 
     JwtHelper,
     AlertDialogFactory]
->>>>>>> dev
 })
 export class OrdersHistoryPage{
   
@@ -63,17 +51,7 @@ export class OrdersHistoryPage{
               private jwtHelper: JwtHelper,
               private user: User,
               private authService: AuthService,
-<<<<<<< HEAD
-              private alertCntrl: AlertDialogFactory,
-              private platform: Platform) {
-=======
               private alertCntrl: AlertDialogFactory) {
->>>>>>> dev
-              // let xAccessToken = this.user.getUserAccessToken();
-                this.platform.ready().then( device => {
-                  console.log('Device Width:', this.platform.width());
-                  console.log('Device Width:', this.platform.height());
-                })
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
                  console.log("userID = ",this.userID);
                 this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
