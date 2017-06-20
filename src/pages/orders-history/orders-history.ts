@@ -15,10 +15,18 @@ import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
 import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
+import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map"; 
+import { AlertDialogFactory } from "../../app/alert.dialog"; 
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [AuthService, User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
+  providers: [AuthService, 
+    User, 
+    OrdersHistoryService, 
+    NativeStorage, 
+    Storage, 
+    JwtHelper,
+    AlertDialogFactory]
 })
 export class OrdersHistoryPage{
   
@@ -40,7 +48,8 @@ export class OrdersHistoryPage{
               private nativeStorage: NativeStorage,
               private jwtHelper: JwtHelper,
               private user: User,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private alertCntrl: AlertDialogFactory) {
               // let xAccessToken = this.user.getUserAccessToken();
               
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
@@ -141,7 +150,8 @@ export class OrdersHistoryPage{
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
         console.log(URL);
         console.log(token);
-        
+        console.log(this.jwtHelper.isTokenExpired(token)); 
+
         this.authService.getCall(URL)
           .subscribe(res => {
             if(res.status == 200) {
@@ -149,11 +159,14 @@ export class OrdersHistoryPage{
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);              
               console.log(this.response);
-              
+              this.hideActivityLoaders(); 
+
             }
           },error=>{
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
+            this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.'); 
+
           },()=>{
             this.mapResponse();
             this.hideActivityLoaders();
