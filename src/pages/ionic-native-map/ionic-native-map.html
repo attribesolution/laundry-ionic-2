@@ -17,18 +17,18 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="fill-bg"> 
  
-  <div #map id="map" style="height:100%;">
-
-     <div class="searchbar">
-    <input [(ngModel)]="search1" [value]="inputFieldValue" id="search" autocomplete="off" #search type="text" class="search-input" placeholder="Enter Location">
-    <ion-icon name="search" class="search-icon"></ion-icon>
-    <div *ngIf="available_locations" style="display: block; overflow-y: scroll; height: 150px; width: 100%; z-index: 1000; position: absolute;">
-      <div #locationDiv (click)="locationClicked(avloc)" style="padding: 1.5% 2%; background-color:#000; opacity: 0.95;" *ngFor="let avloc of available_locations">
-            <p class="auto-complete-text">{{ avloc.formatted_address }}</p>
+  <div #map id="map"> 
+     
+  <div class="searchbar" style="width:75%; z-index: 200; position: fixed;">
+    <input [(ngModel)]="search1" [value]="inputFieldValue" id="search" autocomplete="off" #search type="text" class="search-input" placeholder="Enter Location"> 
+    <ion-icon name="search" class="search-icon"></ion-icon> 
+    <div *ngIf="available_locations" style="display: block; overflow-y: scroll; height: 150px; width: 89%; margin-left: 0.5vw; z-index: 1000; position: fixed;">
+      <div #locationDiv (click)="locationClicked(avloc)" style="padding: 1.5% 2%; background-color:#000; opacity: 0.95; font-size: 16px;" *ngFor="let avloc of available_locations">
+        <p class="auto-complete-text">{{ avloc.name }}</p>
       </div>
-  </div>
+    </div>
   </div>
   
   
@@ -51,7 +51,11 @@
       </div>
     </div>
  </div>
- <button class="button-bottom" ion-button full style="height: 50px" (click)="startNextScreen()" [disabled] = "isModalVisible?'disabled':'' ">
+ <button  
+  class="button-bottom uppercase" 
+  ion-button  
+  full 
+  (click)="startNextScreen()" [disabled] = "isModalVisible?'disabled':'' "> 
           <p style="font-size: 20px;" color="secondary"> Next</p>
         </button>
   </div>
