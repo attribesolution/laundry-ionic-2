@@ -15,93 +15,93 @@ export class User {
 
   getUserId()
   {
-     this.storage.ready().then(() => {
+     
 
        //  to get a key/value pair of user id
        this.storage.get('user-id').then((val) => {
          console.log("user id returned = ",val["user-id"])
         return val["user-id"];
        })
-     });
+     
   }
   saveUserId(userId:String)
   {
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        // set a key/value pair of user id
        this.storage.set('user-id', userId);
        console.log("user id saved = ", userId );
-     });
+    //  });
   }
 
   getUserAccessToken()
   {
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        // to get a key/value pair of user-access-token
        this.storage.get('x-access-token').then((val) => {
         return val["x-access-token"];
        })
-     });
+    //  });
   }
   setUserEmail(email:string){
 
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        // set a key/value pair of user-access-token
        this.storage.set('email', email);
        localStorage.setItem('email',email);
       
-    });
+    // });
      
 
   }
 
   getUserEmai(){
 
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        //  to get a key/value pair of user id
        this.storage.get('email').then((val) => {
          console.log("email returned = ",val["email"])
         return val["email"];
        })
-     });
+    //  });
 
   }
   setUserPassword(password:string){
 
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        // set a key/value pair of user-access-token
        this.storage.set('password', password);
        localStorage.setItem('password',password);
       
-    });
+    // });
 
 
   }
   getUserPassword(){
 
-    this.storage.ready().then(() => {
+    // this.storage.ready().then(() => {
 
        //  to get a key/value pair of user id
        this.storage.get('password').then((val) => {
          console.log("password returned = ",val["password"])
         return val["password"];
        })
-     });
+    //  });
 
   }
   saveUserAccessToken(accessToken:string)
   {
-        this.storage.ready().then(() => {
+        // this.storage.ready().then(() => {
 
        // set a key/value pair of user-access-token
        this.storage.set('x-access-token', accessToken);
        
 
-     });
+    //  });
   }
   /**
    * set an interval for refresh x-access-token
@@ -154,11 +154,11 @@ export class User {
   //   clearInterval(this.intervalHandler);
   // }
   saveSocialData(SocialData){
-    this.storage.ready()
-      .then(
-        () =>{
+    // this.storage.ready()
+    //   .then(
+    //     () =>{
           this.storage.set('Social', SocialData);
         }
-      )
-  }
+  //     )
+  // }
 }
