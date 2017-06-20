@@ -16,12 +16,13 @@ export class MapService{
                     headers: this.headers
             });
     }
-    myApiKey = 'AIzaSyCeMlQWMYr8yv4k1MybAwdHrrbiEcyR8kc';
+    myApiKey = 'AIzaSyBgxy7H8FVjgfVHCdCJ4RLN1nx6wjh8r3g';
     
-    getJSON = (place: string) => {
+getJSON = (place: string, latLng) => { 
+        console.log(latLng);
         // let stringQuery: string; //= place +  " in UAE";
         // place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\ in\ UAE";
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?location=-33.8670522,151.1957362&radius=500query=${place}&key=${this.myApiKey}`
+        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${latLng}&radius=10000&key=${this.myApiKey}` 
         console.log(googleLocationApi);
 
         return this.http.get(googleLocationApi)
