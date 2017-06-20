@@ -21,7 +21,7 @@
   </ion-refresher>
 
   <div *ngIf="!(hideActivityLoader)" class="spinner-div">
-  <ion-spinner></ion-spinner>
+    <ion-spinner></ion-spinner>
   </div>
 
   <div *ngIf="(response?.data.length == 0)" style="font-size: 150%;">
@@ -55,7 +55,7 @@
                         <!--{{ item.status }}-->
                     </ion-col>
                     <ion-col class="center" width-30>
-                        {{ item.expectedDeliveryDate | date:longDate }}
+                        {{ item.expectedDeliveryDate | date:'shortDate' }}
                     </ion-col>
                 </ion-row>
             </ion-item-divider>

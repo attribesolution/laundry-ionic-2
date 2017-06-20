@@ -39,10 +39,13 @@ ion-header {
 
  .alert-wrapper {
    background-color:color($colors, secondary)!important;
-    color: color($colors, primary);
+   color: color($colors, primary);
+   
     .alert-message {
-    color: white;
- }
+      color: white;
+      
+    }
+    
  }
  
 
@@ -52,4 +55,27 @@ ion-header {
   height: 28px;
   stroke: #444;
   fill: #fff;
+}
+.spinner-div{
+
+        text-align: center;
+        margin-top: 50%;
+        margin-bottom: 50%;
+        margin-left: 40%;
+        position: absolute;
+        top: 150px;
+        z-index: 2
+
+    }
+.alertTop{
+  position: fixed;
+  z-index: 2000;
+  .alert-wrapper{
+    
+    z-index: 2005;
+  }
+  .alert-radio{
+    height: 20px;
+    z-index: 2100;
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { JwtHelper } from 'angular2-jwt';
@@ -15,10 +15,18 @@ import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
 import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
+import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map";
+import { AlertDialogFactory } from "../../app/alert.dialog";
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [AuthService, User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
+  providers: [AuthService, 
+              User, 
+              OrdersHistoryService, 
+              NativeStorage, 
+              Storage, 
+              JwtHelper,
+              AlertDialogFactory]
 })
 export class OrdersHistoryPage{
   
@@ -40,13 +48,18 @@ export class OrdersHistoryPage{
               private nativeStorage: NativeStorage,
               private jwtHelper: JwtHelper,
               private user: User,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private alertCntrl: AlertDialogFactory,
+              private platform: Platform) {
               // let xAccessToken = this.user.getUserAccessToken();
-              
+                this.platform.ready().then( device => {
+                  console.log('Device Width:', this.platform.width());
+                  console.log('Device Width:', this.platform.height());
+                })
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
                  console.log("userID = ",this.userID);
                 this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
-                this.getOrdersHistory();
+                // this.getOrdersHistory();
   }
   
  
@@ -141,7 +154,7 @@ export class OrdersHistoryPage{
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
         console.log(URL);
         console.log(token);
-        
+        console.log(this.jwtHelper.isTokenExpired(token));
         this.authService.getCall(URL)
           .subscribe(res => {
             if(res.status == 200) {
@@ -149,9 +162,10 @@ export class OrdersHistoryPage{
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);              
               console.log(this.response);
-              
+              this.hideActivityLoaders();
             }
           },error=>{
+            this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
           },()=>{
@@ -191,7 +205,7 @@ mapResponse(){
   createPreGen(URL, token) {
     console.log('Create Pre Gen Called');
     console.log(URL);
-    
+    this.hideActivityLoader = false;
     this.authService.getCall(URL)
       .subscribe(res => {
         if (res.status == 200) {
@@ -203,12 +217,15 @@ mapResponse(){
             data: response["data"]
           }
           console.log('Response From PreGen', (this.preGenData.data as any));
-          this.navCtrl.push(LaundryMap, {
+          this.navCtrl.push(IonicNativeMapPage, {
             preGenData: this.preGenData
           });
+          this.hideActivityLoaders();
         }
       }, err => {
+        this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');
         console.log(JSON.stringify(err));        
+        this.hideActivityLoaders();
       });
   }
   showOrderSummary(orderID){

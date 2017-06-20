@@ -1,7 +1,8 @@
 import { Component, 
          OnInit, 
          ViewChild,
-         ElementRef } from '@angular/core';
+         ElementRef,
+        } from '@angular/core';
 import { NavController,
          NavParams, 
          Platform, 
@@ -55,16 +56,22 @@ export class IonicNativeMapPage {
   userID: string;
   addressResponse: any;
   locationAlias: string;
-  lat: number;
+  lat: number = 0;
   lng: number;
   address: string;
   additionalInfoText: string;
   addition: any;
-  inputFieldValue: string;
+  inputFieldValue;
   preGenData: PreGenModel;
   @ViewChild('search') button: ElementRef;
   available_locations: Array<Object> = [];
   newLocation;
+  latLng: string;
+  hide = false;
+  token: string;
+  isModalVisible: boolean;
+  deviceWidth: number;
+  deviceHeight: number;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private googleMaps: GoogleMaps,
@@ -76,10 +83,21 @@ export class IonicNativeMapPage {
               private mapService: MapService,
               private authService: AuthService,
               private alertCntrl: AlertDialogFactory,
-              private  savedLocationService: SavedLocationService) {}
+              private  savedLocationService: SavedLocationService,
+              ) {
+                this.token = localStorage.getItem('x-access-token');
+                this.userID = localStorage.getItem('userID');
+                this.preGenData = navParams.get('preGenData');
+                // setTimeout(() => {
+                //   this.inputFieldValue = 'New Value';
+                // }, 3000)
+              }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IonicNativeMapPage');
+            this.loadMap();
+
+    
   }
   ngAfterViewInit(){
     console.log("ngAfterViewInit", this.newLocation);
@@ -94,30 +112,35 @@ export class IonicNativeMapPage {
     // }).catch((error) => {
     //   console.log('Error getting location', error);
     // });
-    
-    this.platform.ready().then(() => {
-      this.loadMap();
-      this.listenToSearchInput();
-      this.getMapLocation(location);
-    });
+    this.platform.ready().then(
+      () => {
+        this.deviceWidth = this.platform.width();
+        this.deviceHeight = this.platform.height();
+      }
+    )
+    this.listenToSearchInput(this.latLng);
+    this.getMapLocation(location, this.latLng);
+    // this.platform.ready().then(() => {  
+    // });
   }
   
-  listenToSearchInput() {
+  listenToSearchInput(latLng) {
+    this.hide = false;
     let location: string;
     console.log('location1:', location)
     let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
       .map(e => location = e['srcElement'].value.trim())
       .distinctUntilChanged()
-      .switchMap(() => this.mapService.getJSON(location))
+      .switchMap(() => this.mapService.getJSON(location, this.latLng))
     searchInput$.subscribe(location => {
       this.available_locations = location;
       console.log(this.available_locations);
     })
   }
 
-  getMapLocation(location) {
+  getMapLocation(location, latLng) {
     if (location) {
-      let location$ = this.mapService.getJSON(location)
+      let location$ = this.mapService.getJSON(location, this.latLng)
 
       location$.subscribe(res => console.log)
 
@@ -125,7 +148,12 @@ export class IonicNativeMapPage {
   }
 
     savedButtonClicked(myEvent) {
+    
     this.saved = this.saved ? false : true;
+    setTimeout(()=>{
+      this.saved = this.saved ? false : true;
+
+    }, 200);
     // console.log("savedButtonClicked");
     
     // this.addition=this.addition?false:true;
@@ -137,20 +165,22 @@ export class IonicNativeMapPage {
         console.log(JSON.parse(res["_body"]));
         inputs = JSON.parse(res["_body"])["data"]["contact"]["address"];
         console.log(inputs);
+        this.addressResponse = inputs;
         // let result = this.alertCntrl.checkBoxAlertDialog("Saved Locations", inputs)
         // console.log(result);
         
-        this.checkBoxAlertDialog("Saved Locations", inputs)
-
-
+        let result = this.radioAlertDialog("Saved Locations", inputs);
+        // console.log(result);
 
       })
     
   }
 
-  checkBoxAlertDialog(title: string, inputs){
+  radioAlertDialog(title: string, inputs){
+        this.map.setClickable(false);
         let alert = this.alertCtrl.create({
             title: title,
+            cssClass: 'alertTop'
         });
 
         inputs.forEach(input => {
@@ -161,64 +191,97 @@ export class IonicNativeMapPage {
                 checked: false
             });
         });
-        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Cancel',
+            handler: () => {
+                console.log('Cancel clicked.');
+                
+            }
+        });
         alert.addButton({
             text: 'Okay',
             handler: data => {
-                console.log('Checkbox data:', data);
+                console.log('Radio data:', data);
                 // this.testCheckboxOpen = false;
                 // this.testCheckboxResult = data;
+                this.locationClicked(data);
             }
         });
         alert.present();
         alert.onDidDismiss((data) => {
-          console.log(data);
-            data ? 
-              this.locationClicked(data[0]) : null;
+            console.log('OnDidDismiss', data);
+            // dataReturned = data;
+            this.map.setClickable(true);
+            return data || 'null';
         });
 
     }
-  openSavedLocationModal(myEvent) {
-    let popover = this.popoverCtrl.create(SavedLocations, { address: this.addressResponse }, { showBackdrop: true });
-    popover.present({
-      ev: myEvent
-    });
-    this.saved = this.saved ? false : true;
-    popover.onDidDismiss(popoverAddress => {
-      console.log(popoverAddress);
-      popoverAddress ? 
-        this.locationClicked(popoverAddress) : '';
-    });
-  }
+  
 
   saveButtonClicked() {
     this.save = this.save ? false : true;
+    setTimeout(()=>{
+      this.save = this.save ? false : true;
+
+    }, 200);
     console.log("saveButtonClicked");
     let userID = localStorage.getItem("userID");
     let URL = globalVars.UserAddress(userID);
+    
+    
+    // console.log(locationExists);
+    
     let data = {
       alias: this.locationAlias,
       address: this.address,
       lat: this.lat,
       long: this.lng
     }
-    this.authService.patchCall(URL, data)
-      .subscribe(res => {
-        if (res.status == 200) {
-          console.log(res['_body']);
-        }
-
-      });
+    if(this.validate()){
+      // let locationExists: boolean = false;
+      // this.addressResponse.forEach(address => {
+        
+      //   locationExists = locationExists || (address.alias == this.locationAlias);
+        
+      //   console.log(address.alias, this.locationAlias);
+        
+      //   console.log(address.alias == this.locationAlias);
+        
+      // });
+      // console.log('location Exists: ', locationExists);
+      // if(!locationExists){
+        this.authService.patchCall(URL, data)
+          .subscribe(res => {
+            if (res.status == 200) {
+              console.log(res['_body']);
+            }
+            
+        });
+      }else{
+        this.map.setClickable(false);
+        this.alertCntrl.openAlertDialog('Location exits', 'Please enter a location.');
+        this.map.setClickable(true);
+      }
+    // }else{
+    //   // this.alertCntrl.openAlertDialog('Error', 'Location already Exists.')
+    // }
+    
   }
 
 
   openAdditionalNoteDialog(myEvent) {
+    this.map.setClickable(false);
+    this.isModalVisible = this.isModalVisible ? false : true;
+    setTimeout(() => {
+      this.isModalVisible = this.isModalVisible ? false : true;
+    }, 200);
     let popover = this.popoverCtrl.create(AdditionalNote, {}, { showBackdrop: true });
     popover.present({
       ev: myEvent
     });
     popover.onDidDismiss(data => {
       if(data){
+        this.map.setClickable(true);
         console.log(data);
         this.additionalInfoText = data + "\n";
         localStorage.setItem("additionalInfoText", this.additionalInfoText);
@@ -231,35 +294,46 @@ export class IonicNativeMapPage {
     console.log("additionButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
-
+  
   locationClicked(location) {
     console.log("You have clicked on: ", location);
-    
+    this.hide = true;
     if(!!location){
-      if(!!location.formatted_address){
-        this.inputFieldValue = location.formatted_address;
+      this.inputFieldValue = '';
+      
+      if(!!location.name){
+        console.log(location);
+        this.inputFieldValue = location.name || '';
         localStorage.setItem("Location", JSON.stringify(location));
         this.lat = location.geometry.location.lat;
         this.lng = location.geometry.location.lng;
-
+        
         this.address = location.formatted_address;
         this.locationAlias = location.name;
-      }      
-    }else{
-      this.inputFieldValue = location.address;
-      localStorage.setItem("Location", JSON.stringify(location));
-      this.lat = location.lat;
-      this.lng = location.long;
-      this.address = location.address;
-      this.locationAlias = location.alias;
-    };
+      }else{
+        console.log('Here');
+        this.inputFieldValue = location.alias || '';
+        localStorage.setItem("Location", JSON.stringify(location));
+        this.lat = location.lat;
+        this.lng = location.long;
+        this.address = location.address;
+        this.locationAlias = location.alias;
+      };    
+      setTimeout(() => { this.available_locations = []}, 200);
+    }
+    
     
     //gMap = new google.maps.Map(document.getElementById('map')); 
     // this.postion =  new google.maps.LatLng(this.lat, this.lng);
     // this.map.setCenter(this.postion);
-    // this.addMarker();
+    // this.addMarkerMoveCamera(this.map, new LatLng(this.lat, this.lng));
     // this.map.center = new google.maps.LatLng(this.lat, this.lng);
+
+    // this.addMarker(this.map, new LatLng(this.lat, this.lng));
+    this.moveCamera(this.map, new LatLng(this.lat, this.lng))
   }
+
+
 
   validate():boolean
   {
@@ -285,14 +359,17 @@ export class IonicNativeMapPage {
 
       });
     }
-    else
-      this.alertCntrl.openAlertDialog("What's missing?","No location selected.");
-    
+    else{
+      this.map.setClickable(false);
+      this.alertCntrl.openAlertDialog("What's missing?","No location selected.", this.map);
+    }
   }
 
   loadMap(){
     let element: HTMLElement = ViewChild('map');
     let mapOptions = {
+        "featureType": "all",
+        "elementType": "geometry",
         styles: [  
           { elementType: 'geometry', stylers: [{ color: '#15151b' }] },
           { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
@@ -379,46 +456,69 @@ export class IonicNativeMapPage {
       };
     let map: GoogleMap = this.googleMaps.create(element);
     map = new GoogleMap('map');
-    
+    this.map = map;
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    map.one(GoogleMapsEvent.MAP_READY).catch(
+    
+    
+    map.one(GoogleMapsEvent.MAP_READY).then(
+   () => {
+     console.log('Map is ready!');
+     // Now you can add elements to the map like the marker
+     map.setOptions(mapOptions);
+     map.setMyLocationEnabled(true);
+     map.setBackgroundColor('black');
+     map.setPadding(0, 80, 150, 0);
+     this.latLng = this.getLocation(map);
+     map.setCompassEnabled(false);  
+   });
+  }
+
+  getLocation(map: GoogleMap) {
+    let latLng: string;
+    map.getMyLocation().then(
+        location => {
+          latLng = location.latLng.lat + ',' + location.latLng.lng;
+          console.log("165", JSON.stringify(location));
+          this.newLocation = new LatLng(location.latLng.lat, location.latLng.lng);
+          
+          // this.addMarker(map, location.latLng);
+          this.moveCamera(map, location.latLng);
+      }
+    ).catch(
       () => {
         console.log('Map is ready!');
         // Now you can add elements to the map like the marker
-      }
-    );
-    // create LatLng object
-    // this.newLocation = new LatLng(25.276987,55.296249);
-    map.setMyLocationEnabled(true);
-    map.setBackgroundColor('black');
-    map.setOptions(mapOptions);
-    map.setPadding(150, 120, 100, 0);
-    map.getMyLocation().then(
-      location => {
-        console.log("165", JSON.stringify(location));
-        this.newLocation = new LatLng(location.latLng.lat, location.latLng.lng);
-        // create CameraPosition
-        let position: CameraPosition = {
-          target: this.newLocation,
-          zoom: 10
-        };
-        map.moveCamera(position);
-    }).catch(
-          err => {
-            console.log('409:', JSON.stringify(err), 'Error occurred.');
-            
-          }
-        )
+        
+      }) 
+      return latLng;
+  }
+  marker: Marker;
+  markerCount: number = 0;
+  addMarker(map, latLng: LatLng){
     
+    if(this.markerCount){
+      // this.marker.remove();
+      this.markerCount = 0;
+      console.log("this.markerCount", this.markerCount);
+    }
+    console.log('Marker', this.marker);
+    
+    // this.marker = map.addMarker({
+    //   position: latLng
+    // },(marker) => {
+    //     console.log('Marker Added', marker); 
+    //     marker.remove();
+    //   }).then().catch();
+    // this.markerCount++;
+  }
 
-    // // move the map's camera to position
-    // map.moveCamera(position);
-
-    // // create new marker
-    // let markerOptions: MarkerOptions = {
-    //   position: this.newLocation,
-    //   title: ''
-    // };
+  moveCamera(map, latLng: LatLng){
+    // create CameraPosition
+    let position: CameraPosition = {
+      target: latLng,
+      zoom: 16
+    };
+    map.moveCamera(position);
   }
 }

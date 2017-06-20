@@ -12,42 +12,60 @@ export class AlertDialogFactory {
 
     }
 
-    openAlertDialog(title: string, msg: string) {
+    openAlertDialog(title: string, msg: string, map?) {
+        // map.setClickable(false);
+        console.log(map);
+        
         let alert = this.alertCtrl.create({
             title: title,
             message: msg,
-            buttons: ['Ok']
+            buttons: ['Ok'],
+            cssClass: 'alertTop'
         });
         alert.present();
+        alert.onDidDismiss(() => {
+            // map.setClickable(true);
+        })
     }
     selected:any;
-    checkBoxAlertDialog(title: string, inputs){
+
+    radioAlertDialog(title: string, inputs){
+        let dataReturned = null;
         let alert = this.alertCtrl.create({
             title: title,
+            cssClass: 'alertTop'
         });
 
         inputs.forEach(input => {
             alert.addInput({
-                type: 'checkbox',
+                type: 'radio',
                 label: input.alias,
                 value: input,
                 checked: false
             });
         });
-        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Cancel',
+            handler: () => {
+                console.log('Cancel clicked.');
+                
+            }
+        });
         alert.addButton({
             text: 'Okay',
             handler: data => {
-                console.log('Checkbox data:', data);
+                console.log('Radio data:', data);
                 // this.testCheckboxOpen = false;
                 // this.testCheckboxResult = data;
             }
         });
         alert.present();
         alert.onDidDismiss((data) => {
-            return data;
+            console.log('OnDidDismiss', data);
+            dataReturned = data;
+            return data || 'null';
         });
-
+        return dataReturned;
     }
 
 }

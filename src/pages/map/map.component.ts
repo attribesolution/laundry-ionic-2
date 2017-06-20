@@ -132,11 +132,12 @@ export class LaundryMap implements AfterViewInit{
   
   listenToSearchInput() {
     let location: string;
+    let latLng;
     console.log('location1:', location)
     let searchInput$ = Observable.fromEvent(this.button.nativeElement, 'keyup')
       .map(e => location = e['srcElement'].value.trim())
       .distinctUntilChanged()
-      .switchMap(() => this.mapService.getJSON(location))
+      .switchMap(() => this.mapService.getJSON(location, latLng))
     searchInput$.subscribe(location => {
       this.available_locations = location;
       console.log(this.available_locations);
@@ -146,7 +147,8 @@ export class LaundryMap implements AfterViewInit{
 
   getMapLocation(location) {
     if (location) {
-      let location$ = this.mapService.getJSON(location)
+      let latLng;
+      let location$ = this.mapService.getJSON(location, latLng)
 
       location$.subscribe(res => console.log)
 

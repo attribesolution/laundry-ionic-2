@@ -184,11 +184,9 @@ export class ProfileComponent implements OnInit{
         let error = this.validateForm(this.profileForm.value);
         console.log(error);
         
-        if(this.error){
-          console.log('Error');
-          this.error = !this.error; 
-        }else{
-          console.log('No error');
+        if(!this.profileForm.pristine && this.profileForm.valid){
+          
+          console.log('No error', this.profileForm.valid);
           let form = this.profileForm.value;
           console.log(form);
           
@@ -213,10 +211,11 @@ export class ProfileComponent implements OnInit{
                   console.log(JSON.parse(res['_body']));
                   this.presentToast();
                 }
-                
-                
               }
-            )  
+            )
+        }else{
+          console.log('Error', this.profileForm.valid);
+          this.error = !this.error;   
         }
         // this.profileService.putProfile(this.URL, data, this.token)
         console.log("save clicked");
