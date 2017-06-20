@@ -28,26 +28,35 @@ export class AlertDialogFactory {
 
         inputs.forEach(input => {
             alert.addInput({
-                type: 'checkbox',
+                type: 'radio',
                 label: input.alias,
                 value: input,
                 checked: false
             });
         });
-        alert.addButton('Cancel');
+        alert.addButton({ 
+            text: 'Cancel', 
+            handler: () => { 
+                console.log('Cancel clicked.'); 
+                 
+            } 
+        }); 
         alert.addButton({
             text: 'Okay',
             handler: data => {
-                console.log('Checkbox data:', data);
+                console.log('Radio data:', data);
                 // this.testCheckboxOpen = false;
                 // this.testCheckboxResult = data;
             }
         });
+        let dataReturned;
         alert.present();
         alert.onDidDismiss((data) => {
-            return data;
+            console.log('OnDidDismiss', data); 
+            dataReturned = data; 
+            return data || 'null'; 
         });
-
+        return dataReturned;
     }
 
 }
