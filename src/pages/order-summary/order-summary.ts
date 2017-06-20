@@ -73,8 +73,9 @@ export class OrderSummaryPage {
   
   getData = () => {
     this.laundryItems = JSON.parse(localStorage.getItem('Laundry Items'));
-    this.locationForHTML = JSON.parse(localStorage.getItem('Location'))['formatted_address'];
-    console.log(this.locationForHTML);
+    this.locationForHTML = JSON.parse(localStorage.getItem('Location')); 
+    this.locationForHTML = this.locationForHTML.address ?  
+      this.locationForHTML.address : this.locationForHTML.formatted_address;     console.log(this.locationForHTML);
     console.log(this.laundryItems)
   }
   startNextScreen = () => {
