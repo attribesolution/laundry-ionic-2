@@ -90,7 +90,8 @@ export class DropOffDetails{
             console.log("Next clicked!");
             let when, newDate; 
             if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
-                newDate = this.selectedDate.day.getFullYear() + ' ' +                                   Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
+                newDate = this.selectedDate.day.getFullYear() + ' ' +                                   
+                                 Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
@@ -101,7 +102,7 @@ export class DropOffDetails{
                 // console.log(this.pickupInstructions); 
                 if(!!textareaValue){ 
                     this.patchDropOffDetails(when, textareaValue); 
-                    this.navCtrl.push(DropOffDetails, { 
+                    this.navCtrl.push(OrderSummaryPage, { 
                         preGenData: this.preGenData 
                     }); 
                 }else{ 

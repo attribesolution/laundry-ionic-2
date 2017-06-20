@@ -94,7 +94,10 @@ export class IonicNativeMapPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad IonicNativeMapPage');
-    this.loadMap();
+    // this.loadMap();
+    setTimeout(() => {
+      this.loadMap();
+    }, 1000);
   }
   ngAfterViewInit(){
     console.log("ngAfterViewInit", this.newLocation);
@@ -464,8 +467,7 @@ export class IonicNativeMapPage {
 
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
-    map.one(GoogleMapsEvent.MAP_READY).then( 
-   () => { 
+    map.one(GoogleMapsEvent.MAP_READY).then( () => { 
      console.log('Map is ready!'); 
      // Now you can add elements to the map like the marker 
      map.setOptions(mapOptions); 
@@ -481,10 +483,12 @@ export class IonicNativeMapPage {
     let latLng: string; 
     map.getMyLocation().then( 
         location => { 
+          
           latLng = location.latLng.lat + ',' + location.latLng.lng; 
-          console.log("165", JSON.stringify(location)); 
+          console.log("165", JSON.stringify(location.latLng)); 
+          console.log(485, ":", latLng);
           this.newLocation = new LatLng(location.latLng.lat, location.latLng.lng); 
-           
+          
           // this.addMarker(map, location.latLng); 
           this.moveCamera(map, location.latLng); 
       } 
