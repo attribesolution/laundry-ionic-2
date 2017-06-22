@@ -12,8 +12,8 @@
     <p>Your order has been placed successfully</p>
   </div>
 
-  <div class="notification">
-    <button (click)="done()">
+  <div class="notification" *ngIf="false">
+    <button (click)="done()" >
       <img src="./assets/images/notification_icon.png" alt="">
       <p>Send notification for this order</p>
     </button>
@@ -26,6 +26,6 @@
 
 <ion-footer color="secondary" style="padding: 10px">
   <button ion-button full style="height: 50px" (click)="startNextScreen()">
-    <p style="font-size: 20px;" color="secondary">START NEW</p>
+    <p style="font-size: 20px;" color="secondary">Check Orders History</p>
   </button>
 </ion-footer>

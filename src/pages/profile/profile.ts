@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { emailValidator } from '../../shared/email-validation.directive';
@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit{
     userID: any;
     URL: string;
     userProfile: Object;
+    error: boolean = true;
     ngOnInit(){
       console.log('ngOnInit');
         this.token = localStorage.getItem('x-access-token');
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit{
                 let response = JSON.parse(res['_body'])['data'][0];
                 this.userProfile = {
                   phone1: response.contact.phone1,
-                  phone2: response.contact.phone1,
+                  phone2: response.contact.phone2,
                   email1: response.contact.email1,
                   firstname: response.firstName,
                   lastname: response.lastName,
@@ -54,8 +55,7 @@ export class ProfileComponent implements OnInit{
                       this.profileForm.controls[item].patchValue(this.userProfile[item]);
                   }
                 }
-              }
-              
+              } 
             }
           );
         this.buildForm();
@@ -110,22 +110,22 @@ export class ProfileComponent implements OnInit{
     
     for(const field in this.formsError){
       const control = form.get(field);      
+      this.error = true;
       if(control){
         this.formsError[field] = '';
-        this.error = false;
+        // this.error = false;
         const messages = this.validationMessages[field];
         for (const key in control.errors){  
+          this.error = false;
           console.log(control.errors, field);
           console.log(control);          
           this.formsError[field] = messages[key];
-          
-            this.error = true;
-          
+          console.log(this.error);
         }
       }
     }
+    return this.error ? true: false;
   }
-  error: boolean = false;
   formsError = {
     firstname: '',
     lastname: '',
@@ -164,7 +164,8 @@ export class ProfileComponent implements OnInit{
 
     },
     email1: {
-      'invalidEmail': 'Invalid Email address.'
+      'invalidEmail': 'Invalid Email address.',
+      'required': 'Email is required.'
     },
   }    
   ionViewDidLoad(){
@@ -174,18 +175,16 @@ export class ProfileComponent implements OnInit{
     constructor(private navCtrl: NavController,
                 private formBuilder: FormBuilder,
                 private profileService: ProfileService,
+                private toastCtrl: ToastController,
                 private authService: AuthService){
-                  console.log('constructor');
-                  
-        
+                  // console.log('constructor');
     }
 
     save(){      
-        this.validateForm(this.profileForm.value);
-        if(this.error){
-          console.log('Error');
-        }else{
-          // console.log('No error');
+        let error = this.validateForm(this.profileForm.value);
+        console.log(error);
+        if(!this.profileForm.pristine && this.profileForm.valid){ 
+          console.log('No error', this.profileForm.valid); 
           let form = this.profileForm.value;
           console.log(form);
           
@@ -208,13 +207,32 @@ export class ProfileComponent implements OnInit{
               res => {
                 if(res.status == 200){
                   console.log(JSON.parse(res['_body']));
+                  this.presentToast();
                 }
-                
-                
-              }
-            )  
+
+              });
+        }else{ 
+          console.log('Error', this.profileForm.valid); 
+          this.error = !this.error;   
         }
         // this.profileService.putProfile(this.URL, data, this.token)
         console.log("save clicked");
     }
+
+    presentToast(){
+    
+    console.log('Inside toast');
+    
+    let toast = this.toastCtrl.create({
+      message: 'Profile Updated',
+      position: 'bottom',
+      closeButtonText: 'OK',
+      showCloseButton: true
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+
+  } 
 }

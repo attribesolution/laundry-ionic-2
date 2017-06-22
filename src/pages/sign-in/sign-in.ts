@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { NativeStorage } from 'ionic-native';
@@ -32,11 +32,11 @@ export class SignInPage implements OnInit {
   buildForm(): void{
     let emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.signInForm = this.formBuilder.group({
-      email: ['', [
+      email: [this.navParams.get('username') ? this.navParams.get('username'): '', [
         Validators.required,
         emailValidator(emailReg)
         ]],
-      password: ['',[
+      password: [this.navParams.get('password') ? this.navParams.get('password'): '',[
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(36)
@@ -87,11 +87,15 @@ export class SignInPage implements OnInit {
               private signInService: SignInService, 
               private storage: Storage, 
               private jwtHelper: JwtHelper,
+              private toastCtrl: ToastController,
               private user: User,
               private fb: Facebook,
               private googlePlus: GooglePlus,
               private formBuilder: FormBuilder) {
     this.menuController.swipeEnable(false);
+    if(this.navParams.get("signupSucess")){
+      this.presentToast('Sign Up Sucessful. You can now login.', "top")
+    }
   }
 
   
@@ -139,6 +143,11 @@ export class SignInPage implements OnInit {
               // this.user.scheduleRefresh(this.token);
               this.navCtrl.setRoot(OrdersHistoryPage);
           }
+      }, err => {
+        console.log(err);
+        if(err.status == 401){
+          this.presentToast(JSON.parse(err['_body'])['message'], "bottom")
+        }
       });
   }
  
@@ -218,5 +227,22 @@ export class SignInPage implements OnInit {
   forgot(){
     this.navCtrl.push(ForgotPasswordPage);
   }
+  
+  presentToast(message, position){
+    
+    console.log('Inside toast');
+    
+    let toast = this.toastCtrl.create({
+      message: message,
+      position: position,
+      closeButtonText: 'OK',
+      showCloseButton: true
+    });
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+    toast.present();
+
+  } 
 
 }

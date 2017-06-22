@@ -68,8 +68,8 @@ export const globalVars =  {
         return (this.BaseURL + this.SignInURL as string);
     },
     forgorPasswordURL: 'password/forgot',
-    getForgotPasswordAPIURL(userID){
-        return this.BaseURL + this.AllUsers + userID + this.forgorPasswordURL;
+    getForgotPasswordAPIURL(){
+        return this.BaseURL + this.AllUsers + this.forgorPasswordURL;
     },
     profileURL: '/profile',
     profileAPIURL(userID){

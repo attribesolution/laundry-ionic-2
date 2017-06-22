@@ -21,7 +21,7 @@
   </ion-refresher>
 
   <div *ngIf="!(hideActivityLoader)" class="spinner-div">
-  <ion-spinner></ion-spinner>
+    <ion-spinner></ion-spinner>
   </div>
 
   <div *ngIf="(response?.data.length == 0)" style="font-size: 150%;">
@@ -39,23 +39,23 @@
     <ion-list color="secondary" style="border-bottom:0;">
             <ion-item-divider color="secondary">
                 <ion-row>
-                    <ion-col width-40><div class="center col-heading">Order ID</div></ion-col>                    
-                    <ion-col width-30><div class="center col-heading" block disabled>Status</div></ion-col>
+                    <ion-col width-20><div class="center col-heading">Order ID</div></ion-col>                    
+                    <ion-col width-50><div class="center col-heading" block disabled>Status</div></ion-col>
                     <ion-col width-30><div block class="center col-heading uppercase">Eta</div></ion-col>
                 </ion-row>
             </ion-item-divider>
             <ion-item-divider color="secondary" *ngFor="let item of response?.data">
                 <ion-row>
-                    <ion-col width-40 class="center">
+                    <ion-col width-20 class="center">
                         <p ion-text class="id-hyperlink" color="primary" (click)="showOrderSummary(item._id)">
                           {{ item._id.slice(item._id.length-5, item._id.length) }}</p>
                     </ion-col >
-                    <ion-col width-30 class="center">
+                    <ion-col width-50 class="center">
+                        {{ item.status.name }}
                         <!--{{ item.status }}-->
-                        {{ this.statusHtml }}
                     </ion-col>
                     <ion-col class="center" width-30>
-                        {{ item.expectedDeliveryDate | date:longDate }}
+                        {{ item.expectedDeliveryDate | date:'shortDate' }} 
                     </ion-col>
                 </ion-row>
             </ion-item-divider>
@@ -72,4 +72,4 @@
     class="center uppercase">
        <p style="font-size: 20px;" color="secondary">Place a new Order</p>
   </button>
-</ion-footer>
+</ion-footer>-

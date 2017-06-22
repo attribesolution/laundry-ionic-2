@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { JwtHelper } from 'angular2-jwt';
@@ -13,17 +13,27 @@ import { PreGenModel } from '../../models/preGen.model';
 import { LaundryMap } from '../map/map.component';
 import { OrderSummaryPage } from '../order-summary/order-summary';
 import { User } from '../../app/user';
-
+import { OrderModel } from "../../models/order.model";
 import { AuthService } from "../../auth/auth.service";
+
+import { IonicNativeMapPage } from "../ionic-native-map/ionic-native-map"; 
+import { AlertDialogFactory } from "../../app/alert.dialog"; 
+
 @Component({
   selector: 'page-orders-history',
   templateUrl: 'orders-history.html',
-  providers: [AuthService, User, OrdersHistoryService, NativeStorage, Storage, JwtHelper]
+  providers: [AuthService, 
+    User, 
+    OrdersHistoryService, 
+    NativeStorage, 
+    Storage, 
+    JwtHelper,
+    AlertDialogFactory]
 })
 export class OrdersHistoryPage{
   
   userID: string;
-  response: any;
+  response: OrderModel;
   preGenData: PreGenModel;
   refreshController : any;
   hideActivityLoader:boolean;
@@ -40,13 +50,12 @@ export class OrdersHistoryPage{
               private nativeStorage: NativeStorage,
               private jwtHelper: JwtHelper,
               private user: User,
-              private authService: AuthService) {
-              // let xAccessToken = this.user.getUserAccessToken();
-              
+              private authService: AuthService,
+              private alertCntrl: AlertDialogFactory) {
                 this.userID = localStorage.getItem('userID');//this.navParams.get('userID');
                  console.log("userID = ",this.userID);
                 this.preGenApiURL = globalVars.PreGenApiURL(this.userID);
-                this.getOrdersHistory();
+                // this.getOrdersHistory();
   }
   
  
@@ -141,19 +150,24 @@ export class OrdersHistoryPage{
         let URL = globalVars.getOrdersHistoryURL(this.userID); 
         console.log(URL);
         console.log(token);
-        
+        console.log(this.jwtHelper.isTokenExpired(token)); 
         this.authService.getCall(URL)
           .subscribe(res => {
             if(res.status == 200) {
               console.log(res);
               console.log(JSON.parse(res['_body']));
-              this.response = JSON.parse(res['_body']);
-              // this.hideActivityLoaders();
+              this.response = JSON.parse(res['_body']);              
+              console.log(this.response);
+              this.hideActivityLoaders(); 
             }
           },error=>{
+            this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');
             this.hideActivityLoaders();
             console.log("Order history error = ", error);
+            this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.'); 
+
           },()=>{
+            this.mapResponse();
             this.hideActivityLoaders();
           })
     // this.hideActivityLoaders();
@@ -164,6 +178,15 @@ export class OrdersHistoryPage{
       // check if refreshController is'nt undefined
       if(this.refreshController)
       this.refreshController.complete();
+}
+mapResponse(){
+  this.response.data.forEach(element => {
+    element['status'] = {
+              "_id": "58bfbb19685648cd0392995a",
+              "name": "Order Complete",
+              "code": "ORC"
+            }
+  });
 }
   placeOrder(){
     this.storage.get("x-access-token")
@@ -180,7 +203,7 @@ export class OrdersHistoryPage{
   createPreGen(URL, token) {
     console.log('Create Pre Gen Called');
     console.log(URL);
-    
+    this.hideActivityLoader = false; 
     this.authService.getCall(URL)
       .subscribe(res => {
         if (res.status == 200) {
@@ -192,12 +215,16 @@ export class OrdersHistoryPage{
             data: response["data"]
           }
           console.log('Response From PreGen', (this.preGenData.data as any));
-          this.navCtrl.push(LaundryMap, {
+          this.navCtrl.push(IonicNativeMapPage, { 
             preGenData: this.preGenData
           });
+          this.hideActivityLoaders(); 
+
         }
       }, err => {
-        console.log(JSON.stringify(err));        
+        this.alertCntrl.openAlertDialog('Error', 'An Error Occoured. Please Check your internet connection.');         
+        console.log(JSON.stringify(err));   
+        this.hideActivityLoaders();              
       });
   }
   showOrderSummary(orderID){

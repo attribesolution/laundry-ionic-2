@@ -1,9 +1,18 @@
-laundry-map{
+page-ionic-native-map {
+
+    ion-alert{ 
+        position: fixed!important; 
+    } 
     #map{
         margin: -10px;
+        margin-left: -18px; 
+        margin-top: -18px;
         padding: 0;
         height: 105%;
-        width: 110%;
+        width: 120%;
+
+        position: relative; 
+        z-index: -10000; 
     }
     .searchbar{
         padding: 0;
@@ -12,7 +21,7 @@ laundry-map{
         margin: 10px 5% 0;
         width: 90%;
         position: absolute;
-        z-index: 2;
+        z-index: 20000; 
 
         .search-input{
             padding: 10px 25px;
@@ -33,10 +42,13 @@ laundry-map{
     }
     .button-bottom{
         position: absolute;
-        bottom: 1px;
-        margin: 10px;
-        left: 0px;
-        width: 80%;
+
+        bottom: 4px; 
+        margin: 10px auto;  
+        height: 50px;  
+        margin-left: 3%;  
+        width: 84%; 
+        font-size: 20px; 
     }
     .bottom-options{
 
@@ -56,5 +68,9 @@ laundry-map{
         width: 60px;
         height: 60px;
     }
+
+    .auto-complete-text { 
+        color: #fff; 
+        margin: 0; 
+    }
 }
-    

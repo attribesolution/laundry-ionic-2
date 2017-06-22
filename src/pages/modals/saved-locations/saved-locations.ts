@@ -39,7 +39,7 @@ export class SavedLocations{
                
      }
      close() {
-         this.viewCtrl.dismiss();
+         this.viewCtrl.dismiss('');
         }
 
      done(){

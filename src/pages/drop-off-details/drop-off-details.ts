@@ -1,42 +1,48 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams } from 'ionic-angular';
 
 import {OrderPlaced} from '../order-placed/order-placed';
-
 import { globalVars } from '../../app/globalvariables';
-
 import { PreGenModel } from '../../models/preGen.model';
-
 import { DropOffService } from './drop-off-details.service';
-
 import { OrderSummaryPage } from './../order-summary/order-summary';
 import { AuthService } from "../../auth/auth.service";
+
+import { AlertDialogFactory } from "./../../app/alert.dialog";
+
 @Component ({
     selector: 'drop-off-details',
     templateUrl: 'drop-off-details.html',
-    providers: [AuthService, DropOffService]
+    providers: [AuthService,
+        DropOffService,
+        AlertDialogFactory]
 })
 
 export class DropOffDetails{
      today: Date = new Date();
      newDate: Date = new Date;
      locale: String = 'en-us';
-     hours: number[] = Array.from(new Array(12),(val,index)=>index+1);
+     hours: number[] = Array.from(
+         new Array(13),
+         (val,index):number => {
+            return index + 9 <= 12 ? index + 9: index - 3;
+         });
      minutes: number[] = Array.from(new Array(60),(val,index)=>index)
      dates = [];
      amPm: String[] = ['AM', 'PM'];
-     highlightedDay: number;
+     highlightedDay = new Date(Date.now()); 
      highlightedHour: number;
      highlightedMinute : number;
      highlightedAmPm: number;
      selectedDate = {
         day: new Date(),
         hour: 0,
-        minute: 0,
+
+        minute: null, 
         amPm: 'AM'
      };
      preGenData: PreGenModel;
+    lat; lng; address; 
      loc: Object;
      token: string;
      dateArrayMaker(){
@@ -47,7 +53,8 @@ export class DropOffDetails{
      constructor(private navCtrl: NavController, 
                  public navParams: NavParams, 
                  public dropOffService: DropOffService,
-                 private authService: AuthService){
+                 private authService: AuthService,
+                 private alertCntrl: AlertDialogFactory){ 
     
          this.dateArrayMaker();
          console.log(this.dates);
@@ -70,43 +77,68 @@ export class DropOffDetails{
         console.log(this.selectedDate);
         
         
-        segment === 'day' ? 
-            this.highlightedDay === Elementid ? this.highlightedDay = 0 : this.highlightedDay = Elementid :
-        segment === 'hour' ? 
-            this.highlightedHour === Elementid ? this.highlightedHour = 0 : this.highlightedHour = Elementid :
-        segment === 'minute' ? 
-            this.highlightedMinute === Elementid ? this.highlightedMinute = 0 : this.highlightedMinute = Elementid :
-        segment === 'amPm' ? 
-            this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : '';
+        segment === 'day' ?  
+            this.highlightedDay = this.highlightedDay === Elementid ?  0 : this.highlightedDay = Elementid : 
+        segment === 'hour' ?  
+            this.highlightedHour === Elementid ? this.highlightedHour = 0 : this.highlightedHour = Elementid : 
+        segment === 'minute' ?  
+            this.highlightedMinute === Elementid ? this.highlightedMinute = 0 : this.highlightedMinute = Elementid : 
+        segment === 'amPm' ?  
+            this.highlightedAmPm === Elementid ? this.highlightedAmPm = 0 : this.highlightedAmPm = Elementid : ''; 
     }
      startNextScreen(textareaValue){
             console.log("Next clicked!");
-            let newDate = this.selectedDate.day.getFullYear() + ' ' + 
+            let when, newDate; 
+            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
+                newDate = this.selectedDate.day.getFullYear() + ' ' +                                   
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
-                                 this.selectedDate.amPm
-            console.log(new Date(newDate));
-            let when = new Date(newDate);
-            this.patchDropOffDetails(when, textareaValue);
-            this.navCtrl.push(OrderSummaryPage)
+                                 this.selectedDate.amPm; 
+                when = new Date(newDate); 
+                console.log('when: ', when); 
+                console.log('location: ', this.loc); 
+                // console.log(this.pickupInstructions); 
+                if(!!textareaValue){ 
+                    this.patchDropOffDetails(when, textareaValue); 
+                    this.navCtrl.push(OrderSummaryPage, { 
+                        preGenData: this.preGenData 
+                    }); 
+                }else{ 
+                    this.alertCntrl.openAlertDialog("What's missing?", "Enter dropoff details."); 
+                } 
+            }else{ 
+                this.alertCntrl.openAlertDialog("What's missing?", "Please select time.");     
+            } 
+
     }
 
     patchDropOffDetails(whenDate, textareaValue){
-        console.log((this.loc as any).geometry.location.lat);
-        
+        // console.log((this.loc as any).geometry.location.lat);
+        if(this.loc['gemetry']){
+            this.lat = this.loc['gemetry']['location']['lat'];
+            this.lng = this.loc['gemetry']['location']['lat'];
+            this.address = this.loc['gemetry']['location']['lat'];
+        }else{
+            this.lat = this.loc['lat'];
+            this.lng = this.loc['lat'];
+            this.address = this.loc['lat'];
+        }
         let data = {
             dropoffDetails: {
                 location: {
-                    lat: (this.loc as any).geometry.location.lat || 0.0,
-                    lng: (this.loc as any).geometry.location.lng || 0.0,
-                    address: (this.loc as any).formatted_address || 'ABC'
+
+                    lat: this.lat, 
+                    lng: this.lng, 
+                    address: this.address 
+
                 },
                 when: whenDate,
                 instruction: textareaValue
             }
         }
+        
         let URL = globalVars.patchDropOffApiURL((this.preGenData.data as any)._id);
         this.authService.patchCall(URL, data)
             .subscribe(res => console.log(res));

@@ -76,7 +76,7 @@ export class SignUpPage implements OnInit{
         this.formsError[field] = '';
         const messages = this.validationMessages[field];
         for (const key in control.errors){  
-          console.log(control.errors);
+          console.log('Line 79', control.errors);
           this.formsError[field] = messages[key];
         }
       }
@@ -133,19 +133,19 @@ export class SignUpPage implements OnInit{
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignUpPage');
+    console.log('Line 136','ionViewDidLoad SignUpPage');
   }
   signUp(username, password, phone, email, dob) {
     this.validateForm(this.signUpForm.value);
     this.submitted = true;
-    console.log(this.signUpForm.value);
+    console.log('Line 141', this.signUpForm.value);
     
     let URL, data: any;
     URL = globalVars.PostNewUser();
     data = {
       
-      "firstname": this.signUpForm.value.firtsname || null,
-      "lastname": this.signUpForm.value.lastname || null,
+      "firstName": this.signUpForm.value.firstname || null,
+      "lastName": this.signUpForm.value.lastname || null,
       "password": this.signUpForm.value.password || null,
       "contact": {
         "phone1": this.signUpForm.value.phone || null,
@@ -154,40 +154,51 @@ export class SignUpPage implements OnInit{
       "dob": this.signUpForm.value.dob || null,
       "username": this.signUpForm.value.email || null
     }
-    console.log(`Sending to server ${data.username}, ${data.password}, ${data.contact.phone1}, ${data.contact.email1}`);
+    console.log('Line 157', `Sending to server ${data.username}, ${data.password}, ${data.contact.phone1}, ${data.contact.email1}`);
     let response: any;
     this.signUpService.PostNewUser(URL, data)
       .subscribe(res => {
 
                   if(res.status == 200){
-                      console.log(JSON.parse(res['_body']));
+                      
+                      console.log('Line 164', JSON.parse(res['_body']));
                       let body  = JSON.parse(res['_body']);
                       response = {
                         href: body["href"],
                         data: body["data"]
                       }
-                      console.log("response data = ",response.data);
+                      console.log('Line 170', "response data = ",response.data);
+                      if(response.data === null){
+                        this.presentToast(body.error, 'bottom');
+                      }else{
+                        // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                        let signInData = {
+                          username: data.contact.email1,
+                          password: data.password
+                        };
+                        // this.requestSignIn(signInData);
+                        this.navCtrl.setRoot(SignInPage, {
+                          signupSucess: true,
+                          username: data.username,
+                          password: data.password
+                        });
+                      }
                       // localStorage.setItem("userID", response.data._id);
                       // this.user.saveUserAccessToken(response.data);
-                      this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
-                      let signInData = {
-                        username: data.contact.email1,
-                        password: data.password
-                      };
-                      this.requestSignIn(signInData);
+                      
                   }
                   
               });
   }
   requestSignIn(data){
-    console.log(data.password);
+    console.log('Line 194', data.password);
     
-    console.log('Inside Sign in call');
+    console.log('Line 196', 'Inside Sign in call');
     
     this.URL = globalVars.PostSignInApi();
-    console.log(this.URL);
+    console.log('Line 199', this.URL);
     
-    this.signInService.signInUser(URL, data)
+    this.signInService.signInUser(this.URL, data)
       .subscribe(res => {
         this.token = JSON.parse(res['_body'])['token'];
         let userID = this.jwtHelper.decodeToken(this.token);
@@ -196,14 +207,14 @@ export class SignUpPage implements OnInit{
         localStorage.setItem('user-id', userID._id);
 
         this.user.saveUserId(userID);
-        console.log(userID._id);
+        console.log('Line 210', userID._id);
         this.user.saveUserAccessToken(this.token);
         // this.user.scheduleRefresh(this.token);
-        this.navCtrl.setRoot(OrdersHistoryPage);
-        console.log(JSON.stringify(res['_body']['data']));
+        
+        console.log('Line 214', JSON.stringify(res['_body']['data']));
         
       }, err => {
-        console.log(JSON.stringify(err));
+        console.log('Line 217', JSON.stringify(err));
         
       })
   }
@@ -213,7 +224,7 @@ export class SignUpPage implements OnInit{
   }
   facebook = "facebook";
   fbSignup(){
-    console.log('FB Signup clicked.');
+    console.log('Line 227', 'FB Signup clicked.');
 
     this.fb.getLoginStatus().then(
       res =>{
@@ -221,9 +232,9 @@ export class SignUpPage implements OnInit{
           this.fb.login(['email', 'public_profile'])
             .then(
               (res: FacebookLoginResponse) => {
-                console.log('Logged into facebook:', res);
-                console.log(res.authResponse.sig);
-                console.log(res.authResponse['email']);
+                console.log('Line 235', 'Logged into facebook:', res);
+                console.log('Line 236', res.authResponse.sig);
+                console.log('Line 237', res.authResponse['email']);
                 // console.log(res.);
                 
                 
@@ -233,7 +244,8 @@ export class SignUpPage implements OnInit{
                 // this.navCtrl.setRoot(OrdersHistoryPage);
 
                 let fbUserID = res.authResponse.userID;
-
+                console.log('Line 247', fbUserID);
+                
                 let params: Array<any>;
                 let data = {
                   
@@ -250,7 +262,7 @@ export class SignUpPage implements OnInit{
                                         hometown
                               `, params).then(
                                 user => {
-                                  console.log(JSON.stringify(user), user.name);
+                                  console.log('Line 265', JSON.stringify(user), user.name);
                                   data = {
                                     "username": fbUserID,
                                     "firstName": user.first_name,
@@ -269,10 +281,12 @@ export class SignUpPage implements OnInit{
                                       "currentCountry":""
                                     }
                                   } 
-                                  
+                                  console.log('Line 284', data);  
                                 }
+                                
+                                
                               ).then(()  => {
-                                console.log(JSON.stringify(data));
+                                console.log('Line 289', this.URL, JSON.stringify(data), fbUserID);
                                 // this.requestSignIn(data);
                                 this.socialSignup(this.URL, data, fbUserID);
                               });
@@ -281,7 +295,7 @@ export class SignUpPage implements OnInit{
                 
               }
             ).catch( e => {
-              console.log('Error logging into facebook', e);
+              console.log('Line 298', 'Error logging into facebook', e);
               this.facebook = e;
             })
         }
@@ -292,48 +306,54 @@ export class SignUpPage implements OnInit{
 
 socialSignup(URL, data, fbUserID){
    let response: any;
-   console.log(URL);
+   console.log('Line 309', URL);
    
     this.signUpService.PostNewUser(URL, data)
       .subscribe(res => {
 
                   if(res.status = 200){
-                      console.log(res['_body']);
+                      console.log('Line 315', res['_body']);
                       let body  = JSON.parse(res['_body']);
                       response = {
                         href: body["href"],
                         data: body["data"]
                       }
-                      console.log("response data = ",JSON.stringify(response.data));
+                      console.log('Line 321', "response data = ",JSON.stringify(response.data));
                       if(!!response.data && !response.error){
                         localStorage.setItem("userID", response.data._id);
+                        let signInData = {
+                          username: fbUserID,
+                          password: fbUserID + "facebook"
+                        };
+                        // this.requestSignIn(signInData);
 
+                        this.presentToast("You are now signed up. Please sign in.", 'bottom');
 
+                        
                       }else{
-                        console.log('You are already signed up. Please sign in.');
-                        this.presentToast();
+                        console.log('Line 334', 'You are already signed up. Please sign in.');
+                        
+                        
+                        this.presentToast((body.error + " Please sign in."), 'bottom');
                       }
                       
                       // //this.user.saveUserAccessToken(response.data.);
-                      // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                      
                   }
-                  let signInData = {
-                    username: fbUserID,
-                    password: fbUserID + "facebook"
-                  };
-                  // this.requestSignIn(signInData);
               });
       }
-    presentToast(){
-      console.log('Inside toast');
+    presentToast(message, position){
+      console.log('Line 344', 'Inside toast');
       
       let toast = this.toastCtrl.create({
-        message: 'You are already signed up. Please sign in using facebook.',
-        duration: 3000,
-        position: 'bottom'
+        message: message,
+        position: position,
+        closeButtonText: 'OK',
+        showCloseButton: true
       });
       toast.onDidDismiss(() => {
-        console.log('Dismissed toast');
+        console.log('Line 353', 'Dismissed toast');
+        this.navCtrl.setRoot(SignInPage);
       });
 
       toast.present();

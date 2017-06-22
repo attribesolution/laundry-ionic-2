@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http'
+import { GoogleMap, LatLng } from "@ionic-native/google-maps";
+import { Geolocation } from "@ionic-native/geolocation";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import { Storage } from '@ionic/storage';
@@ -8,25 +10,46 @@ import { Storage } from '@ionic/storage';
 export class MapService{
     headers: Headers;
     options: RequestOptions;
-    constructor(private http: Http, private storage: Storage){
+    latLng;
+    neWLocation;
+    constructor(private http: Http, private storage: Storage, private geolocation: Geolocation){
         this.headers = new Headers({
                     'x-access-token': this.storage.get('authToken')
             });
             this.options = new RequestOptions({
                     headers: this.headers
             });
+        this.geolocation.getCurrentPosition().then(response => {
+            this.latLng = response.coords.latitude + ',' + response.coords.longitude;
+            console.log(this.latLng);
+            
+        }).catch(error => {
+            console.log(error);
+        })
     }
-    myApiKey = 'AIzaSyBifb4pycCZZCs1OqewdQ-d698bylvYjkw'
+    myApiKey = 'AIzaSyBgxy7H8FVjgfVHCdCJ4RLN1nx6wjh8r3g';
     
-    getJSON = (place: string) => {
-        let stringQuery: string; //= place +  " in UAE";
-        place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\%20in\%20in UAE";
-        let googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${stringQuery}&key=${this.myApiKey}`
-        console.log(googleLocationApi);
-
+getJSON = (place: string, latLng) => { 
+        let googleLocationApi;
+        // this.geolocation.getCurrentPosition().then(response => {
+        //     latLng = response.coords.latitude + ',' + response.coords.longitude;
+        //     console.log(response);
+        //     console.log(latLng);
+            
+            
+        // }).catch(error => {
+        //     console.log(error);
+        // });
+        console.log(latLng);
+        // let stringQuery: string; //= place +  " in UAE";
+        // place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\ in\ UAE";
+        googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${this.latLng}&radius=10000&key=${this.myApiKey}`;
+            console.log(googleLocationApi);
         return this.http.get(googleLocationApi)
             .map(res => JSON.parse(res['_body']).results)
             // .map(e=> e.formatted_address)
+
+        
      } 
 
 

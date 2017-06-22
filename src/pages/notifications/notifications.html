@@ -29,7 +29,7 @@
         </div>
       </ion-item-divider>
       <form>
-        <ion-list>
+        <ion-list *ngIf="false">
            <ion-item class="fill-bg" *ngFor="let notification of notifications">
              <ion-label style="color: white; font-size: 20px;">{{ notification.htmlValue }}</ion-label>
              <ion-toggle  

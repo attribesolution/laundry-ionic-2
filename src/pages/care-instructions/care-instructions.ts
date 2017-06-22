@@ -7,11 +7,13 @@ import { CareInstructionsService } from './care-instructions.service';
 import { globalVars } from '../../app/globalvariables';
 import { AuthService } from "../../auth/auth.service";
 //import { SpinnerDialog } from '@ionic-native/spinner-dialog';
-
+import { AlertDialogFactory } from "../../app/alert.dialog";
 @Component ({
     selector: 'care-instructions',
     templateUrl: 'care-instructions.html',
-    providers: [AuthService, CareInstructionsService]
+    providers: [AuthService, 
+                CareInstructionsService,
+                AlertDialogFactory]
 })
 
 export class CareInstructions{
@@ -21,7 +23,8 @@ export class CareInstructions{
      constructor(private navCtrl:NavController, 
                  public navParams: NavParams, 
                  private careInstructionsService: CareInstructionsService,
-                 private authService: AuthService){
+                 private authService: AuthService,
+                 private alertCntrl: AlertDialogFactory){
         this.preGenData = this.navParams.get('preGenData');
         this.token = localStorage.getItem('x-access-token');
         this.additionalInfoText = localStorage.getItem('additionalInfoText');
@@ -29,7 +32,8 @@ export class CareInstructions{
 
 startNextScreen(shirtsIns, dryCleanIns){
      //this.spinnerDialog.show();
-      shirtsIns += this.additionalInfoText;
+     if(shirtsIns && dryCleanIns){
+      shirtsIns += this.additionalInfoText || '';
       console.log(shirtsIns, dryCleanIns);
       
       let URL = globalVars.patchCareInstructionsURL((this.preGenData.data as any)._id);
@@ -49,12 +53,16 @@ startNextScreen(shirtsIns, dryCleanIns){
           }
         },error=>{
 
-      //this.hideActivityLoaders();
-    },()=>{
-     
-     // this.hideActivityLoaders();
-    });
+        //this.hideActivityLoaders();
+      },()=>{
+      
+      // this.hideActivityLoaders();
+      });
 
       console.log("Next clicked!");
+     }else{
+      this.alertCntrl.openAlertDialog("What's missing", 'Please fill both fields.');
+     }
+      
   }
 }
