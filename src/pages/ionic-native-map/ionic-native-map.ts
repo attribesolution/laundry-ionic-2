@@ -72,6 +72,7 @@ export class IonicNativeMapPage {
   @ViewChild('search') button: ElementRef;
   available_locations: Array<Object> = [];
   newLocation;
+  marker;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private googleMaps: GoogleMaps,
@@ -97,7 +98,7 @@ export class IonicNativeMapPage {
     // this.loadMap();
     setTimeout(() => {
       this.loadMap();
-    }, 1000);
+    }, 500);
   }
   ngAfterViewInit(){
     console.log("ngAfterViewInit", this.newLocation);
@@ -336,8 +337,8 @@ export class IonicNativeMapPage {
     // this.addMarkerMoveCamera(this.map, new LatLng(this.lat, this.lng));
     // this.map.center = new google.maps.LatLng(this.lat, this.lng);
 
-    // this.addMarker(this.map, new LatLng(this.lat, this.lng));
-    this.moveCamera(this.map, new LatLng(this.lat, this.lng))
+    this.addMarker(this.map, new LatLng(this.lat, this.lng));
+    this.moveCamera(this.map, new LatLng(this.lat, this.lng));
   }
 
 
@@ -476,9 +477,10 @@ export class IonicNativeMapPage {
      map.setPadding(0, 80, 150, 0); 
      this.latLng = this.getLocation(map); 
      map.setCompassEnabled(false);   
+     
    }); 
   } 
- 
+  
   getLocation(map: GoogleMap) { 
     let latLng: string; 
     map.getMyLocation().then( 
@@ -491,6 +493,10 @@ export class IonicNativeMapPage {
           
           // this.addMarker(map, location.latLng); 
           this.moveCamera(map, location.latLng); 
+          let markerOptions: MarkerOptions = {
+            position: this.newLocation
+          };
+          this.addMarker(map, this.newLocation);
       } 
     ).catch( 
       () => {
@@ -499,6 +505,14 @@ export class IonicNativeMapPage {
       }
     );
     return latLng;
+  }
+  
+  addMarker(map, latLng: LatLng){
+    this.map.clear();
+
+    this.map.addMarker({
+      position: latLng
+    });
   }
   moveCamera(map, latLng: LatLng){ 
     // create CameraPosition 

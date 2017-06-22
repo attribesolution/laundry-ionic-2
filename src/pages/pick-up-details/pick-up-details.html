@@ -47,7 +47,7 @@
               <sup *ngIf="date.getDate()%10 == 1 && !(date.getDate() == 11)">ST</sup>
               <sup *ngIf="date.getDate()%10 == 2 && !(date.getDate() == 12)">ND</sup>
               <sup *ngIf="date.getDate()%10 == 3 && !(date.getDate() == 13)">RD</sup>
-              <sup *ngIf="date.getDate()%10 >= 4 || date.getDate()%10 == 0 || (date.getDate() > 10) && date.getDate() != 21 && date.getDate() != 31">TH</sup> 
+              <sup *ngIf="date.getDate()%10 >= 4 || date.getDate()%10 == 0 || (date.getDate() > 10) && date.getDate() != 21 && date.getDate() != 22 && date.getDate() != 23 && date.getDate() != 31">TH</sup> 
             <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) | uppercase }}</span>
             </span>
         </ion-item-divider>
