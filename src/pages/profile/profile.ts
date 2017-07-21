@@ -91,6 +91,7 @@ export class ProfileComponent implements OnInit{
                 emailValidator(emailReg)]
             ],
             phone1: ['', [
+                Validators.required
                 // Validators.minLength(4),
                 // Validators.maxLength(50)
                 ]
@@ -158,14 +159,14 @@ export class ProfileComponent implements OnInit{
 
     },
     phone1: {
-      
+      'required': 'Contact number is required'
     },
     phone2: {
 
     },
     email1: {
-      'invalidEmail': 'Invalid Email address.',
-      'required': 'Email is required.'
+      'invalidEmail': 'Invalid Email address',
+      'required': 'Email is required'
     },
   }    
   ionViewDidLoad(){
