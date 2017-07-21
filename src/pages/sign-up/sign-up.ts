@@ -65,7 +65,7 @@ export class SignUpPage implements OnInit{
     });
   }
   validateForm(data?: any){
-    
+    let errorCount = 0;
     if (!this.signUpForm) {return;}
     const form = this.signUpForm;
     
@@ -78,9 +78,11 @@ export class SignUpPage implements OnInit{
         for (const key in control.errors){  
           console.log('Line 79', control.errors);
           this.formsError[field] = messages[key];
+          errorCount++;
         }
       }
     }
+    return errorCount;
   }
   formsError = {
     firstname: '',
@@ -136,7 +138,9 @@ export class SignUpPage implements OnInit{
     console.log('Line 136','ionViewDidLoad SignUpPage');
   }
   signUp(username, password, phone, email, dob) {
-    this.validateForm(this.signUpForm.value);
+    let errorCount = this.validateForm(this.signUpForm.value);
+    console.log(errorCount);
+    
     this.submitted = true;
     console.log('Line 141', this.signUpForm.value);
     
@@ -156,39 +160,41 @@ export class SignUpPage implements OnInit{
     }
     console.log('Line 157', `Sending to server ${data.username}, ${data.password}, ${data.contact.phone1}, ${data.contact.email1}`);
     let response: any;
-    this.signUpService.PostNewUser(URL, data)
+    if(!errorCount){
+      this.signUpService.PostNewUser(URL, data)
       .subscribe(res => {
-
-                  if(res.status == 200){
-                      
-                      console.log('Line 164', JSON.parse(res['_body']));
-                      let body  = JSON.parse(res['_body']);
-                      response = {
-                        href: body["href"],
-                        data: body["data"]
-                      }
-                      console.log('Line 170', "response data = ",response.data);
-                      if(response.data === null){
-                        this.presentToast(body.error, 'bottom');
-                      }else{
-                        // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
-                        let signInData = {
-                          username: data.contact.email1,
-                          password: data.password
-                        };
-                        // this.requestSignIn(signInData);
-                        this.navCtrl.setRoot(SignInPage, {
-                          signupSucess: true,
-                          username: data.username,
-                          password: data.password
-                        });
-                      }
-                      // localStorage.setItem("userID", response.data._id);
-                      // this.user.saveUserAccessToken(response.data);
-                      
-                  }
-                  
-              });
+          if(res.status == 200){
+              
+              console.log('Line 164', JSON.parse(res['_body']));
+              let body  = JSON.parse(res['_body']);
+              response = {
+                href: body["href"],
+                data: body["data"]
+              }
+              console.log('Line 170', "response data = ",response.data);
+              if(response.data === null){
+                this.presentToast(body.error, 'bottom');
+              }else{
+                // this.navCtrl.setRoot(OrdersHistoryPage, {userID: response.data._id});
+                let signInData = {
+                  username: data.contact.email1,
+                  password: data.password
+                };
+                // this.requestSignIn(signInData);
+                this.navCtrl.setRoot(SignInPage, {
+                  signupSucess: true,
+                  username: data.username,
+                  password: data.password
+                });
+              }
+              // localStorage.setItem("userID", response.data._id);
+              // this.user.saveUserAccessToken(response.data);
+              
+          }
+          
+      });
+    }
+    
   }
   requestSignIn(data){
     console.log('Line 194', data.password);
