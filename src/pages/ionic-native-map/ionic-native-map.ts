@@ -88,6 +88,8 @@ export class IonicNativeMapPage {
                 this.token = localStorage.getItem('x-access-token'); 
                 this.userID = localStorage.getItem('userID'); 
                 this.preGenData = navParams.get('preGenData'); 
+                localStorage.setItem("additionalInfoText", "");
+
                 // setTimeout(() => { 
                 //   this.inputFieldValue = 'New Value'; 
                 // }, 3000) 
@@ -259,8 +261,13 @@ export class IonicNativeMapPage {
         }); 
       }else{ 
         this.map.setClickable(false); 
-        this.alertCntrl.openAlertDialog('Location exits', 'Please enter a location.'); 
-        this.map.setClickable(true); 
+        let result = this.alertCntrl.openAlertDialog('Location exits', 'Please enter a location.'); 
+        // result.then(value => {
+        //   if(value){
+        //     this.map.setClickable(true);
+        //   }
+        // })
+        
       } 
     // }else{ 
     //   // this.alertCntrl.openAlertDialog('Error', 'Location already Exists.') 
