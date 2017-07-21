@@ -171,16 +171,25 @@ calculateTotalAmount(item){
 }
   wash(item)
   {
-     item.toWash = !item.toWash;
+     
+     console.log(item.toDry);
+     if(item.toWash && item.toDry == false){
+       item.toWash = true;
+     }else{
+      item.toWash = !item.toWash;
+     }
      this.calculateTotalAmount(item);
-     console.log('wash'+item.toWash);
+     console.log('wash', item.toWash);
   }
   dry(item)
   {
-    
-     item.toDry = !item.toDry;
+     if(item.toDry == true && item.toWash == false){
+       item.toDry = true;
+     }else{
+       item.toDry = !item.toDry;
+     }
      this.calculateTotalAmount(item);
-     console.log('dry'+item.toDry);
+     console.log('dry', item.toDry);
   }
 
  startNextScreen()
