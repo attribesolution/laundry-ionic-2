@@ -8,9 +8,15 @@ import {Component} from '@angular/core';
 })
 export class AdditionalNote
 {
-    constructor(public viewCtrl: ViewController) {}
+    data;
+    constructor(public viewCtrl: ViewController) {
+      this.data = localStorage.getItem("additionalInfoText");
+    }
 
-  close() {
+  close(text) {
+    text = "";
+    this.data = "";
+    localStorage.setItem("additionalInfoText", "");
     this.viewCtrl.dismiss();
   }
 
