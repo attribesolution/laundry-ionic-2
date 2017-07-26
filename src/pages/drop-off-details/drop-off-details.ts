@@ -19,7 +19,8 @@ import { AlertDialogFactory } from "./../../app/alert.dialog";
 })
 
 export class DropOffDetails{
-     today: Date = new Date();
+     today: string = new Date().toISOString();
+     dropOffTime;
      newDate: Date = new Date;
      locale: String = 'en-us';
      hours: number[] = Array.from(
@@ -89,14 +90,16 @@ export class DropOffDetails{
      startNextScreen(textareaValue){
             console.log("Next clicked!");
             let when, newDate; 
-            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
+            if(!(this.dropOffTime == undefined)){ 
+                let today = new Date(this.today.slice(0,10));
+                this.dropOffTime =  this.dropOffTime.slice(0,2);
                 newDate = this.selectedDate.day.getFullYear() + ' ' +                                   
                                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
                                  this.selectedDate.day.getDate() + ' ' +
                                  this.selectedDate.hour + ':' +
                                  this.selectedDate.minute + ' ' +
                                  this.selectedDate.amPm; 
-                when = new Date(newDate); 
+                when = new Date(today.getFullYear(), today.getMonth(), today.getDate(), Number(this.dropOffTime)); 
                 console.log('when: ', when); 
                 console.log('location: ', this.loc); 
                 // console.log(this.pickupInstructions); 

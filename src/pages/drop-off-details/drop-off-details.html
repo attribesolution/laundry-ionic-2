@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <img src="./assets/images/burger_menu.png" alt="" style =" width:15px; height: 15px;">
     </button>
-    <ion-title color="primary">DROP OFF TIME</ion-title>
+    <ion-title color="primary">Drop off Details</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -26,93 +26,18 @@
               height: 100%;"
                                     
                                     color="secondary">
-        <p color="secondary">DROP OFF INSTRUCTIONS</p>
+        <p color="secondary">DROP OFF TIME</p>
         </div>
       </ion-item-divider>
     </div>
-    <ion-row style="height: 27.75%;">
-      <ion-col style="padding: 0!important;" width-40>
-      <div class="scrollableTime">
-        <ion-item-divider 
-          color="secondary" 
-          *ngFor="let date of dates"
-          class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedDay === date || date.getDate() == highlightedDay?.getDate(),  
-                      'drop-off-details-date-item-divider':  highlightedDay !== date }"
-          #$date
-          (click)="toggleHighlight(date, 'day')"
-          >
-            <span class="drop-off-details-date-col">
-              {{ date.toLocaleString(locale, { month: "short" }) | uppercase  }} {{ date.getDate() }}
-              <sup *ngIf="date.getDate()%10 == 1 && !(date.getDate() == 11)">ST</sup> 
-              <sup *ngIf="date.getDate()%10 == 2 && !(date.getDate() == 12)">ND</sup> 
-              <sup *ngIf="date.getDate()%10 == 3 && !(date.getDate() == 13)">RD</sup> 
-              <sup *ngIf="date.getDate()%10 >= 4 || date.getDate()%10 == 0 || (date.getDate() > 10) && date.getDate() != 21 && date.getDate() != 22 && date.getDate() != 23 && date.getDate() != 31">TH</sup> 
-            <span class="weekday">{{ date.toLocaleString(locale, { weekday: "long" }) | uppercase }}</span>
-            </span>
-        </ion-item-divider>
-      </div>
-    </ion-col>
-
-     <ion-col width-20 style="padding: 0!important;">
-      <div class="scrollableTime">
-        <ion-item-divider 
-          color="secondary" 
-          *ngFor="let hour of hours"
-          class="drop-off-details-date-item-divider"
-          style="text-align: center!important;"                                        
-          [ngClass]="{ 'current': highlightedHour === hour, 
-                      'drop-off-details-date-item-divider':  highlightedHour !== hour }"
-          #$hour
-          (click)="toggleHighlight(hour, 'hour')"
-          >
-            <span class="drop-off-details-date-col">
-              {{ hour | number : '2.0-0' }}
-            </span> 
-        </ion-item-divider>
-      </div>
-    </ion-col>
-
-    <ion-col width-20 style="padding: 0!important;">
-      <div class="scrollableTime">
-        <ion-item-divider 
-          color="secondary" 
-          *ngFor="let minute of minutes"
-          class="drop-off-details-date-item-divider"
-          style="text-align: center!important;"
-          [ngClass]="{ 'current': highlightedMinute === minute, 
-                      'drop-off-details-date-item-divider':  highlightedMinute !== minute }"
-          #$minute
-          (click)="toggleHighlight(minute, 'minute')"
-          >
-            <span class="drop-off-details-date-col">
-              {{ minute | number : '2.0-0' }}
-            </span>
-        </ion-item-divider>
-      </div>
-    </ion-col>
-
-     <ion-col width-20 style="padding: 0!important;">
-      <div style="height: 100%; line-height: 50%;" class="scrollableTime">
-        <ion-item-divider 
-          color="secondary" 
-          *ngFor="let value of amPm"
-          class="drop-off-details-date-item-divider"
-          [ngClass]="{ 'current': highlightedAmPm === value, 
-                      'drop-off-details-date-item-divider':  highlightedAmPm !== value }"
-          #$amPm
-          (click)="toggleHighlight(value, 'amPm')"
-          style="text-align: center!important;"
-          >
-            <span class="drop-off-details-date-col">
-              {{ value }}
-            </span>
-        </ion-item-divider>
-      </div>
-    </ion-col>
-
-    
-    </ion-row>
+    <ion-item class="fill-bg">
+        <ion-label>Select Date</ion-label>
+        <ion-datetime displayFormat="MMMM DD" pickerFormat="MMMM DD" [(ngModel)]="today"></ion-datetime>
+      </ion-item>
+      <ion-item class="fill-bg">
+        <ion-label>Select Time</ion-label>
+        <ion-datetime displayFormat="hh A" pickerFormat="h:a" [(ngModel)]="dropOffTime"></ion-datetime>
+      </ion-item>
     <div class="heading">
       <ion-item-divider class="fill-bg"
                         style="
