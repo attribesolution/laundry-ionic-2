@@ -157,7 +157,7 @@ export class OrdersHistoryPage{
               console.log(res);
               console.log(JSON.parse(res['_body']));
               this.response = JSON.parse(res['_body']);              
-              console.log(this.response);
+              console.log(this.response.data.reverse());
               this.hideActivityLoaders(); 
             }
           },error=>{
