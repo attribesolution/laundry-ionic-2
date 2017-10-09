@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {OrderPlaced} from '../order-placed/order-placed';
+import { AuthService } from "../../auth/auth.service";
 import { globalVars } from '../../app/globalvariables';
 import { PreGenModel } from '../../models/preGen.model';
+import { OrderPlaced } from '../order-placed/order-placed';
 import { DropOffService } from './drop-off-details.service';
 import { OrderSummaryPage } from './../order-summary/order-summary';
-import { AuthService } from "../../auth/auth.service";
 
 import { AlertDialogFactory } from "./../../app/alert.dialog";
 
@@ -19,8 +19,9 @@ import { AlertDialogFactory } from "./../../app/alert.dialog";
 })
 
 export class DropOffDetails{
-     today: string = new Date().toISOString();
+     today: string;
      dropOffTime;
+     minDate;
      newDate: Date = new Date;
      locale: String = 'en-us';
      hours: number[] = Array.from(
@@ -43,7 +44,7 @@ export class DropOffDetails{
         amPm: 'AM'
      };
      preGenData: PreGenModel;
-    lat; lng; address; 
+     lat; lng; address; 
      loc: Object;
      token: string;
      dateArrayMaker(){
@@ -56,7 +57,16 @@ export class DropOffDetails{
                  public dropOffService: DropOffService,
                  private authService: AuthService,
                  private alertCntrl: AlertDialogFactory){ 
-    
+
+         this.minDate = new Date(this.navParams.get('pickUpDate'));
+         console.log(this.navParams.get('pickUpDate'));
+         
+         this.minDate.setDate(this.minDate.getDate() + 2);
+         this.minDate = this.minDate.toISOString();
+         this.today = this.minDate;
+         
+         console.log(this.minDate); 
+         
          this.dateArrayMaker();
          console.log(this.dates);
          console.log(this.hours, this.minutes);
@@ -66,6 +76,21 @@ export class DropOffDetails{
          console.log(navParams.get('preGenData'));
          console.log('Location: ', this.loc);
          this.token = localStorage.getItem('x-access-token');
+     }
+     
+     checkDate(today){
+         console.log(today);
+         
+         let dropOffDate = new Date(today);
+         let pickUpDate = new Date(this.navParams.get('pickUpDate'));
+         let timeDifference = Math.abs(dropOffDate.getTime() - pickUpDate.getTime());
+         let DaysDifference= Math.ceil(timeDifference / (1000 * 3600 *24));
+         console.log(dropOffDate, pickUpDate, DaysDifference);
+         console.log(dropOffDate.getTime(), pickUpDate.getTime(), timeDifference);
+         if(pickUpDate.getMonth() > dropOffDate.getMonth() || (pickUpDate.getMonth() == dropOffDate.getMonth() && 
+            (dropOffDate.getDate() - pickUpDate.getDate() < 2))){
+                this.alertCntrl.openAlertDialog("What's wrong?", "Drop off date should be 2 days in future.");                
+            }
      }
 
      getClassofDate(e){
@@ -121,12 +146,12 @@ export class DropOffDetails{
         // console.log((this.loc as any).geometry.location.lat);
         if(this.loc['gemetry']){
             this.lat = this.loc['gemetry']['location']['lat'];
-            this.lng = this.loc['gemetry']['location']['lat'];
-            this.address = this.loc['gemetry']['location']['lat'];
+            this.lng = this.loc['gemetry']['location']['lng'];
+            this.address = this.loc['gemetry']['location']['address'];
         }else{
             this.lat = this.loc['lat'];
-            this.lng = this.loc['lat'];
-            this.address = this.loc['lat'];
+            this.lng = this.loc['lng'];
+            this.address = this.loc['address'];
         }
         let data = {
             dropoffDetails: {

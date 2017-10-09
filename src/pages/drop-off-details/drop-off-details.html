@@ -10,33 +10,35 @@
 <ion-content padding class="fill-bg">
   <div class="parentDivScreen">
     <div class="heading">
-      <ion-item-divider class="fill-bg"
-                        style="
-                                padding-top: 5px; 
-                                padding-bottom: 5px; 
-                                border-bottom: 0px">
-        <div id="heading-bg" 
-        style="padding: 10px; 
-              background: url('./assets/images/heading_bg.png');  
-              text-align: center;
-              background-size: 100%; 
-              background-repeat: no-repeat;
-              background-position: center;
-              width: 100%; 
-              height: 100%;"
-                                    
-                                    color="secondary">
+      <ion-item-divider 
+        class="fill-bg"
+        style="
+              padding-top: 5px; 
+              padding-bottom: 5px; 
+              border-bottom: 0px">
+        <div 
+          id="heading-bg" 
+          style="
+                padding: 10px; 
+                background: url('./assets/images/heading_bg.png');  
+                text-align: center;
+                background-size: 100%; 
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 100%; 
+                height: 100%;"
+          color="secondary">
         <p color="secondary">DROP OFF TIME</p>
         </div>
       </ion-item-divider>
     </div>
     <ion-item class="fill-bg">
         <ion-label>Select Date</ion-label>
-        <ion-datetime displayFormat="MMMM DD" pickerFormat="MMMM DD" [(ngModel)]="today"></ion-datetime>
+        <ion-datetime id="datetime" displayFormat="MMMM DD" pickerFormat="MMMM DD" (ngModelChange)="checkDate($event)" [(ngModel)]="today"></ion-datetime>
       </ion-item>
       <ion-item class="fill-bg">
         <ion-label>Select Time</ion-label>
-        <ion-datetime displayFormat="hh A" pickerFormat="h:a" [(ngModel)]="dropOffTime"></ion-datetime>
+        <ion-datetime displayFormat="hh:mm A" pickerFormat="h:mm:a" [(ngModel)]="dropOffTime"></ion-datetime>
       </ion-item>
     <div class="heading">
       <ion-item-divider class="fill-bg"

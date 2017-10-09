@@ -107,7 +107,8 @@ export class PickUpDetails{
                 if(!!textareaValue){ 
                     this.patchPickUpDetails(when, textareaValue); 
                     this.navCtrl.push(DropOffDetails, { 
-                        preGenData: this.preGenData 
+                        preGenData: this.preGenData,
+                        pickUpDate: when 
                     }); 
                 }else{ 
                     this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details."); 
@@ -123,12 +124,12 @@ export class PickUpDetails{
         console.log((this.loc as any)); 
         if(this.loc['geometry']){ 
             this.lat = this.loc['geometry']['location']['lat']; 
-            this.lng = this.loc['geometry']['location']['lat']; 
-            this.address = this.loc['geometry']['location']['lat']; 
+            this.lng = this.loc['geometry']['location']['lng']; 
+            this.address = this.loc['geometry']['location']['address']; 
         }else{ 
             this.lat = this.loc['lat']; 
-            this.lng = this.loc['lat']; 
-            this.address = this.loc['lat']; 
+            this.lng = this.loc['lng']; 
+            this.address = this.loc['address']; 
         }
         
         let data = {
