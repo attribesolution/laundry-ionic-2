@@ -70,7 +70,7 @@ export class ComplaintsSuggestionsPage{suggestions
       if(!!complaints){
         let userID = localStorage.getItem("userID");
         let URL = globalVars.PatchComplainURL(userID);
-        
+        this.suggestions = '';
         let complaintsAndSuggestions = {complain: complaints, dataTime: new Date().toISOString().slice(0,10).replace(/-/g,"-")};
         console.log(complaintsAndSuggestions);
         //this.spinnerDialog.show();
@@ -82,6 +82,7 @@ export class ComplaintsSuggestionsPage{suggestions
               this.presentToast()
               
               this.getHistory();
+
               // let URL2 = globalVars.getComplainsURL(userID);
               // this.complaintsSuggestionsService.hitComplaintsSuggestionsGetURL(URL2)
               //   .subscribe(response => {
