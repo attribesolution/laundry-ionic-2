@@ -25,9 +25,22 @@ export class RatesListComponent{
             }
         });
     }
+    upperBody = ["Kandura-Summer", "Ghutra",      "Shirt",         "T-Shirt", 
+                 "Jacket",         "Safari Suit", "Men's Suit",    "Pakistani Suit", 
+                 "Sweater",        "Coat",        "Long Coat",     "Tie",
+                 "Cap",            "Under Shirt", "Night Gown",    "Abaya",
+                 "Bed Sheet",      "Ladies Suit", "Saree",         "Blouse",
+                 "Dress",          "Dress",       "Dress Wedding", "Dress Child",
+                 "Shela",          "Apron"];
+    LowerBody = ["Jeans", "Trouser", "Under Shorts", "Lungi", 
+                 "Pyjama", "Socks", "Short Skirt", "Long Skirt",
+                 "Shalwar Kameez", "Uniform", "Dress Child", "Blanket Large",
+                 "Blanket Small", "Bed Sheel (L)", "Bed Cover", "Curtains", 
+                 "Table Cloth", "Pillow Cover", "Towel Big", "Towel Medium", 
+                 "Towel Small", "Carpet"];
     maplaundryitems(data){
         data.forEach(element => {
-            
+        let pseudoIcon = this.upperBody.findIndex( obj => obj == element.name) != -1 ? "kc-jacket" : "kc-jeans"
         let mappedObject =  {
             object_id: element.object_id, 
             name: element.name,
@@ -36,7 +49,8 @@ export class RatesListComponent{
             count: 0,
             amount:0,
             toWash:true,
-            toDry:false
+            toDry:false,
+            pIcon: pseudoIcon
             }
             this.responseArray.push(mappedObject);
         });
