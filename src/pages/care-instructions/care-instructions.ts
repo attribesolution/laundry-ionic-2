@@ -32,7 +32,7 @@ export class CareInstructions{
 
 startNextScreen(shirtsIns, dryCleanIns){
      //this.spinnerDialog.show();
-     if(shirtsIns && dryCleanIns){
+    //  if(shirtsIns && dryCleanIns){
       shirtsIns += this.additionalInfoText || '';
       console.log(shirtsIns, dryCleanIns);
       
@@ -60,9 +60,9 @@ startNextScreen(shirtsIns, dryCleanIns){
       });
 
       console.log("Next clicked!");
-     }else{
-      this.alertCntrl.openAlertDialog("What's missing", 'Please fill both fields.');
-     }
+    //  }else{
+    //   this.alertCntrl.openAlertDialog("What's missing", 'Please fill both fields.');
+    //  }
       
   }
 }
