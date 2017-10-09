@@ -1,3 +1,4 @@
+import { LoaderComponent } from './../pages/loader/loader';
 import { AgmCoreModule } from 'angular2-google-maps/core';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -61,7 +62,8 @@ export function getAuthHttp(http){
     PaymentMethodsPage,
     OrderSummaryPage,
     ForgotPasswordPage,
-    IonicNativeMapPage
+    IonicNativeMapPage,
+    LoaderComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -94,7 +96,8 @@ export function getAuthHttp(http){
     PaymentMethodsPage,
     OrderSummaryPage,
     ForgotPasswordPage,
-    IonicNativeMapPage
+    IonicNativeMapPage,
+    LoaderComponent
   ],
   providers: [{
     provide: ErrorHandler, 
