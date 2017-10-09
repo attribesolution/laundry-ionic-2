@@ -32,9 +32,9 @@
   </ion-item-divider>
 </div>
 
-<ion-refresher (ionRefresh)="doRefresh($event)">
+<!-- <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
   <div *ngIf="responseArray" class="list" >
     <ion-list class="fill-bg itemlist" 
               color="secondary"
@@ -48,8 +48,13 @@
                  item-left
                  width-30>
         <ion-icon [name]="item.icon" item-left></ion-icon>
-        <img class="item-icon" src="./assets/images/{{item.icon}}.png" alt="">
-                        &nbsp; &nbsp;{{item.name}}
+          <table>
+              <tr>
+                  <td><img class="item-icon" src="./assets/images/{{item.icon}}.png" alt=""></td>
+                  <td>&nbsp; &nbsp;</td>
+                  <td><span class="center" style="text-align: justify;">{{ item.name }}</span></td>
+              </tr>
+          </table>
         </ion-col>
         <ion-col class="item-col" 
                  width-10 
