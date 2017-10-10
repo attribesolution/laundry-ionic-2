@@ -80,3 +80,17 @@ ion-header {
   } 
 
 }
+
+.picker-toolbar, .picker-wrapper{
+    background: #252525!important;
+}
+
+.datetime-text{
+  color: white;
+}
+.picker-above-highlight{
+  background: linear-gradient(to bottom, black 20%, rgba(0, 0, 0, 0.1) 70%)!important;
+}
+.picker-below-highlight{
+  background: linear-gradient(to top, black 20%, rgba(0, 0, 0, 0.1) 70%)!important;
+}

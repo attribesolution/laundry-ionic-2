@@ -81,7 +81,7 @@ export class AuthService{
         let token = localStorage.getItem('x-access-token');
         let header = new Headers();
         
-        
+        console.log(this.jwtHelper.isTokenExpired(token));
         if(this.jwtHelper.isTokenExpired(token)){
             token = this.refreshToken();
         }

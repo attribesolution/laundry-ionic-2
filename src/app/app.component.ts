@@ -1,10 +1,13 @@
+import { DropOffDetails } from './../pages/drop-off-details/drop-off-details';
+import { LoaderComponent } from './../pages/loader/loader';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { JwtHelper, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http } from "@angular/http";
-import { BackgroundGeolocation, BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
+import { BackgroundGeolocation, 
+         BackgroundGeolocationConfig } from '@ionic-native/background-geolocation';
 
 
 // import { LaundryMap } from '../pages/map/map.component';
@@ -56,7 +59,6 @@ export class MyApp {
       //{ title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
       // { title: 'ForgotPassword', component: ForgotPasswordPage},
-      // { title: 'Map', component: IonicNativeMapPage },
       
       { title: 'Sign Out', component: SignInPage }
       

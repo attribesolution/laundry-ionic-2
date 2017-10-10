@@ -88,6 +88,8 @@ export class IonicNativeMapPage {
                 this.token = localStorage.getItem('x-access-token'); 
                 this.userID = localStorage.getItem('userID'); 
                 this.preGenData = navParams.get('preGenData'); 
+                localStorage.setItem("additionalInfoText", "");
+
                 // setTimeout(() => { 
                 //   this.inputFieldValue = 'New Value'; 
                 // }, 3000) 
@@ -259,8 +261,13 @@ export class IonicNativeMapPage {
         }); 
       }else{ 
         this.map.setClickable(false); 
-        this.alertCntrl.openAlertDialog('Location exits', 'Please enter a location.'); 
-        this.map.setClickable(true); 
+        let result = this.alertCntrl.openAlertDialog('Location exits', 'Please enter a location.'); 
+        // result.then(value => {
+        //   if(value){
+        //     this.map.setClickable(true);
+        //   }
+        // })
+        
       } 
     // }else{ 
     //   // this.alertCntrl.openAlertDialog('Error', 'Location already Exists.') 
@@ -295,14 +302,15 @@ export class IonicNativeMapPage {
     console.log("additionButtonClicked");
     this.openAdditionalNoteDialog(myEvent);
   }
-  
+  locationClickedBool;
   locationClicked(location) {
     console.log("You have clicked on: ", location);
-
+    this.locationClickedBool = false;
     this.hide = true; 
     if(!!location){
       this.inputFieldValue = ''; 
       if(!!location.name){ 
+        this.locationClickedBool = true;
         console.log(location); 
         this.inputFieldValue = location.name || ''; 
         localStorage.setItem("Location", JSON.stringify(location));
@@ -313,6 +321,7 @@ export class IonicNativeMapPage {
         this.locationAlias = location.name;
       }else{
         console.log('Here');
+        this.locationClickedBool = true;
         this.inputFieldValue = location.alias || '';
         localStorage.setItem("Location", JSON.stringify(location));
         this.lat = location.lat;
@@ -321,14 +330,15 @@ export class IonicNativeMapPage {
         this.locationAlias = location.alias;
       };    
       setTimeout(() => { this.available_locations = []}, 200);
-      }else{ 
-        console.log('Here'); 
-        this.inputFieldValue = location.alias || ''; 
-        localStorage.setItem("Location", JSON.stringify(location)); 
-        this.lat = location.lat; 
-        this.lng = location.long; 
-        this.address = location.address; 
-        this.locationAlias = location.alias; 
+    }else{ 
+      console.log('Here'); 
+      this.locationClickedBool = true;
+      this.inputFieldValue = location.alias || ''; 
+      localStorage.setItem("Location", JSON.stringify(location)); 
+      this.lat = location.lat; 
+      this.lng = location.long; 
+      this.address = location.address; 
+      this.locationAlias = location.alias; 
       };     
       setTimeout(() => { this.available_locations = []}, 200); 
     //gMap = new google.maps.Map(document.getElementById('map')); 
@@ -352,7 +362,7 @@ export class IonicNativeMapPage {
     let valid:boolean  = this.validate();
     console.log(valid);
 
-    if(valid === true)
+    if(valid === true && this.locationClickedBool == true)
     {
     console.log(this.preGenData);
       this.navCtrl.push(LaundryItems, {

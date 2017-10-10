@@ -15,22 +15,31 @@ export class AlertDialogFactory {
     openAlertDialog(title: string, msg: string, map?) {
         // map.setClickable(false);
         console.log(map);
-        
+        let promise = new Promise((resolve, reject) => {
+            resolve(true);
+        });
         let alert = this.alertCtrl.create({
             title: title,
             message: msg,
-            buttons: ['Ok'],
             cssClass: 'alertTop'
         });
         alert.present();
+        alert.addButton({
+            text: 'OK', 
+            handler:()=>{    
+                return promise;
+            }
+        })
         alert.onDidDismiss(() => {
             // map.setClickable(true);
         })
+        // return promise;
     }
     selected:any;
 
     radioAlertDialog(title: string, inputs){
         let dataReturned = null;
+        
         let alert = this.alertCtrl.create({
             title: title,
             cssClass: 'alertTop'
@@ -49,7 +58,6 @@ export class AlertDialogFactory {
             text: 'Cancel', 
             handler: () => { 
                 console.log('Cancel clicked.'); 
-                 
             } 
         }); 
 
@@ -70,7 +78,7 @@ export class AlertDialogFactory {
             return data || 'null'; 
 
         });
-        return dataReturned;
+        
     }
 
 }

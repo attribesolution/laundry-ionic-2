@@ -31,11 +31,7 @@
         </div>
       </ion-item-divider>
     </div>
-    <ion-list style="height: 20vh;" class="fill-bg"> 
-        <ion-item-divider style="color: white;" *ngIf="details.error" class="center fill-bg"> 
-          {{ details.error }}
-        </ion-item-divider>
-        <ion-item-divider *ngIf="!details.error" class="fill-bg"> 
+    <ion-item-divider *ngIf="!details.error" class="fill-bg"> 
           <ion-row style="color: white;"> 
             <ion-col width-10 class="center">No.</ion-col> 
             <ion-col width-30 class="center">Item</ion-col> 
@@ -43,12 +39,16 @@
             <ion-col width-20 class="center">Amount</ion-col> 
           </ion-row> 
         </ion-item-divider> 
+    <ion-list style="height: 20vh;" class="fill-bg"> 
+        <ion-item-divider style="color: white;" *ngIf="details.error" class="center fill-bg"> 
+          {{ details.error }}
+        </ion-item-divider>
         <ion-item-divider *ngFor="let laundryItem of laundryItems" class="fill-bg">
            <ion-row style="color: white;" class="fill-bg">            
             <ion-col width-10 class="center">{{ laundryItems.indexOf(laundryItem) + 1 }}</ion-col> 
             <ion-col width-30 class="center">{{ laundryItem.name }}</ion-col> 
             <ion-col width-20 class="center">{{ laundryItem.count }}</ion-col> 
-            <ion-col width-20 class="center">{{ laundryItem.rate }}</ion-col> 
+            <ion-col width-20 class="center">{{ laundryItem.rate + " AED" }}</ion-col> 
           </ion-row>
         </ion-item-divider>
     </ion-list>
@@ -70,7 +70,7 @@
         </ion-row>
         <ion-row>
           <ion-item class="fill-bg" style="font-size: 14px;">
-            {{ locationForHTML}}
+            {{ locationForHTML }}
           </ion-item>
         </ion-row>
         <ion-row>

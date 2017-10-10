@@ -22,7 +22,7 @@ page-ionic-native-map {
         width: 90%;
         position: absolute;
         z-index: 20000; 
-
+        
         .search-input{
             padding: 10px 25px;
             width: 90%;
@@ -72,5 +72,6 @@ page-ionic-native-map {
     .auto-complete-text { 
         color: #fff; 
         margin: 0; 
+        font-size: 25px;
     }
 }

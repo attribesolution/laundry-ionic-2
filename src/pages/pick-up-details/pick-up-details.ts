@@ -18,13 +18,14 @@ import { AlertDialogFactory } from "../../app/alert.dialog";
 
 export class PickUpDetails{
     @ViewChild('textarea') textarea: ElementRef; 
-    today: Date = new Date(); 
-    newDate: Date = new Date; 
+    today: string = new Date().toISOString(); 
+    pickerTime;
+    newDate: Date = new Date(); 
     locale: String = 'en-us'; 
-    hours: number[] = Array.from( 
+    hours: string[] = Array.from( 
         new Array(13), 
-        (val,index):number => { 
-            return index + 9 <= 12 ? index + 9: index - 3;
+        (val,index):string => { 
+            return index + 9 <= 12 ? index + 9 + ' AM': index - 3 + ' PM';
          }); 
     minutes: number[] = Array.from(new Array(60),(val,index)=>index) 
     dates = []; 
@@ -66,42 +67,48 @@ export class PickUpDetails{
          this.token = localStorage.getItem('x-access-token');
      }
      
-     toggleHighlight(Elementid: any, segment: string){
-        console.clear();
-        console.log(Elementid);
-        this.selectedDate[segment] = Elementid;
-        console.log(this.selectedDate);
+    //  toggleHighlight(Elementid: any, segment: string){
+    //     console.clear();
+    //     console.log(Elementid);
+    //     this.selectedDate[segment] = Elementid;
+    //     console.log(this.selectedDate);
         
         
-        segment === 'day' ? 
-            this.highlightedDay = this.highlightedDay === Elementid ? 0 : Elementid :
-        segment === 'hour' ? 
-            this.highlightedHour = this.highlightedHour === Elementid ? 0 : Elementid :
-        segment === 'minute' ? 
-            this.highlightedMinute = this.highlightedMinute === Elementid ? 0 : Elementid :
-        segment === 'amPm' ? 
-            this.highlightedAmPm = this.highlightedAmPm === Elementid ? 0 : Elementid : null
-     }
+    //     segment === 'day' ? 
+    //         this.highlightedDay = this.highlightedDay === Elementid ? 0 : Elementid :
+    //     segment === 'hour' ? 
+    //         this.highlightedHour = this.highlightedHour === Elementid ? 0 : Elementid :
+    //     segment === 'minute' ? 
+    //         this.highlightedMinute = this.highlightedMinute === Elementid ? 0 : Elementid :
+    //     segment === 'amPm' ? 
+    //         this.highlightedAmPm = this.highlightedAmPm === Elementid ? 0 : Elementid : null
+    //  }
      startNextScreen(textareaValue){
+         console.log(this.pickerTime);
+                  
             console.log(textareaValue);
             console.log("Next clicked!");
             let when, newDate; 
-            if(!(this.selectedDate.hour === 0) && !(this.selectedDate.minute === null)){ 
-                newDate = this.selectedDate.day.getFullYear() + ' ' +  
+            if(!(this.pickerTime == undefined)){ 
+                let today = new Date(this.today.slice(0,10));
+                this.pickerTime = this.pickerTime.slice(0,2);
+                console.log(today, this.pickerTime, this.today);
+                // newDate = this.selectedDate.day.getFullYear() + ' ' +  
 
-                                 Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
-                                 this.selectedDate.day.getDate() + ' ' +
-                                 this.selectedDate.hour + ':' +
-                                 this.selectedDate.minute + ' ' +
-                                 this.selectedDate.amPm;
-            when = new Date(newDate); 
+                //                  Number(this.selectedDate.day.getMonth() + 1 )+ ' ' + 
+                //                  this.selectedDate.day.getDate() + ' ' +
+                //                  this.selectedDate.hour + ':' +
+                //                  this.selectedDate.minute + ' ' +
+                //                  this.selectedDate.amPm;
+            when = new Date(today.getFullYear(), today.getMonth(), today.getDate(), Number(this.pickerTime)) 
                 console.log('when: ', when); 
                 console.log('location: ', this.loc); 
                 // console.log(this.pickupInstructions); 
                 if(!!textareaValue){ 
                     this.patchPickUpDetails(when, textareaValue); 
                     this.navCtrl.push(DropOffDetails, { 
-                        preGenData: this.preGenData 
+                        preGenData: this.preGenData,
+                        pickUpDate: when 
                     }); 
                 }else{ 
                     this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details."); 
@@ -117,12 +124,12 @@ export class PickUpDetails{
         console.log((this.loc as any)); 
         if(this.loc['geometry']){ 
             this.lat = this.loc['geometry']['location']['lat']; 
-            this.lng = this.loc['geometry']['location']['lat']; 
-            this.address = this.loc['geometry']['location']['lat']; 
+            this.lng = this.loc['geometry']['location']['lng']; 
+            this.address = this.loc['geometry']['location']['address']; 
         }else{ 
             this.lat = this.loc['lat']; 
-            this.lng = this.loc['lat']; 
-            this.address = this.loc['lat']; 
+            this.lng = this.loc['lng']; 
+            this.address = this.loc['address']; 
         }
         
         let data = {

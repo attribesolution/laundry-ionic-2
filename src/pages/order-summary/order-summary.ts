@@ -1,3 +1,4 @@
+import { LoaderComponent } from './../loader/loader';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
@@ -52,12 +53,12 @@ export class OrderSummaryPage {
                   if(!details.laundryItems.length){
                     this.details.error = "Incomplete Order";
                     console.log(this.details);
-                    
+                    // this.locationForHTML = details['pickup']['location']['address'];
                   }else{
                     this.laundryItems = details['laundryItems'] || {};
                     console.log(this.laundryItems);
                     console.log('Empty Laundry Items', this.laundryItems.length);
-                    this.locationForHTML = details['dropoff']['location']['address'];
+                    this.locationForHTML = details['pickup']['location']['address'];
                     console.log(this.laundryItems, this.locationForHTML);   
                   }                  
                 }
@@ -79,6 +80,6 @@ export class OrderSummaryPage {
     console.log(this.laundryItems)
   }
   startNextScreen = () => {
-    this.navCtrl.setRoot(OrderPlaced)
+    this.navCtrl.setRoot(LoaderComponent)
   }
 }
