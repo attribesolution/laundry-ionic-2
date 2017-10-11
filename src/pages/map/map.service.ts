@@ -10,7 +10,7 @@ import { Storage } from '@ionic/storage';
 export class MapService{
     headers: Headers;
     options: RequestOptions;
-    latLng;
+    latLng = `25.276987, 55.296249`;
     neWLocation;
     constructor(private http: Http, private storage: Storage, private geolocation: Geolocation){
         this.headers = new Headers({
@@ -43,7 +43,7 @@ getJSON = (place: string, latLng) => {
         console.log(latLng);
         // let stringQuery: string; //= place +  " in UAE";
         // place == undefined || place == '' ? stringQuery = '' : stringQuery = place +  "\ in\ UAE";
-        googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${this.latLng}&radius=10000&key=${this.myApiKey}`;
+        googleLocationApi = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place}&location=${this.latLng}&radius=100000&key=${this.myApiKey}`;
             console.log(googleLocationApi);
         return this.http.get(googleLocationApi)
             .map(res => JSON.parse(res['_body']).results)
