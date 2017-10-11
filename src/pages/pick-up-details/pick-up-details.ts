@@ -18,6 +18,8 @@ import { AlertDialogFactory } from "../../app/alert.dialog";
 
 export class PickUpDetails{
     @ViewChild('textarea') textarea: ElementRef; 
+    minDate: string = new Date().toISOString().slice(0,10);
+    maxDate;
     today: string = new Date().toISOString(); 
     pickerTime;
     newDate: Date = new Date(); 
@@ -44,17 +46,22 @@ export class PickUpDetails{
     loc: Object;
     token: string;
     preGenData: PreGenModel;
-    private pickupInstructions: string;
+    pickupInstructions: string;
      dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
      };
+     charcount = 0;
      constructor(public navCtrl: NavController, 
                  public navParams: NavParams, 
                  public pickupService: PickupService,
                  private authservice: AuthService,
                  private alertCntrl: AlertDialogFactory){
          this.dateArrayMaker();
+         this.maxDate = new Date();
+         this.maxDate.setYear(this.maxDate.getFullYear() + 1);
+         console.log(this.maxDate);
+         this.maxDate = this.maxDate.toISOString().slice(0, 10);
          console.log(this.dates);
          console.log(this.hours, this.minutes);
          console.log(this.highlightedDay); 
@@ -66,6 +73,11 @@ export class PickUpDetails{
          console.log('Location: ', this.loc);
          this.token = localStorage.getItem('x-access-token');
      }
+     onTextEnter(value){
+        this.charcount = value.length
+        console.log(value);
+        
+      }
      
     //  toggleHighlight(Elementid: any, segment: string){
     //     console.clear();
@@ -108,7 +120,7 @@ export class PickUpDetails{
                     this.patchPickUpDetails(when, textareaValue); 
                     this.navCtrl.push(DropOffDetails, { 
                         preGenData: this.preGenData,
-                        pickUpDate: when 
+                        pickUpDate: when
                     }); 
                 }else{ 
                     this.alertCntrl.openAlertDialog("What's missing?", "Enter pickup details."); 

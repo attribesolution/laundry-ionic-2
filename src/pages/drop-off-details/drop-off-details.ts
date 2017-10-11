@@ -22,6 +22,7 @@ export class DropOffDetails{
      today: string;
      dropOffTime;
      minDate;
+     maxDate;
      newDate: Date = new Date;
      locale: String = 'en-us';
      hours: number[] = Array.from(
@@ -47,25 +48,32 @@ export class DropOffDetails{
      lat; lng; address; 
      loc: Object;
      token: string;
+     ls;
      dateArrayMaker(){
         for(let i = 0; i <= 9; i++)
             this.dates.push(new Date(Date.now() + 24*i*36e5));
      };
-    
+     charcount: Number = 0;
      constructor(private navCtrl: NavController, 
                  public navParams: NavParams, 
                  public dropOffService: DropOffService,
                  private authService: AuthService,
                  private alertCntrl: AlertDialogFactory){ 
-
+                    
          this.minDate = new Date(this.navParams.get('pickUpDate'));
-         console.log(this.navParams.get('pickUpDate'));
+        // this.minDate = new Date();
+        this.minDate.setDate(this.minDate.getDate() + 2);
+        this.maxDate = new Date();
+        this.maxDate.setYear(this.maxDate.getFullYear() + 1);
+
+        console.log(this.maxDate);
+        this.maxDate = this.maxDate.toISOString().slice(0, 10);
+        //  console.log(this.navParams.get('pickUpDate'));
          
-         this.minDate.setDate(this.minDate.getDate() + 2);
          this.minDate = this.minDate.toISOString();
          this.today = this.minDate;
          
-         console.log(this.minDate); 
+        //  console.log(this.minDate); 
          
          this.dateArrayMaker();
          console.log(this.dates);
@@ -77,19 +85,27 @@ export class DropOffDetails{
          console.log('Location: ', this.loc);
          this.token = localStorage.getItem('x-access-token');
      }
-     
+     onTextEnter(value){
+        this.charcount = value.length
+        console.log(value.length);
+        
+      }
      checkDate(today){
          console.log(today);
-         
+         let monthsList = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
          let dropOffDate = new Date(today);
          let pickUpDate = new Date(this.navParams.get('pickUpDate'));
+        // let pickUpDate = new Date('10/10/2017');
          let timeDifference = Math.abs(dropOffDate.getTime() - pickUpDate.getTime());
          let DaysDifference= Math.ceil(timeDifference / (1000 * 3600 *24));
          console.log(dropOffDate, pickUpDate, DaysDifference);
          console.log(dropOffDate.getTime(), pickUpDate.getTime(), timeDifference);
-         if(pickUpDate.getMonth() > dropOffDate.getMonth() || (pickUpDate.getMonth() == dropOffDate.getMonth() && 
+         if(pickUpDate.getFullYear() > dropOffDate.getFullYear() && pickUpDate.getMonth() > dropOffDate.getMonth() || (pickUpDate.getFullYear() == dropOffDate.getFullYear() && pickUpDate.getMonth() == dropOffDate.getMonth() && 
             (dropOffDate.getDate() - pickUpDate.getDate() < 2))){
-                this.alertCntrl.openAlertDialog("What's wrong?", "Drop off date should be 2 days in future.");                
+                this.alertCntrl.openAlertDialog("What's wrong?", `Your pickup date is ${monthsList[dropOffDate.getMonth()], dropOffDate.getDate()}. The earliest drop-off you can select is mm:dd`);                
             }
      }
 
@@ -131,7 +147,7 @@ export class DropOffDetails{
                 if(!!textareaValue){ 
                     this.patchDropOffDetails(when, textareaValue); 
                     this.navCtrl.push(OrderSummaryPage, { 
-                        preGenData: this.preGenData 
+                        preGenData: this.preGenData
                     }); 
                 }else{ 
                     this.alertCntrl.openAlertDialog("What's missing?", "Enter dropoff details."); 
@@ -143,6 +159,10 @@ export class DropOffDetails{
     }
 
     patchDropOffDetails(whenDate, textareaValue){
+        localStorage.setItem('dates', JSON.stringify({
+            pickUpDate: this.navParams.get('pickUpDate'),
+            dropOffDate: whenDate
+        }));
         // console.log((this.loc as any).geometry.location.lat);
         if(this.loc['gemetry']){
             this.lat = this.loc['gemetry']['location']['lat'];

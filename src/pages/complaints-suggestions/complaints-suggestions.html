@@ -31,7 +31,8 @@
       </ion-item-divider>
       <ion-item-divider class="myBg" style="border-bottom: 0;">
         <div class="ParentDiv1">
-          <textarea name="complaints" #complaints cols="30" rows="6" placeholder="Enter Suggestions and/or Complaints"></textarea>
+          <textarea name="complaints" maxlength="500" [ngModel]="suggest" (ngModelChange)="onTextEnter($event)" #complaints cols="30" rows="6" placeholder="Enter Suggestions and/or Complaints"></textarea>
+          <span class="counter">{{ 500 - charcount }}</span>
         </div>
       </ion-item-divider>
     </div>
@@ -89,7 +90,8 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="suggestions" #suggestions cols="30" rows="6" placeholder="Enter Suggestions and/or complaints"></textarea>
+          <!-- <textarea name="suggestions"  #suggestions cols="30" rows="6" placeholder="Enter Suggestions and/or complaints"></textarea> -->
+          
         </div>
       </ion-item-divider>
     </div>

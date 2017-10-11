@@ -31,7 +31,8 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="launderedShirts" #launderedShirts cols="30" rows="6" placeholder="Enter care instructions (Optional)"></textarea>
+          <textarea name="launderedShirts" [ngModel]="laundered" (ngModelChange)="onTextEnter($event, 'ls')" maxlength="500" #launderedShirts cols="30" rows="6" placeholder="Enter care instructions (Optional)"></textarea>
+          <span class="counter">{{ 500 - charcount.ls }}</span>
         </div>
       </ion-item-divider>
     </div>
@@ -60,7 +61,8 @@
       </ion-item-divider>
       <ion-item-divider class="myBg">
         <div class="ParentDiv1">
-          <textarea name="dryCleaning" #dryCleaning cols="30" rows="6" placeholder="Enter care instructions (Optional)"></textarea>
+          <textarea name="dryCleaning" maxlength="500" [ngModel]="dryCleanining" (ngModelChange)="onTextEnter($event, 'dc')" #dryCleaning cols="30" rows="6" placeholder="Enter care instructions (Optional)"></textarea>
+          <span class="counter">{{ 500 - charcount.dc }}</span>
         </div>
       </ion-item-divider>
     </div>

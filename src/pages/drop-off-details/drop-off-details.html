@@ -34,7 +34,7 @@
     </div>
     <ion-item class="fill-bg">
         <ion-label>Select Date</ion-label>
-        <ion-datetime id="datetime" displayFormat="MMMM DD" pickerFormat="MMMM DD" (ngModelChange)="checkDate($event)" [(ngModel)]="today"></ion-datetime>
+        <ion-datetime displayFormat="YYYY-MMM-DD" min="{{minDate}}" max ="{{maxDate}}" pickerFormat="YYYY-MMMM-DD" [(ngModel)]="today"></ion-datetime>
       </ion-item>
       <ion-item class="fill-bg">
         <ion-label>Select Time</ion-label>
@@ -62,7 +62,8 @@
       </ion-item-divider>
       <ion-item-divider class="myBg" style="border: 0;">
         <div class="ParentDiv1">
-          <textarea #textarea name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
+          <textarea #textarea maxlength="500"  [ngModel]="ls" (ngModelChange)="onTextEnter($event)" name="launderedShirts" id="launderedShirtsTextArea1" cols="30" rows="6" placeholder="Any Drop off instructions"></textarea>
+          <span class="counter">{{ 500 - charcount }}</span>
         </div>
       </ion-item-divider>
     </div>
