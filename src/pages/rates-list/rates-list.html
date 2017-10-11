@@ -19,7 +19,7 @@
         <ion-list color="secondary" style="border-bottom:0">
             <ion-item-divider color="secondary">
                 <ion-row>
-                    <ion-col width-40><div class="center col-heading">Name</div></ion-col>                    
+                    <ion-col width-40></ion-col>                    
                     <ion-col width-30><div class="center col-heading" block disabled>Dry Clean</div></ion-col>
                     <ion-col width-30><div block class="center col-heading">Wash</div></ion-col>
                 </ion-row>
@@ -36,10 +36,10 @@
                         </table>
                     </ion-col>
                     <ion-col class="center">
-                        {{ item.rate.dryclean }}
+                        {{ item.rate.dryclean + " AED" }}
                     </ion-col>
                     <ion-col class="center">
-                        {{ item.rate.wash }}
+                        {{ item.rate.wash + " AED" }}
                     </ion-col>
                 </ion-row>
             </ion-item-divider>
