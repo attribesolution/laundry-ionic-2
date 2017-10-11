@@ -51,6 +51,7 @@ export class AlertDialogFactory {
                 label: input.alias,
                 value: input,
                 checked: false
+                
             });
         });
 

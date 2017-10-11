@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.kiitoos.app" version="0.0.20" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.kiitoos.app" version="0.0.24" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>KIITOOS</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -42,6 +42,7 @@
   <allow-navigation href="http://192.168.100.37:8100"/>
   <allow-navigation href="http://192.168.100.37:8101"/>
   <allow-navigation href="http://192.168.1.109:8100"/>
+  <allow-navigation href="http://192.168.100.76:8101"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>

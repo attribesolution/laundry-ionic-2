@@ -78,11 +78,19 @@ ion-header {
     height: 20px; 
     z-index: 2100; 
   } 
-
+  .alert-radio-label{
+    color: white;
+  }
 }
 
 .picker-toolbar, .picker-wrapper{
     background: #252525!important;
+}
+.picker-opt{
+  color: white!important;
+}
+.picker-opt-selected{
+  color: #59bd84!important;
 }
 
 .datetime-text{
@@ -93,4 +101,10 @@ ion-header {
 }
 .picker-below-highlight{
   background: linear-gradient(to top, black 20%, rgba(0, 0, 0, 0.1) 70%)!important;
+}
+.counter{
+  position: absolute; 
+  bottom: 20px;
+  right: 15px;
+  
 }
