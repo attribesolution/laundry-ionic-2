@@ -67,7 +67,7 @@ export class OrdersHistoryPage{
         if(res.status == 200){
           console.log(res);
           let response = JSON.parse(res['_body'])["data"];
-          this.storage.set("statusList", response);
+          // this.storage.set("statusList", response);
 
           //Dummy status list below. Remove it and get stauts from server
           this.statusList = [
@@ -189,14 +189,18 @@ mapResponse(){
   });
 }
   placeOrder(){
-    this.storage.get("x-access-token")
-      .then(
-      token => {
-        console.log(token);
+    let token = localStorage.getItem("x-access-token");
+    if(!!token){
+      this.createPreGen(this.preGenApiURL, token);
+    }
+    // this.storage.get("x-access-token")
+    //   .then(
+    //   token => {
+    //     console.log(token);
         
-        this.createPreGen(this.preGenApiURL, token);
-      }
-      )
+        
+    //   }
+    //   )
     
   }
 
