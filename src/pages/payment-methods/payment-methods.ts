@@ -19,9 +19,16 @@ export class PaymentMethodsPage {
     checked: false,
     disabled: true,
     htmlValue: 'Credit Card',
-    helperValueHtml: 'Credit Card payment soon to be included.'
+    helperValueHtml: 'Credit Card payment coming soon.'
   };
-  methods = [this.cashOnDelivery, this.creditCard];
+  payPal = {
+    name: 'payPal',
+    checked: false,
+    disabled: true,
+    htmlValue: 'PayPal',
+    helperValueHtml: 'PayPal payment coming soon.'
+  };
+  methods = [this.cashOnDelivery, this.creditCard, this.payPal];
   toggleMethod(method){
     console.log(method.name, ' is ', method.checked);
     method == 'cashOnDelivery' ? this.creditCard.checked = false : this.cashOnDelivery.checked = true;

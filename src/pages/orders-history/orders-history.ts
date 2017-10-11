@@ -182,10 +182,10 @@ export class OrdersHistoryPage{
 mapResponse(){
   this.response.data.forEach(element => {
     element['status'] = {
-              "_id": "58bfbb19685648cd0392995a",
-              "name": "Order Complete",
-              "code": "ORC"
-            }
+          "_id": "58bfbb19685648cd03929946",
+          "name": "Order Initiated",
+          "code": "ORI"
+      }
   });
 }
   placeOrder(){
