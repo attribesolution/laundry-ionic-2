@@ -58,7 +58,7 @@ export class MyApp {
       { title: 'Rates List', component: RatesListComponent },
       //{ title: 'Notifications', component: NotificationComponent },
       { title: 'Complaints and Suggestions', component: ComplaintsSuggestionsPage },
-      // { title: 'ForgotPassword', component: ForgotPasswordPage},
+      // { title: 'ForgotPassword', component: DropOffDetails},
       
       { title: 'Sign Out', component: SignInPage }
       
@@ -85,7 +85,7 @@ export class MyApp {
   initializeApp() {
     //this.spinnerDialog.show();
     this.platform.ready().then( () => {
-      
+
       this.storage.get('x-access-token').then(
         
         token =>{

@@ -24,6 +24,8 @@ import { AlertDialogFactory } from "../../app/alert.dialog";
 export class ComplaintsSuggestionsPage{suggestions
      preGenData: PreGenModel;
      complaints1: any = '';
+     charcount = 0;
+     suggest;
      constructor(private navCtrl:NavController, 
                  public navParams: NavParams, 
                  private complaintsSuggestionsService: ComplaintsSuggestionsService, 
@@ -35,7 +37,12 @@ export class ComplaintsSuggestionsPage{suggestions
      }
     ionViewDidLoad(){
       
-    }     
+    }    
+    onTextEnter(value){
+      this.charcount = value.length
+      console.log(value.length);
+      
+    } 
     getHistory = () => {
       //this.spinnerDialog.show();
       let userID = localStorage.getItem("userID");
@@ -65,7 +72,7 @@ export class ComplaintsSuggestionsPage{suggestions
         toast.present();
      }
 
-   startNextScreen(complaints){
+  startNextScreen(complaints){
       console.log(complaints);
       if(!!complaints){
         let userID = localStorage.getItem("userID");
@@ -80,7 +87,7 @@ export class ComplaintsSuggestionsPage{suggestions
               //this.spinnerDialog.hide();
               console.log(res['_body']);
               this.presentToast()
-              
+              this.suggest = '';
               this.getHistory();
 
               // let URL2 = globalVars.getComplainsURL(userID);

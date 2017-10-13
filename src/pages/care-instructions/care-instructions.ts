@@ -20,6 +20,12 @@ export class CareInstructions{
      preGenData: PreGenModel;
      token: string;
      additionalInfoText: string;
+     charcount: Object = {
+       ls: 0,
+       dc: 0
+     }
+     dryCleanining;
+     laundered;
      constructor(private navCtrl:NavController, 
                  public navParams: NavParams, 
                  private careInstructionsService: CareInstructionsService,
@@ -29,7 +35,11 @@ export class CareInstructions{
         this.token = localStorage.getItem('x-access-token');
         this.additionalInfoText = localStorage.getItem('additionalInfoText');
      }
-
+onTextEnter(value, counter){
+  this.charcount[counter] = value.length
+  console.log(value.length);
+  
+}
 startNextScreen(shirtsIns, dryCleanIns){
      //this.spinnerDialog.show();
     //  if(shirtsIns && dryCleanIns){

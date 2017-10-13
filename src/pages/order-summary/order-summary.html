@@ -55,7 +55,7 @@
     <ion-list style="color: white!important; height: 40vh;" class="fill-bg">
         <ion-row>
           <ion-item-divider style="font-weight: bolder; font-size: 20px;" class="fill-bg">
-            Pickup Location
+            Pickup &amp; Dropoff Location
           </ion-item-divider>
         </ion-row>
         <ion-row>
@@ -65,12 +65,26 @@
         </ion-row>
         <ion-row>
           <ion-item-divider style="font-weight: bolder; font-size: 20px;" class="fill-bg">
-            Dropoff Location
+            Pick up Timing
           </ion-item-divider>
         </ion-row>
         <ion-row>
           <ion-item class="fill-bg" style="font-size: 14px;">
-            {{ locationForHTML }}
+            {{ pickUpTime }}
+          </ion-item>
+        </ion-row>
+
+        <ion-row>
+          <ion-item-divider *ngIf="!orderID" style="font-weight: bolder; font-size: 20px;" class="fill-bg">
+            Drop off Timing
+          </ion-item-divider>
+          <ion-item-divider *ngIf="!!orderID" style="font-weight: bolder; font-size: 20px;" class="fill-bg">
+            Expected Delivery Date
+          </ion-item-divider>
+        </ion-row>
+        <ion-row>
+          <ion-item class="fill-bg" style="font-size: 14px;">
+            {{ eta }}
           </ion-item>
         </ion-row>
         <ion-row>
