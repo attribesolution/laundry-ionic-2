@@ -85,7 +85,7 @@ export class AuthService{
         if(this.jwtHelper.isTokenExpired(token)){
             token = this.refreshToken();
         }
-        console.log(this.jwtHelper.getTokenExpirationDate(token));
+        console.log('JWT will expire at', this.jwtHelper.getTokenExpirationDate(token));
         header.append('x-access-token', token);
         let options = new RequestOptions({ 
             headers: header 
