@@ -102,8 +102,8 @@ export class PickUpDetails{
             console.log("Next clicked!");
             let when, newDate; 
             if(!(this.pickerTime == undefined)){ 
-                let today = new Date(this.today.slice(0,10));
-                this.pickerTime = this.pickerTime.slice(0,2);
+                let today = new Date(this.today);
+                this.pickerTime = this.pickerTime;
                 console.log(today, this.pickerTime, this.today);
                 // newDate = this.selectedDate.day.getFullYear() + ' ' +  
 
@@ -112,7 +112,12 @@ export class PickUpDetails{
                 //                  this.selectedDate.hour + ':' +
                 //                  this.selectedDate.minute + ' ' +
                 //                  this.selectedDate.amPm;
-            when = new Date(today.getFullYear(), today.getMonth(), today.getDate(), Number(this.pickerTime)) 
+            when = new Date(today.getFullYear(), 
+                            today.getMonth(), 
+                            today.getDate(), 
+                            Number(this.pickerTime.slice(0,2)), 
+                            Number(this.pickerTime.slice(3, this.pickerTime.length -1))
+                        ); 
                 console.log('when: ', when); 
                 console.log('location: ', this.loc); 
                 // console.log(this.pickupInstructions); 

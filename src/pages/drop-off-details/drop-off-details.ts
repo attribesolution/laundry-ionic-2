@@ -60,8 +60,8 @@ export class DropOffDetails{
                  private authService: AuthService,
                  private alertCntrl: AlertDialogFactory){ 
                     
-         this.minDate = new Date(this.navParams.get('pickUpDate'));
-        // this.minDate = new Date();
+        this.minDate = new Date(this.navParams.get('pickUpDate'));
+        console.log('64', this.minDate);
         this.minDate.setDate(this.minDate.getDate() + 2);
         this.maxDate = new Date();
         this.maxDate.setYear(this.maxDate.getFullYear() + 1);
@@ -69,8 +69,8 @@ export class DropOffDetails{
         console.log(this.maxDate);
         this.maxDate = this.maxDate.toISOString().slice(0, 10);
         //  console.log(this.navParams.get('pickUpDate'));
-         
-         this.minDate = this.minDate.toISOString();
+         console.log(this.minDate.toISOString());
+         this.minDate = this.minDate.toISOString().slice(0, 10);
          this.today = this.minDate;
          
         //  console.log(this.minDate); 
@@ -97,8 +97,7 @@ export class DropOffDetails{
                 "July", "August", "September", "October", "November", "December"
             ];
          let dropOffDate = new Date(today);
-         let pickUpDate = new Date(this.navParams.get('pickUpDate'));
-        // let pickUpDate = new Date('10/10/2017');
+         let pickUpDate = new Date(this.navParams.get('pickUpDate'));    
          let timeDifference = Math.abs(dropOffDate.getTime() - pickUpDate.getTime());
          let DaysDifference= Math.ceil(timeDifference / (1000 * 3600 *24));
          console.log(dropOffDate, pickUpDate, DaysDifference);

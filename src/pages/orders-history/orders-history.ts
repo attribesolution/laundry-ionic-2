@@ -181,6 +181,7 @@ export class OrdersHistoryPage{
 }
 mapResponse(){
   this.response.data.forEach(element => {
+    element['expectedDeliveryDate'] = element['expectedDeliveryDate'].slice(0, 10);
     element['status'] = {
           "_id": "58bfbb19685648cd03929946",
           "name": "Order Initiated",

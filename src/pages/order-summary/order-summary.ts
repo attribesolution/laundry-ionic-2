@@ -62,13 +62,17 @@ export class OrderSummaryPage {
                     console.log(this.details);
                     // this.locationForHTML = details['pickup']['location']['address'];
                   }else{
-                    this.eta = (JSON.parse(res['_body'])['data']['expectedDeliveryDate']).slice(0, 10);
+                    let time = new Date(JSON.parse(res['_body'])['data']['expectedDeliveryDate']);
+                    this.eta = time.toISOString().slice(0, 10);
+                    this.eta += ' ' + this.timeTo12HrFormat(time.toTimeString());
                     this.laundryItems = details['laundryItems'] || {};
                     console.log(this.laundryItems);
                     console.log('Empty Laundry Items', this.laundryItems.length);
                     this.locationForHTML = details['pickup']['location']['address'];
                     console.log(this.laundryItems, this.locationForHTML);   
-                    this.pickUpTime = (details['pickup']['when']).slice(0, 10);
+                    let pickUpTime = new Date(details['pickup']['when']);
+                    this.pickUpTime = pickUpTime.toISOString().slice(0, 10);
+                    this.pickUpTime += ' ' + this.timeTo12HrFormat(pickUpTime.toTimeString());
                   }                  
                 }
               }
@@ -87,11 +91,37 @@ export class OrderSummaryPage {
     this.locationForHTML = this.locationForHTML.address ?  
       this.locationForHTML.address : this.locationForHTML.formatted_address;     console.log(this.locationForHTML);
     console.log(this.laundryItems);
-    this.pickUpTime = (JSON.parse(localStorage.getItem('dates'))['pickUpDate']).slice(0, 10);
+    let pickupTime = new Date(JSON.parse(localStorage.getItem('dates'))['pickUpDate'])
+    this.pickUpTime = pickupTime.toISOString().slice(0, 10) + ' ' + (this.timeTo12HrFormat(pickupTime.toTimeString()));
     console.log(this.pickUpTime);
-    this.eta = (JSON.parse(localStorage.getItem('dates'))['dropOffDate']).slice(0, 10);
+    let time = new Date(JSON.parse(localStorage.getItem('dates'))['dropOffDate']);
+    this.eta = time.toISOString().slice(0, 10) + ' ' + this.timeTo12HrFormat(time.toTimeString());
+
   }
   startNextScreen = () => {
     this.navCtrl.setRoot(LoaderComponent)
   }
+
+  timeTo12HrFormat(time)
+  {   // Take a time in 24 hour format and format it in 12 hour format
+      let time_part_array = time.split(":");
+      console.log(time_part_array)
+      let ampm = 'AM';
+  
+      if (time_part_array[0] >= 12) {
+          ampm = 'PM';
+      }
+  
+      if (time_part_array[0] > 12) {
+          time_part_array[0] = time_part_array[0] - 12;
+      }
+  
+      let formatted_time = time_part_array[0] + ':' + time_part_array[1] + ' ' + ampm;
+  
+      return formatted_time;
+  }
+  
+  
+  
+  // var time = timeTo12HrFormat(18:00:00);
 }
